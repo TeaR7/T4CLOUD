@@ -28,12 +28,14 @@
 
     <properties>
         <t4cloud.version>1.0.0</t4cloud.version>
+        <t4cloud.group>t4cloud</t4cloud.group>
         <spring-boot.version>2.2.2.RELEASE</spring-boot.version>
         <spring-cloud.version>Hoxton.SR1</spring-cloud.version>
         <spring-cloud-alibaba.version>2.1.1.RELEASE</spring-cloud-alibaba.version>
         <hutool.version>5.1.0</hutool.version>
         <mybatis-plus.version>3.3.0</mybatis-plus.version>
         <swagger.fox.version>2.9.2</swagger.fox.version>
+        <spring.platform.version>Cairo-SR8</spring.platform.version>
     </properties>
 
     <dependencyManagement>
@@ -52,6 +54,13 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+<!--            <dependency>-->
+<!--                <groupId>io.spring.platform</groupId>-->
+<!--                <artifactId>platform-bom</artifactId>-->
+<!--                <version>${spring.platform.version}</version>-->
+<!--                <type>pom</type>-->
+<!--                <scope>import</scope>-->
+<!--            </dependency>-->
             <!--spring cloud alibaba-->
             <dependency>
                 <groupId>com.alibaba.cloud</groupId>

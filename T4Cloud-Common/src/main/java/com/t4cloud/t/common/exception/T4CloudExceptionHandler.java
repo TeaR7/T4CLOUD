@@ -2,7 +2,6 @@ package com.t4cloud.t.common.exception;
 
 import com.t4cloud.t.common.entity.dto.Result;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
