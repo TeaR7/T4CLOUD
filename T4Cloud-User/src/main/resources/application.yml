@@ -1,0 +1,6 @@
+server:
+  port: 18080
+  tomcat:
+    max-swallow-size: -1
+  servlet:
+    context-path: /t4cloud-user

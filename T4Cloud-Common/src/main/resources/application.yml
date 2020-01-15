@@ -1,0 +1,7 @@
+security:
+  basic:
+    enabled: true
+    path: /t4cloud-user/swagger-ui.html
+  user:
+    name: admin
+    password: admin

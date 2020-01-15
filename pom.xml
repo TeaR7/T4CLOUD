@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  ~  Copyright (c) 2019-2024, T4CLOUD (zqr.it@t4cloud.com).
+  ~  <p>
+  ~  Licensed under the GNU General Public License 3.0 (the "License");
+  ~  you may not use this file except in compliance with the License.
+  ~  You may obtain a copy of the License at
+  ~  <p>
+  ~ https://www.gnu.org/licenses/
+  ~  <p>
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.t4cloud</groupId>
+    <artifactId>t4cloud</artifactId>
+    <version>${spring-cloud.version}.${t4cloud.version}</version>
+    <name>${project.artifactId}</name>
+    <packaging>pom</packaging>
+    <url>https://www.t4cloud.com</url>
+
+    <properties>
+        <t4cloud.version>1.0.0</t4cloud.version>
+        <spring-boot.version>2.2.2.RELEASE</spring-boot.version>
+        <spring-cloud.version>Hoxton.SR1</spring-cloud.version>
+        <spring-cloud-alibaba.version>2.1.1.RELEASE</spring-cloud-alibaba.version>
+        <hutool.version>5.1.0</hutool.version>
+        <mybatis-plus.version>3.3.0</mybatis-plus.version>
+        <swagger.fox.version>2.9.2</swagger.fox.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!--spring cloud alibaba-->
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring-cloud-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!--web 模块-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <version>${spring-boot.version}</version>
+                <!--                <exclusions>-->
+                <!--                    &lt;!&ndash;排除tomcat依赖&ndash;&gt;-->
+                <!--                    <exclusion>-->
+                <!--                        <artifactId>spring-boot-starter-tomcat</artifactId>-->
+                <!--                        <groupId>org.springframework.boot</groupId>-->
+                <!--                    </exclusion>-->
+                <!--                </exclusions>-->
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+
+    <dependencies>
+
+        <!--		<dependency>-->
+        <!--			<groupId>com.github.ulisesbocchio</groupId>-->
+        <!--			<artifactId>jasypt-spring-boot-starter</artifactId>-->
+        <!--			<version>${jasypt.version}</version>-->
+        <!--		</dependency>-->
+        <!--监控-->
+        <!--		<dependency>-->
+        <!--			<groupId>org.springframework.boot</groupId>-->
+        <!--			<artifactId>spring-boot-starter-actuator</artifactId>-->
+        <!--		</dependency>-->
+        <!--监控客户端-->
+        <!--		<dependency>-->
+        <!--			<groupId>de.codecentric</groupId>-->
+        <!--			<artifactId>spring-boot-admin-starter-client</artifactId>-->
+        <!--			<version>${spring-boot-admin.version}</version>-->
+        <!--		</dependency>-->
+        <!--断路器依赖-->
+        <!--		<dependency>-->
+        <!--			<groupId>org.springframework.cloud</groupId>-->
+        <!--			<artifactId>spring-cloud-starter-netflix-hystrix</artifactId>-->
+        <!--		</dependency>-->
+
+        <!--测试依赖-->
+        <!--		<dependency>-->
+        <!--			<groupId>org.springframework.boot</groupId>-->
+        <!--			<artifactId>spring-boot-starter-test</artifactId>-->
+        <!--			<scope>test</scope>-->
+        <!--		</dependency>-->
+    </dependencies>
+
+    <modules>
+        <module>T4Cloud-User</module>
+        <module>T4Cloud-Common</module>
+        <module>T4Cloud-Tool</module>
+    </modules>
+
+
+    <build>
+        <finalName>${project.name}</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <encoding>utf-8</encoding>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <repositories>
+        <!--阿里云主仓库，代理了maven central和jcenter仓库-->
+        <repository>
+            <id>aliyun</id>
+            <name>aliyun</name>
+            <url>https://maven.aliyun.com/repository/public</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+</project>
