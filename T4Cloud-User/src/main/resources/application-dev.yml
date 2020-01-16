@@ -20,7 +20,7 @@ spring:
         # 环境隔离
         group:   dev
         # 项目隔离
-#        namespace: xxxxx
+  #        namespace: xxxxx
   #redis 配置
   redis:
     database: 1
@@ -97,4 +97,4 @@ mybatis-plus:
 #Mybatis输出sql日志
 logging:
   level:
-    com.t4cloud.t.user.mapper : debug
+    com.t4cloud.t.user.mapper: debug

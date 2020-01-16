@@ -88,6 +88,12 @@
 
     <dependencies>
 
+        <dependency>
+            <groupId>com.t4cloud</groupId>
+            <artifactId>T4Cloud-Common</artifactId>
+            <version>${spring-cloud.version}.${t4cloud.version}</version>
+        </dependency>
+
         <!--		<dependency>-->
         <!--			<groupId>com.github.ulisesbocchio</groupId>-->
         <!--			<artifactId>jasypt-spring-boot-starter</artifactId>-->
@@ -120,8 +126,6 @@
 
     <modules>
         <module>T4Cloud-User</module>
-        <module>T4Cloud-Common</module>
-        <module>T4Cloud-Tool</module>
     </modules>
 
 
@@ -158,6 +162,17 @@
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
+        </repository>
+        <repository>
+            <id>aliyun</id>
+            <name>aliyun</name>
+            <url>https://maven.aliyun.com/repository/public</url>
+        </repository>
+
+        <repository>
+            <id>t4cloud-maven</id>
+            <name>t4cloud</name>
+            <url>https://gitee.com/Terry7/T4-Repo/raw/master</url>
         </repository>
     </repositories>
 </project>
