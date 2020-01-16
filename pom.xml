@@ -91,7 +91,7 @@
         <dependency>
             <groupId>com.t4cloud</groupId>
             <artifactId>T4Cloud-Common</artifactId>
-            <version>${spring-cloud.version}.${t4cloud.version}</version>
+            <version>Hoxton.SR1.1.0.0</version>
         </dependency>
 
         <!--		<dependency>-->
@@ -151,6 +151,18 @@
     </build>
 
     <repositories>
+
+        <repository>
+            <id>t4cloud-maven</id>
+            <name>t4cloud</name>
+            <url>https://raw.github.com/TeaR7/T4-Repo/master</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+<!--            <url>https://gitee.com/Terry7/T4-Repo/raw/master</url>-->
+        </repository>
+
         <!--阿里云主仓库，代理了maven central和jcenter仓库-->
         <repository>
             <id>aliyun</id>
@@ -163,16 +175,6 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
-        <repository>
-            <id>aliyun</id>
-            <name>aliyun</name>
-            <url>https://maven.aliyun.com/repository/public</url>
-        </repository>
 
-        <repository>
-            <id>t4cloud-maven</id>
-            <name>t4cloud</name>
-            <url>https://gitee.com/Terry7/T4-Repo/raw/master</url>
-        </repository>
     </repositories>
 </project>
