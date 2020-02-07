@@ -60,6 +60,12 @@ Spring cloud 快速开发脚手架项目，支持单体BOOT快速部署（无需
 
 ```
 
+## 项目规划图
+
+![T4CLOUD](https://ccnu-mooc.oss-cn-shanghai.aliyuncs.com/TeaR/T4CLOUD%E5%BE%AE%E6%9C%8D%E5%8A%A1%E8%84%9A%E6%89%8B%E6%9E%B6.png "T4CLOUD")
+
+> 蓝色节点为已完成，黄色节点为正在进行，其他节点为已规划计划
+
 
 ## 写在最后
 > + 本项目由现有商业项目中抽离并经过重新梳理设计，个人完成，欢迎大家提出指正我的错误或提出开发意见，亦或加入一起完善，给简历加一些重量！
