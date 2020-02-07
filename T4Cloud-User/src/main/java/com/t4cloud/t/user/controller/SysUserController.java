@@ -4,7 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import com.t4cloud.t.common.annotation.AutoLog;
 import com.t4cloud.t.common.controller.T4Controller;
 import com.t4cloud.t.common.entity.LoginUser;
-import com.t4cloud.t.common.entity.dto.Result;
+import com.t4cloud.t.common.entity.dto.R;
 import com.t4cloud.t.common.exception.T4CloudException;
 import com.t4cloud.t.common.utils.RedisUtil;
 import com.t4cloud.t.user.entity.SysUser;
@@ -44,7 +44,7 @@ public class SysUserController extends T4Controller<SysUser, ISysUserService> {
     @AutoLog(value = "测试")
     @ApiOperation(value = "测试方法", notes = "具体用来测试是否可以成功返回")
     @GetMapping("/403/{type}")
-    public Result test(@PathVariable String type) {
+    public R test(@PathVariable String type) {
 
         redisUtil.set("test", type);
 
@@ -57,7 +57,7 @@ public class SysUserController extends T4Controller<SysUser, ISysUserService> {
         redisUtil.get("test");
         redisUtil.set("test:" + type, sysUser);
 
-        return Result.ok("测试成功" + type, sysUser);
+        return R.ok("测试成功" + type, sysUser);
     }
 
     /**
@@ -71,7 +71,7 @@ public class SysUserController extends T4Controller<SysUser, ISysUserService> {
     @AutoLog(value = "测试登录")
     @ApiOperation(value = "测试登录方法", notes = "此方法需要登录才可以")
     @GetMapping("/testLogin/{type}")
-    public Result testLogin(@PathVariable String type) {
+    public R testLogin(@PathVariable String type) {
 
         redisUtil.set("test", type);
 
@@ -85,7 +85,7 @@ public class SysUserController extends T4Controller<SysUser, ISysUserService> {
         redisUtil.get("test");
         redisUtil.set("test:" + type, user);
 
-        return Result.ok("测试成功" + type, user);
+        return R.ok("测试成功" + type, user);
     }
 
 
@@ -94,7 +94,7 @@ public class SysUserController extends T4Controller<SysUser, ISysUserService> {
      *
      * @param user 用户对象，传入账号密码即可
      *             <p>
-     * @return com.t4cloud.t.common.entity.dto.Result
+     * @return com.t4cloud.t.common.entity.dto.R
      * --------------------
      * @author TeaR
      * @date 2020/1/16 13:42
@@ -102,7 +102,7 @@ public class SysUserController extends T4Controller<SysUser, ISysUserService> {
     @AutoLog(value = "用户登录")
     @ApiOperation(value = "用户登录", notes = "用户登录接口，传入账号密码即可")
     @PostMapping("/login")
-    public Result login(@RequestBody SysUser user) {
+    public R login(@RequestBody SysUser user) {
 
         SysUser sysUser = service.getById("f5b910f2f895c1aca6662b38ea01aef6");
 
@@ -115,7 +115,7 @@ public class SysUserController extends T4Controller<SysUser, ISysUserService> {
 
         service.generateToken(loginUser);
 
-        return Result.ok("登录成功", loginUser);
+        return R.ok("登录成功", loginUser);
     }
 
 }
