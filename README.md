@@ -1,4 +1,5 @@
 ![T4CLOUD](https://git.t4cloud.com/img/favicon.png "T4CLOUD")
+
 #T4CLOUD  
 
 Spring cloud 快速开发脚手架项目，支持单体BOOT快速部署（无需依赖NACOS等注册中心），也支持复杂模式的CLOUD开发。专业代码生成器一键生成前后端代码，无需考虑支撑功能，拥有方便的鉴权及权限体系，自动化的日志记录系统，让您更好的专注于业务开发即可。
@@ -6,6 +7,10 @@ Spring cloud 快速开发脚手架项目，支持单体BOOT快速部署（无需
 ===============
 
 当前最新版本： 0.0.1（发布日期：2020.02.08）
+
+> 源码获取
+ + Github：   https://github.com/TeaR7/T4CLOUD
+ + Gitee：    https://gitee.com/TRCloud/T4CLOUD
 
 
 ## 后端技术架构

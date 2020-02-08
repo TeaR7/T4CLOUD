@@ -1,18 +1,17 @@
 package com.t4cloud.t.user.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.time.LocalDateTime;
-
-
 import com.t4cloud.t.common.entity.BaseEntity;
+import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.experimental.Accessors;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
 
 /**
  * 用户表 实体类
@@ -28,7 +27,7 @@ import io.swagger.annotations.ApiModelProperty;
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @ApiModel(value = "User对象", description = "用户表")
-public class SysUser extends BaseEntity {
+public class User extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
 

@@ -89,7 +89,9 @@ public class ShiroConfig {
 //        filterChainDefinitionMap.put("/generic/**", "anon");//pdf预览需要文件
 
         //测试接口排除
+        filterChainDefinitionMap.put("/test/login", "anon");
         filterChainDefinitionMap.put("/sysUser/403/**", "anon");
+        filterChainDefinitionMap.put("/user/user/detail", "anon");
 
         //websocket排除
         filterChainDefinitionMap.put("/websocket/**", "anon");
