@@ -1,10 +1,10 @@
 package com.t4cloud.t.user.service.impl;
 
-import com.t4cloud.t.common.constant.CacheConstant;
-import com.t4cloud.t.common.entity.LoginUser;
-import com.t4cloud.t.common.service.impl.T4ServiceImpl;
-import com.t4cloud.t.common.utils.JwtUtil;
-import com.t4cloud.t.common.utils.RedisUtil;
+import com.t4cloud.t.base.constant.CacheConstant;
+import com.t4cloud.t.base.entity.LoginUser;
+import com.t4cloud.t.base.service.impl.T4ServiceImpl;
+import com.t4cloud.t.base.utils.JwtUtil;
+import com.t4cloud.t.base.utils.RedisUtil;
 import com.t4cloud.t.user.entity.SysUser;
 import com.t4cloud.t.user.mapper.SysUserMapper;
 import com.t4cloud.t.user.service.ISysUserService;

@@ -82,7 +82,8 @@ spring:
           #driver-class-name: com.mysql.jdbc.Driver
 #mybatis plus 设置
 mybatis-plus:
-  mapper-locations: classpath*:com/t4cloud/t/**/xml/*Mapper.xml
+  mapper-locations: classpath*:com/t4cloud/t/**/*Mapper.xml
+  check-config-location: true
   global-config:
     # 关闭MP3.0自带的banner
     banner: false

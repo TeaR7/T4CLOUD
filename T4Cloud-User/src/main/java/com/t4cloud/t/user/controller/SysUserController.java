@@ -1,121 +1,118 @@
 package com.t4cloud.t.user.controller;
 
-import cn.hutool.core.bean.BeanUtil;
-import com.t4cloud.t.common.annotation.AutoLog;
-import com.t4cloud.t.common.controller.T4Controller;
-import com.t4cloud.t.common.entity.LoginUser;
-import com.t4cloud.t.common.entity.dto.R;
-import com.t4cloud.t.common.exception.T4CloudException;
-import com.t4cloud.t.common.utils.RedisUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
+import com.t4cloud.t.base.annotation.AutoLog;
+import com.t4cloud.t.base.controller.T4Controller;
+import com.t4cloud.t.base.entity.dto.R;
+import com.t4cloud.t.base.query.T4Query;
 import com.t4cloud.t.user.entity.SysUser;
 import com.t4cloud.t.user.service.ISysUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.apache.shiro.SecurityUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import io.swagger.annotations.ApiParam;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import java.util.Arrays;
+import java.util.List;
+
 /**
- * TestController
- * <p>
- * 测试用
- * <p>
- * ---------------------
+ * 用户表 控制器
  *
- * @author Terry
- * @date 2020/1/15 12:39
+ * <p>
+ * --------------------
+ *
+ * @author T4Cloud
+ * @since 2020-02-08
  */
 @RestController
-@RequestMapping("/sysUser")
-@Api(tags = "用户相关")
+@AllArgsConstructor
+@RequestMapping("/user/user")
+@Api(value = "用户表", tags = "用户表接口")
 public class SysUserController extends T4Controller<SysUser, ISysUserService> {
 
-    @Autowired
-    private RedisUtil redisUtil;
-
     /**
-     * 测试接口
-     * <p>
-     * --------------------
-     *
-     * @author TeaR
-     * @date 2020/1/15 18:12
+     * 详情
      */
-    @AutoLog(value = "测试")
-    @ApiOperation(value = "测试方法", notes = "具体用来测试是否可以成功返回")
-    @GetMapping("/403/{type}")
-    public R test(@PathVariable String type) {
-
-        redisUtil.set("test", type);
-
-        if (type.equalsIgnoreCase("1")) {
-            throw new T4CloudException("测试异常d");
-        }
-
-        SysUser sysUser = service.getById("f5b910f2f895c1aca6662b38ea01aef6");
-
-        redisUtil.get("test");
-        redisUtil.set("test:" + type, sysUser);
-
-        return R.ok("测试成功" + type, sysUser);
+    @AutoLog(value = "用户表-详情", operateType = 4)
+    @GetMapping("/detail")
+    @ApiOperationSupport(order = 1)
+    @ApiOperation(value = "详情", notes = "传入user")
+    public R<SysUser> detail(SysUser user, HttpServletRequest req) {
+        QueryWrapper<SysUser> userQueryWapper = T4Query.initQuery(user, req.getParameterMap());
+        SysUser detail = service.getOne(userQueryWapper);
+        return R.ok("用户表-详情查询成功", detail);
     }
 
     /**
-     * 测试接口
-     * <p>
-     * --------------------
-     *
-     * @author TeaR
-     * @date 2020/1/15 18:12
+     * 全部列表 用户表
      */
-    @AutoLog(value = "测试登录")
-    @ApiOperation(value = "测试登录方法", notes = "此方法需要登录才可以")
-    @GetMapping("/testLogin/{type}")
-    public R testLogin(@PathVariable String type) {
+    @AutoLog(value = "用户表-全部列表", operateType = 4)
+    @GetMapping("/list")
+    @ApiOperationSupport(order = 2)
+    @ApiOperation(value = "全部列表", notes = "传入user")
+    public R<List<SysUser>> list(SysUser user, HttpServletRequest req) {
+        QueryWrapper<SysUser> userQueryWapper = T4Query.initQuery(user, req.getParameterMap());
+        List<SysUser> list = service.list(userQueryWapper);
+        return R.ok("用户表-全部列表查询成功", list);
+    }
 
-        redisUtil.set("test", type);
+    /**
+     * 分页查询 用户表
+     */
+    @AutoLog(value = "用户表-分页查询", operateType = 4)
+    @GetMapping("/page")
+    @ApiOperationSupport(order = 3)
+    @ApiOperation(value = "分页查询", notes = "传入user")
+    public R<IPage<SysUser>> page(SysUser user,
+                                  @ApiParam(name = "pageNo", required = false)
+                                  @RequestParam(name = "pageNo", required = false, defaultValue = "1") Integer pageNo,
+                                  @ApiParam(name = "pageSize", required = false)
+                                  @RequestParam(name = "pageSize", required = false, defaultValue = "10") Integer pageSize,
+                                  HttpServletRequest req) {
+        QueryWrapper<SysUser> userQueryWapper = T4Query.initQuery(user, req.getParameterMap());
+        IPage<SysUser> pages = service.page(new Page<>(pageNo, pageSize), userQueryWapper);
+        return R.ok("用户表-分页查询查询成功", pages);
+    }
 
-        if (type.equalsIgnoreCase("1")) {
-            throw new T4CloudException("测试异常d");
-        }
+    /**
+     * 新增 用户表
+     */
+    @AutoLog(value = "用户表-新增", operateType = 1)
+    @PostMapping("/save")
+    @ApiOperationSupport(order = 4)
+    @ApiOperation(value = "新增", notes = "传入user")
+    public R save(@Valid @RequestBody SysUser user) {
+        return R.ok("用户表-新增成功", service.save(user));
+    }
 
-        LoginUser user = (LoginUser) SecurityUtils.getSubject().getPrincipal();
-
-
-        redisUtil.get("test");
-        redisUtil.set("test:" + type, user);
-
-        return R.ok("测试成功" + type, user);
+    /**
+     * 修改 用户表
+     */
+    @AutoLog(value = "用户表-修改", operateType = 3)
+    @PostMapping("/update")
+    @ApiOperationSupport(order = 5)
+    @ApiOperation(value = "修改", notes = "传入user")
+    public R update(@Valid @RequestBody SysUser user) {
+        return R.ok("用户表-修改成功", service.updateById(user));
     }
 
 
     /**
-     * 用户登录接口
-     *
-     * @param user 用户对象，传入账号密码即可
-     *             <p>
-     * @return com.t4cloud.t.common.entity.dto.R
-     * --------------------
-     * @author TeaR
-     * @date 2020/1/16 13:42
+     * 删除 用户表
      */
-    @AutoLog(value = "用户登录")
-    @ApiOperation(value = "用户登录", notes = "用户登录接口，传入账号密码即可")
-    @PostMapping("/login")
-    public R login(@RequestBody SysUser user) {
-
-        SysUser sysUser = service.getById("f5b910f2f895c1aca6662b38ea01aef6");
-
-        LoginUser loginUser = new LoginUser();
-        BeanUtil.copyProperties(sysUser, loginUser);
-
-        //2. 校验用户名或密码是否正确
-//        String userpassword = PasswordUtil.encrypt(username, password, sysUser.getSalt());
-//        String syspassword = sysUser.getPassword();
-
-        service.generateToken(loginUser);
-
-        return R.ok("登录成功", loginUser);
+    @AutoLog(value = "用户表-删除", operateType = 2)
+    @PostMapping("/delete")
+    @ApiOperationSupport(order = 8)
+    @ApiOperation(value = "删除", notes = "传入ids")
+    public R delete(@ApiParam(value = "主键集合", required = true) @RequestParam String ids) {
+        return R.ok("用户表-删除成功", service.removeByIds(Arrays.asList(ids.split(","))));
     }
+
 
 }

@@ -126,6 +126,7 @@
 
     <modules>
         <module>T4Cloud-User</module>
+        <module>T4Cloud-Gen</module>
     </modules>
 
 

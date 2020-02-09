@@ -4,13 +4,13 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
-import com.t4cloud.t.common.annotation.AutoLog;
-import com.t4cloud.t.common.controller.T4Controller;
-import com.t4cloud.t.common.entity.LoginUser;
-import com.t4cloud.t.common.entity.dto.R;
-import com.t4cloud.t.common.exception.T4CloudException;
-import com.t4cloud.t.common.query.T4Query;
-import com.t4cloud.t.common.utils.RedisUtil;
+import com.t4cloud.t.base.annotation.AutoLog;
+import com.t4cloud.t.base.controller.T4Controller;
+import com.t4cloud.t.base.entity.LoginUser;
+import com.t4cloud.t.base.entity.dto.R;
+import com.t4cloud.t.base.exception.T4CloudException;
+import com.t4cloud.t.base.query.T4Query;
+import com.t4cloud.t.base.utils.RedisUtil;
 import com.t4cloud.t.user.entity.SysUser;
 import com.t4cloud.t.user.service.ISysUserService;
 import io.swagger.annotations.Api;
@@ -39,7 +39,6 @@ public class TestController extends T4Controller<SysUser, ISysUserService> {
 
     @Autowired
     private RedisUtil redisUtil;
-
 
     /**
      * 详情

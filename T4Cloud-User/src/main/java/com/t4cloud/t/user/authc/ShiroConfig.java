@@ -1,6 +1,6 @@
 package com.t4cloud.t.user.authc;
 
-import com.t4cloud.t.common.authc.config.JwtFilter;
+import com.t4cloud.t.base.authc.config.JwtFilter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -13,11 +13,14 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * @author: Scott
- * @date: 2018/2/7
- * @description: shiro 配置类
+ * Shiro配置类，在此处放过本模块无需校验的接口
+ *
+ * <p>
+ * --------------------
+ *
+ * @author TeaR
+ * @date 2020/2/9 12:34
  */
-
 @Slf4j
 @Configuration
 public class ShiroConfig {

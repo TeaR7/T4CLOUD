@@ -1,7 +1,7 @@
-package com.t4cloud.t.user;
+package com.t4cloud.t.gen;
 
-import com.t4cloud.t.common.config.GenConfig;
-import com.t4cloud.t.common.utils.T4GenUtils;
+import com.t4cloud.t.base.config.GenConfig;
+import com.t4cloud.t.base.utils.T4GenUtils;
 
 /**
  * 单表代码生成器
@@ -19,10 +19,11 @@ public class T4GenCode {
         //配置参数
         GenConfig config = new GenConfig();
         //设置模块的包名，可以为空
-        config.setModuleName("user");
+        config.setModuleName("service");
         //设置表前缀，可以为空
-        config.setTablePrefix("sys");
+        config.setTablePrefix("");
         //设置需要生成的表名,数组形式，可以多个
+//        String[] tableNames = new String[]{"sys_dict","sys_dict_value"};
         String[] tableNames = new String[]{"sys_user"};
         config.setTableName(tableNames);
 
