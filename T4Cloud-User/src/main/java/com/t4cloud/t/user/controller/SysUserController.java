@@ -70,11 +70,11 @@ public class SysUserController extends T4Controller<SysUser, ISysUserService> {
     @ApiOperationSupport(order = 3)
     @ApiOperation(value = "分页查询", notes = "传入user")
     public R<IPage<SysUser>> page(SysUser user,
-                                  @ApiParam(name = "pageNo", required = false)
-                                  @RequestParam(name = "pageNo", required = false, defaultValue = "1") Integer pageNo,
-                                  @ApiParam(name = "pageSize", required = false)
-                                  @RequestParam(name = "pageSize", required = false, defaultValue = "10") Integer pageSize,
-                                  HttpServletRequest req) {
+                               @ApiParam(name = "pageNo", required = false)
+                               @RequestParam(name = "pageNo", required = false, defaultValue = "1") Integer pageNo,
+                               @ApiParam(name = "pageSize", required = false)
+                               @RequestParam(name = "pageSize", required = false, defaultValue = "10") Integer pageSize,
+                               HttpServletRequest req) {
         QueryWrapper<SysUser> userQueryWapper = T4Query.initQuery(user, req.getParameterMap());
         IPage<SysUser> pages = service.page(new Page<>(pageNo, pageSize), userQueryWapper);
         return R.ok("用户表-分页查询查询成功", pages);

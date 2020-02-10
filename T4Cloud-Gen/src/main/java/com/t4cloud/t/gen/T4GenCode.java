@@ -1,7 +1,7 @@
 package com.t4cloud.t.gen;
 
 import com.t4cloud.t.base.config.GenConfig;
-import com.t4cloud.t.base.utils.T4GenUtils;
+import com.t4cloud.t.base.utils.T4GenUtil;
 
 /**
  * 单表代码生成器
@@ -28,7 +28,7 @@ public class T4GenCode {
         config.setTableName(tableNames);
 
         //开始生成
-        T4GenUtils.gen(config);
+        T4GenUtil.gen(config);
 
     }
 

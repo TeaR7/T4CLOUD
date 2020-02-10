@@ -103,7 +103,7 @@ public class SysUser extends BaseEntity {
      * 性别(1-正常,2-冻结)
      */
     @Dict(code = "common_status")
-    @ApiModelProperty(value = "性别(1-正常,2-冻结)")
+    @ApiModelProperty(value = "状态(0-冻结，1-正常,)")
     private Integer status;
 
 

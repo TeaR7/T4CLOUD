@@ -39,4 +39,17 @@ public interface ISysUserService extends T4Service<SysUser> {
      */
     LoginUser generateToken(LoginUser user);
 
+    /**
+     * 检验基础的图片验证码
+     *
+     * @param code 用户提交的验证码
+     * @param key  验证码对应的KEY
+     *             <p>
+     * @return boolean
+     * --------------------
+     * @author TeaR
+     * @date 2020/2/10 17:33
+     */
+    boolean checkCode(String code, String key);
+
 }

@@ -99,3 +99,7 @@ mybatis-plus:
 logging:
   level:
     com.t4cloud.t.user.mapper: debug
+
+#T4CLOUD自定义配置
+t4cloud:
+  check-code: true #登录接口是否强制验证图片验证码

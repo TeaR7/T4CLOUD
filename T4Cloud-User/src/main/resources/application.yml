@@ -7,4 +7,4 @@ swagger:
   basic:
     enable: true
     username: t4cloud
-    password: t4cloud@123
+    password: 123456

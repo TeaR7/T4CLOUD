@@ -17,7 +17,6 @@ import java.util.Map;
  *
  * <p>
  * --------------------
- *
  * @author TeaR
  * @date 2020/2/9 12:34
  */
@@ -55,6 +54,7 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/**/*.mp4", "anon");
         filterChainDefinitionMap.put("/**/*.ttf", "anon");
         filterChainDefinitionMap.put("/**/*.woff", "anon");
+        filterChainDefinitionMap.put("/csrf", "anon"); // swagger-ui 需要，不然会抱该接口需要登录
         filterChainDefinitionMap.put("/swagger-ui.html", "anon");
         filterChainDefinitionMap.put("/swagger**/**", "anon");
         filterChainDefinitionMap.put("/webjars/**", "anon");
@@ -68,14 +68,8 @@ public class ShiroConfig {
 
         // ----------------------------------------------- 系统业务相关 -----------------------------------------------
         //登录接口排除
-        filterChainDefinitionMap.put("/sysUser/login", "anon");
-//        filterChainDefinitionMap.put("/sys/getCheckCode", "anon"); //登录验证码接口排除
-//        filterChainDefinitionMap.put("/sys/login", "anon"); //登录接口排除
-//        filterChainDefinitionMap.put("/sys/mLogin", "anon"); //登录接口排除
-//        filterChainDefinitionMap.put("/sys/logout", "anon"); //登出接口排除
-//        filterChainDefinitionMap.put("/sys/getEncryptedString", "anon"); //获取加密串
-//        filterChainDefinitionMap.put("/sys/sms", "anon");//短信验证码
-//        filterChainDefinitionMap.put("/sys/phoneLogin", "anon");//手机登录
+        filterChainDefinitionMap.put("/user/login/checkCode", "anon"); // 图片验证码获取接口
+        filterChainDefinitionMap.put("/user/login/loginByPwd", "anon"); // 账号密码登录
 //
 //        filterChainDefinitionMap.put("/sys/getCode", "anon");//前台获取验证码
 //        filterChainDefinitionMap.put("/sys/loginByCaptcha", "anon");//前台验证码登录/注册接口
