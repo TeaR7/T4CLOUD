@@ -15,7 +15,7 @@ import lombok.Data;
  * @date 2020/2/10 16:00
  */
 @Data
-@ApiModel(value="登录对象", description="各种登录接口可能需要传递的参数")
+@ApiModel(value = "登录对象", description = "各种登录接口可能需要传递的参数")
 public class LoginDTO {
 
     @ApiModelProperty(value = "账号")

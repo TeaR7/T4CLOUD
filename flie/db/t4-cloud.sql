@@ -72,6 +72,42 @@ CREATE TABLE `sys_dict_value` (
 INSERT INTO `sys_dict_value` VALUES ('1', '1', '正常', '1', null, '1', '1', 'TeaR', '2019-02-09 13:18:47', null, null);
 INSERT INTO `sys_dict_value` VALUES ('2', '1', '失效', '0', '', '2', '1', 'TeaR', '2019-02-09 13:18:47', '', null);
 
+
+-- ----------------------------
+-- Table structure for sys_log
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_log`;
+CREATE TABLE `sys_log` (
+  `id` varchar(32) CHARACTER SET utf8 NOT NULL,
+  `log_type` tinyint(2) DEFAULT NULL COMMENT '日志类型（1-管理员操作，2-登录日志，3-用户操作，4-定时任务，5-其他日志）',
+  `log_content` varchar(100) CHARACTER SET utf8 DEFAULT NULL COMMENT '日志内容',
+  `operate_type` tinyint(2) DEFAULT NULL COMMENT '操作类型(1-增，2-删，3-改，4-查)',
+  `result` varchar(1000) CHARACTER SET utf8 DEFAULT NULL COMMENT '操作结果记录',
+  `result_type` tinyint(2) DEFAULT NULL COMMENT '是否异常（0-异常，1-正常）',
+  `user_id` varchar(32) CHARACTER SET utf8 DEFAULT NULL COMMENT '操作用户账号',
+  `username` varchar(100) CHARACTER SET utf8 DEFAULT NULL COMMENT '操作用户名称',
+  `ip` varchar(100) CHARACTER SET utf8 DEFAULT NULL COMMENT 'IP',
+  `method` varchar(500) CHARACTER SET utf8 DEFAULT NULL COMMENT '请求java方法',
+  `request_url` varchar(255) CHARACTER SET utf8 DEFAULT NULL COMMENT '请求路径',
+  `request_param` longtext CHARACTER SET utf8 COMMENT '请求参数',
+  `request_type` varchar(10) CHARACTER SET utf8 DEFAULT NULL COMMENT '请求类型',
+  `cost_time` bigint(20) DEFAULT NULL COMMENT '耗时',
+  `create_by` varchar(32) CHARACTER SET utf8 DEFAULT NULL COMMENT '创建人',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(32) CHARACTER SET utf8 DEFAULT NULL COMMENT '更新人',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `index_table_user_id` (`user_id`) USING BTREE,
+  KEY `index_logt_ype` (`log_type`) USING BTREE,
+  KEY `index_operate_type` (`operate_type`) USING BTREE,
+  KEY `index_log_type` (`log_type`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='系统日志表';
+
+-- ----------------------------
+-- Records of sys_log
+-- ----------------------------
+
+
 -- ----------------------------
 -- Table structure for sys_user
 -- ----------------------------

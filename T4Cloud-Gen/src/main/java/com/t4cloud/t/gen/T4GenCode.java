@@ -24,7 +24,8 @@ public class T4GenCode {
         config.setTablePrefix("");
         //设置需要生成的表名,数组形式，可以多个
 //        String[] tableNames = new String[]{"sys_dict","sys_dict_value"};
-        String[] tableNames = new String[]{"sys_user"};
+//        String[] tableNames = new String[]{"sys_user"};
+        String[] tableNames = new String[]{"sys_log"};
         config.setTableName(tableNames);
 
         //开始生成
