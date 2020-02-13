@@ -54,13 +54,13 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-<!--            <dependency>-->
-<!--                <groupId>io.spring.platform</groupId>-->
-<!--                <artifactId>platform-bom</artifactId>-->
-<!--                <version>${spring.platform.version}</version>-->
-<!--                <type>pom</type>-->
-<!--                <scope>import</scope>-->
-<!--            </dependency>-->
+            <!--            <dependency>-->
+            <!--                <groupId>io.spring.platform</groupId>-->
+            <!--                <artifactId>platform-bom</artifactId>-->
+            <!--                <version>${spring.platform.version}</version>-->
+            <!--                <type>pom</type>-->
+            <!--                <scope>import</scope>-->
+            <!--            </dependency>-->
             <!--spring cloud alibaba-->
             <dependency>
                 <groupId>com.alibaba.cloud</groupId>
@@ -191,15 +191,29 @@
 
     <repositories>
 
+        <!--        <repository>-->
+        <!--            <id>t4cloud-maven</id>-->
+        <!--            <name>t4cloud</name>-->
+        <!--            <url>https://raw.github.com/TeaR7/T4-Repo/master</url>-->
+        <!--            <snapshots>-->
+        <!--                <enabled>true</enabled>-->
+        <!--                <updatePolicy>always</updatePolicy>-->
+        <!--            </snapshots>-->
+        <!--&lt;!&ndash;            <url>https://gitee.com/Terry7/T4-Repo/raw/master</url>&ndash;&gt;-->
+        <!--        </repository>-->
+
         <repository>
-            <id>t4cloud-maven</id>
+            <id>t4cloud</id>
             <name>t4cloud</name>
-            <url>https://raw.github.com/TeaR7/T4-Repo/master</url>
+            <url>http://nexus.t4cloud.com/repository/maven-public/</url>
             <snapshots>
                 <enabled>true</enabled>
                 <updatePolicy>always</updatePolicy>
             </snapshots>
-<!--            <url>https://gitee.com/Terry7/T4-Repo/raw/master</url>-->
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </releases>
         </repository>
 
         <!--阿里云主仓库，代理了maven central和jcenter仓库-->
