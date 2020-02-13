@@ -19,6 +19,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -59,9 +61,13 @@ public class LoginController extends T4Controller<SysUser, ISysUserService> {
             return R.error("验证码错误");
         }
 
+        if(StringUtils.isEmpty(loginDTO.getUsername()) || StringUtils.isEmpty(loginDTO.getPassword())){
+            return R.error("账号密码不允许为空");
+        }
+
         //获取账号密码,查看是否有效账户
         SysUser sysUser = service.lambdaQuery()
-                .eq(SysUser::getUsername, loginDTO.getUsername())
+                .eq(SysUser:: getUsername, loginDTO.getUsername())
                 .one();
         if (sysUser == null) {
             return R.error("用户不存在");
@@ -101,6 +107,7 @@ public class LoginController extends T4Controller<SysUser, ISysUserService> {
         //删除用户登录Token缓存
         redisUtil.del(CacheConstant.SYS_USERS_TOKEN + username + "-" + getToken());
 
+        SecurityUtils.getSubject().logout();
         /** TODO 退出的时候是否需要删除掉其他用户相关信息？
          *
          * 例如用户本身的缓存，用户权限的缓存。但是删除这些缓存是否会导致其他的客户端登录失效或登录异常？
@@ -142,7 +149,7 @@ public class LoginController extends T4Controller<SysUser, ISysUserService> {
     @GetMapping("/userInfo")
     @ApiOperationSupport(order = 5)
     @ApiOperation(value = "获取用户信息", notes = "已登录的用户信息")
-    public R<LoginUser> userInfo(@RequestBody LoginDTO loginDTO) {
+    public R<LoginUser> userInfo() {
         return R.ok("获取用户信息成功！", UserUtil.getCurrentUser());
     }
 

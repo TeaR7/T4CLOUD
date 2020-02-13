@@ -1,4 +1,4 @@
-package com.t4cloud.t.user.authc;
+package com.t4cloud.t.system.authc;
 
 import com.t4cloud.t.base.authc.aop.JwtFilter;
 import lombok.extern.slf4j.Slf4j;
@@ -12,12 +12,12 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+
 /**
  * Shiro配置类，在此处放过本模块无需校验的接口
  *
  * <p>
  * --------------------
- *
  * @author TeaR
  * @date 2020/2/9 12:34
  */
@@ -55,7 +55,6 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/**/*.mp4", "anon");
         filterChainDefinitionMap.put("/**/*.ttf", "anon");
         filterChainDefinitionMap.put("/**/*.woff", "anon");
-        filterChainDefinitionMap.put("/csrf", "anon"); // swagger-ui 需要，不然会抱该接口需要登录
         filterChainDefinitionMap.put("/swagger-ui.html", "anon");
         filterChainDefinitionMap.put("/swagger**/**", "anon");
         filterChainDefinitionMap.put("/webjars/**", "anon");
@@ -68,26 +67,7 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/druid/**", "anon");
 
         // ----------------------------------------------- 系统业务相关 -----------------------------------------------
-        //登录接口排除
-        filterChainDefinitionMap.put("/user/login/checkCode", "anon"); // 图片验证码获取接口
-        filterChainDefinitionMap.put("/user/login/loginByPwd", "anon"); // 账号密码登录
-//
-//        filterChainDefinitionMap.put("/sys/getCode", "anon");//前台获取验证码
-//        filterChainDefinitionMap.put("/sys/loginByCaptcha", "anon");//前台验证码登录/注册接口
-//
-//        filterChainDefinitionMap.put("/sys/user/checkOnlyUser", "anon");//校验用户是否存在
-//        filterChainDefinitionMap.put("/sys/user/register", "anon");//用户注册
-//        filterChainDefinitionMap.put("/sys/user/querySysUser", "anon");//根据手机号获取用户信息
-//        filterChainDefinitionMap.put("/sys/user/phoneVerification", "anon");//用户忘记密码验证手机号
-//        filterChainDefinitionMap.put("/sys/user/passwordChange", "anon");//用户更改密码
-//        filterChainDefinitionMap.put("/auth/2step-code", "anon");//登录验证码
-//        filterChainDefinitionMap.put("/sys/common/view/**", "anon");//图片预览不限制token
-//        filterChainDefinitionMap.put("/sys/common/download/**", "anon");//文件下载不限制token
-//        filterChainDefinitionMap.put("/sys/common/pdf/**", "anon");//pdf预览
-//        filterChainDefinitionMap.put("/generic/**", "anon");//pdf预览需要文件
 
-        //测试接口排除
-//        filterChainDefinitionMap.put("/user/user/detail", "anon");
 
         //websocket排除
         filterChainDefinitionMap.put("/websocket/**", "anon");

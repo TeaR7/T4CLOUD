@@ -19,13 +19,14 @@ public class T4GenCode {
         //配置参数
         GenConfig config = new GenConfig();
         //设置模块的包名，可以为空
-        config.setModuleName("service");
+        config.setModuleName("system");
         //设置表前缀，可以为空
         config.setTablePrefix("");
         //设置需要生成的表名,数组形式，可以多个
 //        String[] tableNames = new String[]{"sys_dict","sys_dict_value"};
 //        String[] tableNames = new String[]{"sys_user"};
-        String[] tableNames = new String[]{"sys_log"};
+//        String[] tableNames = new String[]{"sys_log"};
+        String[] tableNames = new String[]{"sys_permission"};
         config.setTableName(tableNames);
 
         //开始生成
