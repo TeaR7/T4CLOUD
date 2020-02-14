@@ -19,13 +19,13 @@ public class T4CloudUserApplication {
         Environment env = application.getEnvironment();
         String ip = InetAddress.getLocalHost().getHostAddress();
         String port = env.getProperty("server.port");
-        String path = env.getProperty("server.servlet.context-path");
+//        String path = env.getProperty("server.servlet.context-path");
         log.info("\n----------------------------------------------------------\n\t" +
                 "Application T4CLOUD-User is running! Access URLs:\n\t" +
-                "Local: \t\thttp://localhost:" + port + path + "/\n\t" +
-                "External: \thttp://" + ip + ":" + port + path + "/\n\t" +
-                "swagger-ui: \thttp://" + ip + ":" + port + path + "/swagger-ui.html\n\t" +
-                "Doc: \t\thttp://" + ip + ":" + port + path + "/doc.html\n" +
+                "Local: \t\thttp://localhost:" + port + "/\n\t" +
+                "External: \thttp://" + ip + ":" + port + "/\n\t" +
+                "swagger-ui: \thttp://" + ip + ":" + port + "/swagger-ui.html\n\t" +
+                "Doc: \t\thttp://" + ip + ":" + port + "/doc.html\n" +
                 "----------------------------------------------------------");
     }
 

@@ -32,7 +32,7 @@ import java.util.List;
  */
 @RestController
 @AllArgsConstructor
-@RequestMapping("/user/user")
+@RequestMapping("/SysUser")
 @Api(value = "用户表", tags = "用户表接口")
 public class SysUserController extends T4Controller<SysUser, ISysUserService> {
 
@@ -42,7 +42,7 @@ public class SysUserController extends T4Controller<SysUser, ISysUserService> {
     @AutoLog(value = "用户表-详情", operateType = 4)
     @GetMapping("/detail")
     @ApiOperationSupport(order = 1)
-    @ApiOperation(value = "详情", notes = "传入user")
+    @ApiOperation(value = "用户表-详情", notes = "传入user")
     public R<SysUser> detail(SysUser user, HttpServletRequest req) {
         QueryWrapper<SysUser> userQueryWapper = T4Query.initQuery(user, req.getParameterMap());
         SysUser detail = service.getOne(userQueryWapper);
@@ -55,7 +55,7 @@ public class SysUserController extends T4Controller<SysUser, ISysUserService> {
     @AutoLog(value = "用户表-全部列表", operateType = 4)
     @GetMapping("/list")
     @ApiOperationSupport(order = 2)
-    @ApiOperation(value = "全部列表", notes = "传入user")
+    @ApiOperation(value = "用户表-全部列表", notes = "传入user")
     public R<List<SysUser>> list(SysUser user, HttpServletRequest req) {
         QueryWrapper<SysUser> userQueryWapper = T4Query.initQuery(user, req.getParameterMap());
         List<SysUser> list = service.list(userQueryWapper);
@@ -68,7 +68,7 @@ public class SysUserController extends T4Controller<SysUser, ISysUserService> {
     @AutoLog(value = "用户表-分页查询", operateType = 4)
     @GetMapping("/page")
     @ApiOperationSupport(order = 3)
-    @ApiOperation(value = "分页查询", notes = "传入user")
+    @ApiOperation(value = "用户表-分页查询", notes = "传入user")
     public R<IPage<SysUser>> page(SysUser user,
                                   @ApiParam(name = "pageNo", required = false)
                                   @RequestParam(name = "pageNo", required = false, defaultValue = "1") Integer pageNo,
@@ -84,9 +84,9 @@ public class SysUserController extends T4Controller<SysUser, ISysUserService> {
      * 新增 用户表
      */
     @AutoLog(value = "用户表-新增", operateType = 1)
-    @PostMapping("/save")
+    @PutMapping("/save")
     @ApiOperationSupport(order = 4)
-    @ApiOperation(value = "新增", notes = "传入user")
+    @ApiOperation(value = "用户表-新增", notes = "传入user")
     public R save(@Valid @RequestBody SysUser user) {
         return R.ok("用户表-新增成功", service.save(user));
     }
@@ -97,7 +97,7 @@ public class SysUserController extends T4Controller<SysUser, ISysUserService> {
     @AutoLog(value = "用户表-修改", operateType = 3)
     @PostMapping("/update")
     @ApiOperationSupport(order = 5)
-    @ApiOperation(value = "修改", notes = "传入user")
+    @ApiOperation(value = "用户表-修改", notes = "传入user")
     public R update(@Valid @RequestBody SysUser user) {
         return R.ok("用户表-修改成功", service.updateById(user));
     }
@@ -107,9 +107,9 @@ public class SysUserController extends T4Controller<SysUser, ISysUserService> {
      * 删除 用户表
      */
     @AutoLog(value = "用户表-删除", operateType = 2)
-    @PostMapping("/delete")
+    @DeleteMapping("/delete")
     @ApiOperationSupport(order = 8)
-    @ApiOperation(value = "删除", notes = "传入ids")
+    @ApiOperation(value = "用户表-删除", notes = "传入ids")
     public R delete(@ApiParam(value = "主键集合", required = true) @RequestParam String ids) {
         return R.ok("用户表-删除成功", service.removeByIds(Arrays.asList(ids.split(","))));
     }

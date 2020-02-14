@@ -16,20 +16,39 @@ Spring cloud 快速开发脚手架项目，支持单体BOOT快速部署（无需
 ```
 【当前进度更新】
 
-【2019.02.10】
-1.用户登录，退出，改密，验证码
-2.token验证优化，避免特殊情况下无法退出的异常
+【2020.02.14】
+后台
+Gateway组件&Nacos集成
+Swagger聚合文档完成
+Mock模块初始完成
 
-【下一步】
-1.MQ的集成和操作日志的入库
-2.WEB端的DEMO搭建
+前台
+用户登录退出完成
+
+其他
+
+【计划】
+
+后台
+
+1.mq集成,
+2.日志入库MQ方式实现，并实现可配置选择
+
+前台
+1.本地存储工具类的封装
+2.用户改密
+3.用户菜单动态路由对接
 
 ```
 
 
 ## 后端技术架构
 
-- 基础框架：Spring Boot & Spring Cloud
+- 基础框架：Spring Boot & Spring Cloud & Spring Cloud Alibaba
+
+- 网关：Spring Cloud Gateway
+
+- 注册 & 配置中心： Alibaba Nacos Server
 
 - 持久层框架：Mybatis-plus
 
@@ -57,6 +76,8 @@ Spring cloud 快速开发脚手架项目，支持单体BOOT快速部署（无需
 
 - 缓存：Redis
 
+- 注册 & 配置中心： Nacos
+
 
 ## 技术文档
 
@@ -71,7 +92,7 @@ Spring cloud 快速开发脚手架项目，支持单体BOOT快速部署（无需
 
 ## 代码生成器
 
-> 功能说明：   简单易用一键生成基础代码（包括：controller、service、dao、mapper、entity、vue）
+> 功能说明：   简单易用一键生成基础代码，提供Cloud和Boot两种模式（包括：controller、service、dao、mapper、entity、vue）
 
 ```
 
@@ -86,8 +107,19 @@ Spring cloud 快速开发脚手架项目，支持单体BOOT快速部署（无需
 > 蓝色节点为已完成，黄色节点为正在进行，其他节点为已规划计划
 
 
+## 作者
+
+感谢几位伙伴共同努力
+
+> + [yuxiuyu](18896591232@163.com)
+> + [启明](lindagewu@foxmail.com)
+> + [黄焖小鸡](18702114679@163.com)
+> + [TeaR](zqr.it@t4cloud.com)
+
 ## 写在最后
 > + 本项目由现有商业项目中抽离并经过重新梳理设计，个人完成，欢迎大家入群指正我的错误或提出开发意见，任何想法都可以
 > + 有朋友加入一起完善就更好了，给各自的简历加一些重量！
 > + 适合用作个人项目，个人私活，中小型公司项目的快速开发
 > + [zqr.it@t4cloud.com](zqr.it@t4cloud.com)
+
+

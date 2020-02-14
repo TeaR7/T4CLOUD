@@ -1,0 +1,29 @@
+server:
+  port: 8010
+spring:
+  application:
+    name: @project.name@
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        # 环境隔离
+        group:   dev
+        # 项目隔离
+#        namespace: xxx
+    gateway:
+      discovery:
+        locator:
+          # 让gateway通过服务发现组件找到其他的微服务
+          enabled: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+logging:
+  level:
+    org.springframework.cloud.gateway: trace

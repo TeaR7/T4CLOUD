@@ -1,7 +1,5 @@
 package com.t4cloud.t.system.controller;
 
-import cn.hutool.json.JSONArray;
-import cn.hutool.json.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -19,7 +17,6 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections.ListUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -47,7 +44,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Slf4j
 @Api(value = "菜单权限表", tags = "菜单权限表接口")
-@RequestMapping("/system/")
+@RequestMapping("/SysPermission")
 public class SysPermissionController extends T4Controller<SysPermission, ISysPermissionService> {
 
     /**
@@ -57,7 +54,7 @@ public class SysPermissionController extends T4Controller<SysPermission, ISysPer
     @GetMapping("/detail")
     @ApiOperationSupport(order = 1)
     @RequiresPermissions(value = {"system:SysPermission:VIEW"})
-    @ApiOperation(value = "详情", notes = "传入sysPermission")
+    @ApiOperation(value = "菜单权限表-详情", notes = "传入sysPermission")
     public R<SysPermission> detail(SysPermission sysPermission, HttpServletRequest req) {
         QueryWrapper<SysPermission> sysPermissionQueryWapper = T4Query.initQuery(sysPermission, req.getParameterMap());
         SysPermission detail = service.getOne(sysPermissionQueryWapper);
@@ -71,7 +68,7 @@ public class SysPermissionController extends T4Controller<SysPermission, ISysPer
     @GetMapping("/list")
     @ApiOperationSupport(order = 2)
     @RequiresPermissions(value = {"system:SysPermission:VIEW"})
-    @ApiOperation(value = "全部列表", notes = "传入sysPermission")
+    @ApiOperation(value = "菜单权限表-全部列表", notes = "传入sysPermission")
     public R<List<SysPermission>> list(SysPermission sysPermission, HttpServletRequest req) {
         QueryWrapper<SysPermission> sysPermissionQueryWapper = T4Query.initQuery(sysPermission, req.getParameterMap());
         List<SysPermission> list = service.list(sysPermissionQueryWapper);
@@ -85,7 +82,7 @@ public class SysPermissionController extends T4Controller<SysPermission, ISysPer
     @GetMapping("/page")
     @ApiOperationSupport(order = 3)
     @RequiresPermissions(value = {"system:SysPermission:VIEW"})
-    @ApiOperation(value = "分页查询", notes = "传入sysPermission")
+    @ApiOperation(value = "菜单权限表-分页查询", notes = "传入sysPermission")
     public R<IPage<SysPermission>> page(SysPermission sysPermission,
                                         @ApiParam(name = "pageNo", required = false)
                                         @RequestParam(name = "pageNo", required = false, defaultValue = "1") Integer pageNo,
@@ -101,10 +98,10 @@ public class SysPermissionController extends T4Controller<SysPermission, ISysPer
      * 新增 菜单权限表
      */
     @AutoLog(value = "菜单权限表-新增", operateType = 1)
-    @PostMapping("/save")
+    @PutMapping("/save")
     @ApiOperationSupport(order = 4)
     @RequiresPermissions(value = {"system:SysPermission:ADD"})
-    @ApiOperation(value = "新增", notes = "传入sysPermission")
+    @ApiOperation(value = "菜单权限表-新增", notes = "传入sysPermission")
     public R save(@Valid @RequestBody SysPermission sysPermission) {
         return R.ok("菜单权限表-新增成功", service.save(sysPermission));
     }
@@ -116,7 +113,7 @@ public class SysPermissionController extends T4Controller<SysPermission, ISysPer
     @PostMapping("/update")
     @ApiOperationSupport(order = 5)
     @RequiresPermissions(value = {"system:SysPermission:ADD", "system:SysPermission:EDIT"}, logical = Logical.OR)
-    @ApiOperation(value = "修改", notes = "传入sysPermission")
+    @ApiOperation(value = "菜单权限表-修改", notes = "传入sysPermission")
     public R update(@Valid @RequestBody SysPermission sysPermission) {
         return R.ok("菜单权限表-修改成功", service.updateById(sysPermission));
     }
@@ -126,11 +123,11 @@ public class SysPermissionController extends T4Controller<SysPermission, ISysPer
      * 删除 菜单权限表
      */
     @AutoLog(value = "菜单权限表-删除", operateType = 2)
-    @PostMapping("/delete")
+    @DeleteMapping("/delete")
     @ApiOperationSupport(order = 8)
     @RequiresRoles("ADMIN")
     @RequiresPermissions(value = {"system:SysPermission:DELETE"})
-    @ApiOperation(value = "删除", notes = "传入ids")
+    @ApiOperation(value = "菜单权限表-删除", notes = "传入ids")
     public R delete(@ApiParam(value = "主键集合", required = true) @RequestParam String ids) {
         return R.ok("菜单权限表-删除成功", service.removeByIds(Arrays.asList(ids.split(","))));
     }

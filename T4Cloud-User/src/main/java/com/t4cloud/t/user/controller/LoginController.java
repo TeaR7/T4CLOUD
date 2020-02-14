@@ -39,7 +39,7 @@ import static com.t4cloud.t.base.constant.CacheConstant.SYS_USERS_CHECK_CODE;
 @Slf4j
 @RestController
 @AllArgsConstructor
-@RequestMapping("/user/login")
+@RequestMapping("/login")
 @Api(value = "用户登录、退出、密码修改、图片验证码", tags = "登录相关接口")
 public class LoginController extends T4Controller<SysUser, ISysUserService> {
 

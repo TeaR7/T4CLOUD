@@ -1,0 +1,10 @@
+spring:
+  profiles:
+    active: dev
+#    active: prod
+swagger:
+  production: false
+  basic:
+    enable: true
+    username: t4cloud
+    password: 123456

@@ -69,8 +69,8 @@ public class ShiroConfig {
 
         // ----------------------------------------------- 系统业务相关 -----------------------------------------------
         //登录接口排除
-        filterChainDefinitionMap.put("/user/login/checkCode", "anon"); // 图片验证码获取接口
-        filterChainDefinitionMap.put("/user/login/loginByPwd", "anon"); // 账号密码登录
+        filterChainDefinitionMap.put("/login/checkCode", "anon"); // 图片验证码获取接口
+        filterChainDefinitionMap.put("/login/loginByPwd", "anon"); // 账号密码登录
 //
 //        filterChainDefinitionMap.put("/sys/getCode", "anon");//前台获取验证码
 //        filterChainDefinitionMap.put("/sys/loginByCaptcha", "anon");//前台验证码登录/注册接口
