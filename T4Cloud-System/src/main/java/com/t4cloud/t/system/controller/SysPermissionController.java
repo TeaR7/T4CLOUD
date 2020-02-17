@@ -158,7 +158,6 @@ public class SysPermissionController extends T4Controller<SysPermission, ISysPer
             metaList.add(0, SysPermission.getHomePage());
         }
 
-
         // 将数据处理成树状结构
 
         //获取根目录

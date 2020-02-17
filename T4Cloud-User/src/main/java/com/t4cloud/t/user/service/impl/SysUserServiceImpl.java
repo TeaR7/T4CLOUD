@@ -116,7 +116,7 @@ public class SysUserServiceImpl extends T4ServiceImpl<SysUserMapper, SysUser> im
                 return false;
             }
 
-            if (!checkCode.equals(code)) {
+            if (!checkCode.equalsIgnoreCase(code)) {
                 return false;
             }
 

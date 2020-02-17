@@ -43,13 +43,14 @@ const user = {
       });
     },
     // 退出登录
-    Logout({ commit, state }) {
+    Logout({ commit }) {
       return new Promise(resolve => {
-        let logoutToken = state.token;
-        commit("SET_TOKEN", "");
-        Vue.ls.remove(ACCESS_TOKEN);
-        fetchExitLogin(logoutToken)
+        fetchExitLogin()
           .then(response => {
+            if(response.code==200){
+              commit("SET_TOKEN", "");
+              Vue.ls.remove(ACCESS_TOKEN);
+            }
             resolve(response);
           })
           .catch(() => {

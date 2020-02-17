@@ -1,13 +1,13 @@
 ![T4CLOUD](https://git.t4cloud.com/img/favicon.png "T4CLOUD")
 
 
-#T4CLOUD  
+# T4CLOUD  
 
 Spring cloud 快速开发脚手架项目，支持单体BOOT快速部署（无需依赖NACOS等注册中心），也支持复杂模式的CLOUD开发。专业代码生成器一键生成前后端代码，无需考虑支撑功能，拥有方便的鉴权及权限体系，自动化的日志记录系统，让您更好的专注于业务开发即可。
 
 ===============
 
-当前最新版本： 0.0.2（发布日期：2020.02.09）
+当前最新版本： 0.0.2（发布日期：2020.02.17）
 
 > 源码获取
  + Github：   https://github.com/TeaR7/T4CLOUD
@@ -16,23 +16,25 @@ Spring cloud 快速开发脚手架项目，支持单体BOOT快速部署（无需
 ```
 【当前进度更新】
 
-【2020.02.14】
+【2020.02.17】
 后台
-Gateway组件&Nacos集成
-Swagger聚合文档完成
-Mock模块初始完成
+-a 增加Rocket MQ 消费者生产者实例
+-u 日志处理方式优化，配置可选项
 
 前台
-用户登录退出完成
+-a 国际化集成
+-u 菜单栏收缩文字效果优化
+-u 登录页LOGO文字优化
 
 其他
+
 
 【计划】
 
 后台
 
-1.mq集成,
-2.日志入库MQ方式实现，并实现可配置选择
+1.QA社区的搭建
+2.系统运行环境的采集
 
 前台
 1.本地存储工具类的封装
@@ -111,10 +113,10 @@ Mock模块初始完成
 
 感谢几位伙伴共同努力
 
-> + [yuxiuyu](18896591232@163.com)
-> + [启明](lindagewu@foxmail.com)
-> + [黄焖小鸡](18702114679@163.com)
-> + [TeaR](zqr.it@t4cloud.com)
+> + [yuxiuyu<18896591232@163.com>](mailto:18896591232@163.com)
+> + [启明<lindagewu@foxmail.com>](mailto:lindagewu@foxmail.com)
+> + [黄焖小鸡<18702114679@163.com>](mailto:18702114679@163.com)
+> + [TeaR<zqr.it@t4cloud.com>](mailto:zqr.it@t4cloud.com)
 
 ## 写在最后
 > + 本项目由现有商业项目中抽离并经过重新梳理设计，个人完成，欢迎大家入群指正我的错误或提出开发意见，任何想法都可以

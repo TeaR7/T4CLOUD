@@ -130,6 +130,7 @@
         <module>T4Cloud-Mock</module>
         <module>T4Cloud-Gateway</module>
         <module>T4Cloud-Gen</module>
+        <module>T4Cloud-Rocketmq-Console</module>
     </modules>
 
 

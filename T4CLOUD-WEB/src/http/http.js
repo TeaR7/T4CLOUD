@@ -1,4 +1,6 @@
 /* eslint-disable */
+import Vue from 'vue'
+import { ACCESS_TOKEN } from "@/store/mutation-types"
 // 配置API接口地址
 // var root = "https://cloud.t4cloud.com/";
 // 引用axios
@@ -27,10 +29,11 @@ function filterNull(o) {
   return o;
 }
 
-function apiAxios(method, url, params, token) {
+function apiAxios(method, url, params) {
   if (params) {
     params = filterNull(params);
   }
+  const token = Vue.ls.get(ACCESS_TOKEN)
   return axios({
     method: method,
     url: url,

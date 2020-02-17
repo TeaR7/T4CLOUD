@@ -20,6 +20,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,13 +62,13 @@ public class LoginController extends T4Controller<SysUser, ISysUserService> {
             return R.error("验证码错误");
         }
 
-        if(StringUtils.isEmpty(loginDTO.getUsername()) || StringUtils.isEmpty(loginDTO.getPassword())){
+        if (StringUtils.isEmpty(loginDTO.getUsername()) || StringUtils.isEmpty(loginDTO.getPassword())) {
             return R.error("账号密码不允许为空");
         }
 
         //获取账号密码,查看是否有效账户
         SysUser sysUser = service.lambdaQuery()
-                .eq(SysUser:: getUsername, loginDTO.getUsername())
+                .eq(SysUser::getUsername, loginDTO.getUsername())
                 .one();
         if (sysUser == null) {
             return R.error("用户不存在");

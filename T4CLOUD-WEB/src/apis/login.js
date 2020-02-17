@@ -29,13 +29,20 @@ export function fetchLogin(data) {
  * 获取用户信息
  * @returns {*}
  */
-export function fetchGetUserInfo(token) {
-  return apiAxios('GET',"T4Cloud-User/login/userInfo", null, token)
+export function fetchGetUserInfo() {
+  return apiAxios('GET',"T4Cloud-User/login/userInfo", null)
+}
+/**
+ * 修改用户密码
+ * @returns {*}
+ */
+export function fetchChangePwd(data) {
+  return apiAxios('POST',"T4Cloud-User/login/changePwd", data)
 }
 /**
  * 退出登录
  * @returns {*}
  */
-export function fetchExitLogin(token) {
-  return apiAxios('DELETE',"T4Cloud-User/login/logout", null, token)
+export function fetchExitLogin() {
+  return apiAxios('DELETE',"T4Cloud-User/login/logout", null)
 }

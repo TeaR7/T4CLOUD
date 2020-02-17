@@ -1,25 +1,25 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import firstpage from '@/views/firstpage'
-import orderManage from '@/views/orderManage'
-import login from '@/views/login'
+import FirstPage from '@/views/FirstPage'
+import OrderManage from '@/views/order/OrderManage'
+import Login from '@/views/user/Login'
 Vue.use(Router)
 
 export default new Router({
   mode : 'history',
   routes: [{
     path: '/',
-    name: 'login',
-    component: login
+    name: 'Login',
+    component: Login
   }, {
-    path: '/firstpage',
-    name: 'firstpage',
-    component: firstpage,
+    path: '/FirstPage',
+    name: 'FirstPage',
+    component: FirstPage,
     redirect: '/orderManage',
     children: [{
       path: '/orderManage',
-      name: 'orderManage',
-      component: orderManage
+      name: 'OrderManage',
+      component: OrderManage
     }]
   }]
 })
