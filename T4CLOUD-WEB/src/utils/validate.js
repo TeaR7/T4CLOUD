@@ -16,3 +16,10 @@ export function validUsername () {
   // return valid_map.indexOf(str.trim()) >= 0
   return true
 }
+/**
+ * URL地址
+ * @param {*} s
+ */
+export function isURL (s) {
+  return /^http[s]?:\/\/.*/.test(s)
+}

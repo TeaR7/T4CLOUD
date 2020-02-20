@@ -1,12 +1,7 @@
 <template>
   <div class="navBarWrap">
-    <!-- <el-header> -->
     <div class="headDiv">
-      <div
-        class="menuicon-box"
-        @click="handleIsOpen"
-        :style="{'transform': (!isCollapse ? 'rotate(0deg)':'rotate(180deg)')}"
-      >
+      <div class="menuicon-box" @click="handleIsOpen" :style="{'transform': (!isCollapse ? 'rotate(0deg)':'rotate(180deg)')}">
         <i class="el-icons-shousuo"></i>
       </div>
       <div class="headText web">欢迎进入 T4Cloud 企业级快速开发平台</div>
@@ -14,17 +9,15 @@
       <div>
         <el-dropdown class="nameSpan" @command="handleCommand">
           <span class="el-dropdown-link">
-            <img
-              class="userImg"
-              :src="this.userInfo().avatar ? this.userInfo().avatar : 'https://git.t4cloud.com/img/favicon.png'"
-              alt="avatar"
-            />
+            <img class="userImg" :src="this.userInfo().avatar ? this.userInfo().avatar : 'https://git.t4cloud.com/img/favicon.png'"
+              alt="avatar" />
             <span class="web">
               {{welcome}}，{{username()}}
               <i class="el-icon-arrow-down el-icon--right"></i>
             </span>
           </span>
           <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item command="systemSetting">系统设置</el-dropdown-item>
             <el-dropdown-item command="changePassword">修改密码</el-dropdown-item>
             <el-dropdown-item command="loginOut">退出</el-dropdown-item>
           </el-dropdown-menu>
@@ -32,12 +25,13 @@
       </div>
     </div>
     <ForgetPassword :isShow="isShowPassWordCom" @hidePasswordCom="handPasswordHide"></ForgetPassword>
-    <!-- </el-header> -->
+    <TSettingDrawer ref="settingDrawer"></TSettingDrawer>
   </div>
 </template>
 <script>
 import { mapGetters, mapActions } from "vuex";
 import ForgetPassword from "../../views/user/Modals/ForgetPasswordModal";
+import TSettingDrawer from "../Setting/TSettingDrawer"
 
 export default {
   data() {
@@ -51,7 +45,8 @@ export default {
     };
   },
   components: {
-    ForgetPassword
+    ForgetPassword,
+    TSettingDrawer
   },
   //页面加载时
   created() {
@@ -102,16 +97,17 @@ export default {
     // 退出登录
     handleCommand(command) {
       console.log(command);
-      if (command == "changePassword") {
+      if (command == 'systemSetting') {
+        this.$refs.settingDrawer.drawer=true
+      } else if (command == 'changePassword') {
         this.isShowPassWordCom = true;
-      } else if (command == "loginOut") {
+      } else if (command == 'loginOut') {
         this.Logout().then(res => {
           if (res.code == 200) {
-            this.$router.push("/");
+            this.$router.push('/user/login');
           }
           this.$message(res.message);
         });
-        // this.$router.push('/')
       }
     }
   }
@@ -140,10 +136,10 @@ export default {
       margin-left: 10px;
       font-size: 15px;
       color: #000;
-        &:hover {
-            background-color: rgba(197, 197, 197, 0.2);
-            color: lightblue;
-        }
+      &:hover {
+        background-color: rgba(197, 197, 197, 0.2);
+        color: lightblue;
+      }
     }
 
     .userImg {

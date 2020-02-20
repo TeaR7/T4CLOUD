@@ -1,5 +1,5 @@
 module.exports = {
-    publicPath: './',
+    // publicPath: './', // 打包app时放开该配置
     // 所有的接口请求代理
     // baseUrl: '/',
     devServer: {

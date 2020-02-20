@@ -26,7 +26,6 @@ import org.apache.rocketmq.client.QueryResult;
 import org.apache.rocketmq.client.exception.MQBrokerException;
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.client.impl.MQAdminImpl;
-import org.apache.rocketmq.common.AclConfig;
 import org.apache.rocketmq.common.PlainAccessConfig;
 import org.apache.rocketmq.common.TopicConfig;
 import org.apache.rocketmq.common.admin.ConsumeStats;
@@ -94,11 +93,6 @@ public class MQAdminExtImpl implements MQAdminExt {
 
     @Override
     public ClusterAclVersionInfo examineBrokerClusterAclVersionInfo(String s) throws RemotingException, MQBrokerException, InterruptedException, MQClientException {
-        return null;
-    }
-
-    @Override
-    public AclConfig examineBrokerClusterAclConfig(String s) throws RemotingException, MQBrokerException, InterruptedException, MQClientException {
         return null;
     }
 

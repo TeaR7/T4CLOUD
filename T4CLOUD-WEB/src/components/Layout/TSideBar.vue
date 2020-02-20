@@ -1,40 +1,40 @@
 <template>
   <div class="sideBarWrap">
-    <div class="headImgDiv">
-      <div class="headImgBox">
-        <img src="@/assets/logos/logo-o-w.png" alt="logo" />
-        <div class="text" :class="!isCollapse?'open':'close'">T4CLOUD</div>
+    <div v-if="device=='desktop'">
+      <div class="headImgDiv">
+        <div class="headImgBox">
+          <img src="@/assets/logos/logo-o-w.png" alt="logo" />
+          <div class="text" :class="!isCollapse?'open':'close'">T4CLOUD</div>
+        </div>
       </div>
+      <el-menu class="el-menu-vertical-demo" :default-active="$route.path" :default-openeds="['1']" background-color="#1d2128"
+        text-color="#fff" active-text-color="#ffd04b" :collapse="isCollapse" :collapse-transition="true" router>
+        <TSidebarItem :routes='addRouters[0].children'></TSidebarItem>
+      </el-menu>
     </div>
-    <el-menu
-      class="el-menu-vertical-demo"
-      :default-active="$route.path"
-      :default-openeds="['1']"
-      background-color="#1d2128"
-      text-color="#fff"
-      active-text-color="#ffd04b"
-      :collapse="isCollapse"
-      :collapse-transition="true"
-    >
-      <el-submenu index="1">
-        <template slot="title">
-          <i class="el-icon-menu"></i>
-          <span slot="title">导航一</span>
-        </template>
-        <el-menu-item index="/orderManage">订单管理</el-menu-item>
-      </el-submenu>
-      <el-submenu index="2">
-        <template slot="title">
-          <i class="el-icon-search"></i>
-          <span slot="title">导航二</span>
-        </template>
-        <el-menu-item index="/test">订单管理</el-menu-item>
-        <el-menu-item index="/test">订单管理</el-menu-item>
-      </el-submenu>
-    </el-menu>
+    <div v-else>
+      <el-drawer title="" :visible.sync="isCollapse" direction="ltr" :with-header="false" size="auto"
+        :before-close="handleClose">
+        <div class="sideBarWrap">
+          <div class="headImgDiv">
+            <div class="headImgBox">
+              <img src="@/assets/logos/logo-o-w.png" alt="logo" />
+              <div class="text open">T4CLOUD</div>
+            </div>
+          </div>
+          <el-menu class="el-menu-vertical-demo" :default-active="$route.path" :default-openeds="['1']"
+            background-color="#1d2128" text-color="#fff" active-text-color="#ffd04b"
+            :collapse-transition="true" router @select="mobileMenuSelect">
+            <TSidebarItem :routes='addRouters[0].children'></TSidebarItem>
+          </el-menu>
+    </div>
+    </el-drawer>
+  </div>
   </div>
 </template>
 <script>
+import TSidebarItem from '../Layout/TSidebarItem'
+import { mapGetters } from 'vuex'
 export default {
   name: "SideBar",
   props: {
@@ -42,13 +42,28 @@ export default {
       type: Boolean,
       default: false
     }
+  },
+  components: { TSidebarItem },
+  computed: {
+    ...mapGetters([
+      'addRouters',
+      'device'
+    ])
+  },
+  methods: {
+    handleClose() {
+      this.$emit('hideSideBar')
+    },
+    mobileMenuSelect(){
+      this.$emit('hideSideBar')
+    }
   }
 };
 </script>
 <style>
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 230px;
-  height: 100%;
+  /* height: 100%; */
 }
 .el-menu {
   border-right: none !important;
@@ -57,6 +72,7 @@ export default {
 <style lang="scss" scoped>
 .sideBarWrap {
   background-color: #1d2128;
+  height: 100%;
   .headImgDiv {
     display: flex;
     align-items: center;

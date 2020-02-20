@@ -1,0 +1,89 @@
+### web
+server:
+  port: 8020
+#  servlet:
+#    context-path: /job-admin
+
+### actuator
+management:
+  server:
+    servlet:
+      context-path: /actuator
+  health:
+    mail:
+      enabled: false
+
+spring:
+  ### resources
+  mvc:
+    servlet:
+      load-on-startup: 0
+    static-path-pattern: /static/**
+  resources:
+    static-locations: classpath:/static/
+  ###nacos
+  application:
+    name: T4Cloud-XXL-Job-Admin
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        # 环境隔离
+        group:   dev
+        # 项目隔离
+#        namespace: xxx
+  ### freemarker
+  freemarker:
+    templateLoaderPath: classpath:/templates/
+    suffix: .ftl
+    charset: UTF-8
+    request-context-attribute: request
+    settings:
+      number_format: 0.##########
+  ### datasource
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/t4-job?Unicode=true&characterEncoding=UTF-8
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      minimum-idle: 10
+      maximum-pool-size: 30
+      auto-commit: true
+      idle-timeout: 30000
+      pool-name: HikariCP
+      max-lifetime: 900000
+      connection-timeout: 10000
+      connection-test-query: SELECT 1
+  ### email
+  mail:
+    host: smtp.163.com
+    username: jeecgos@163.com
+    password: ??
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+
+### mybatis
+mybatis:
+  mapper-locations: classpath:/mybatis-mapper/*Mapper.xml
+
+## triggerpool max size
+xxl:
+  job:
+    triggerpool:
+      fast:
+        max: 200
+      slow:
+        max: 100
+    ##log retention days
+    logretentiondays: 30
+    ### access token
+    accessToken:
+    ### i18n (default empty as chinese, "en" as english)
+    i18n:

@@ -34,12 +34,14 @@ spring:
       shutdown-timeout: 100ms
     password: ''
     port: 6379
+  autoconfigure:
+    exclude: com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure
   #数据库 配置
   datasource:
     druid:
       stat-view-servlet:
         enabled: true
-        loginUsername: admin
+        loginUsername: t4cloud
         loginPassword: 123456
         allow:
       web-stat-filter:
@@ -80,6 +82,15 @@ spring:
           #username: root
           #password: root
           #driver-class-name: com.mysql.jdbc.Driver
+
+#运行环境监控端点开放
+management:
+  endpoints:
+    web:
+      exposure:
+        include: metrics,httptrace
+
+
 #mybatis plus 设置
 mybatis-plus:
   mapper-locations: classpath*:com/t4cloud/t/**/*Mapper.xml
@@ -109,5 +120,13 @@ rocketmq:
 
 #T4CLOUD自定义配置
 t4cloud:
-  check-code: true #登录接口是否强制验证图片验证码
-  log-type: 1 #系统日志的处理方式，0：直接入库，1：通过MQ交由SYS模块集中处理
+  #系统日志的处理方式，0：直接入库，1：通过MQ交由SYS模块集中处理
+  log-type: 1
+  # 分布式任务调度器配置
+  job:
+    ## 是否启用定时任务
+    open: true
+    address: http://127.0.0.1:8020
+    ## 端口自动配置成本项目的端口-100
+    port: ${server.port}
+    appname: @project.name@

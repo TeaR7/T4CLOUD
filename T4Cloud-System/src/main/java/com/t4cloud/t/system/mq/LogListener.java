@@ -28,6 +28,7 @@ public class LogListener implements RocketMQListener<T4Log> {
 
     @Override
     public void onMessage(T4Log t4Log) {
+        t4Log.setCreateBy("MQ入库");
         service.saveLog(t4Log);
     }
 

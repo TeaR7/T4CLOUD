@@ -7,7 +7,9 @@ import '../src/styles/index.scss' // global css
 import store from './store/'
 import config from '@/defaultSettings'
 import VueI18n from 'vue-i18n'
+import '@/permission' // permission control
 import Storage from 'vue-ls'
+import '../src/styles/element-variables.scss'
 Vue.use(Storage, config.storageOptions)
 Vue.use(VueI18n)
 Vue.use(ElementUI)

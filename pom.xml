@@ -32,11 +32,60 @@
         <spring-boot.version>2.2.2.RELEASE</spring-boot.version>
         <spring-cloud.version>Hoxton.SR1</spring-cloud.version>
         <spring-cloud-alibaba.version>2.2.0.RELEASE</spring-cloud-alibaba.version>
-        <hutool.version>5.1.0</hutool.version>
-        <mybatis-plus.version>3.3.0</mybatis-plus.version>
         <swagger.fox.version>2.9.2</swagger.fox.version>
-        <spring.platform.version>Cairo-SR8</spring.platform.version>
+        <xxl-job.version>2.2.0-SNAPSHOT</xxl-job.version>
+        <xxl-rpc.version>1.5.0</xxl-rpc.version>
+        <groovy.version>2.5.9</groovy.version>
     </properties>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>com.t4cloud</groupId>
+            <artifactId>T4Cloud-Common</artifactId>
+            <version>Hoxton.SR1.1.0.0</version>
+        </dependency>
+
+        <!--		<dependency>-->
+        <!--			<groupId>com.github.ulisesbocchio</groupId>-->
+        <!--			<artifactId>jasypt-spring-boot-starter</artifactId>-->
+        <!--			<version>${jasypt.version}</version>-->
+        <!--		</dependency>-->
+        <!--监控-->
+        <!--		<dependency>-->
+        <!--			<groupId>org.springframework.boot</groupId>-->
+        <!--			<artifactId>spring-boot-starter-actuator</artifactId>-->
+        <!--		</dependency>-->
+        <!--监控客户端-->
+        <!--		<dependency>-->
+        <!--			<groupId>de.codecentric</groupId>-->
+        <!--			<artifactId>spring-boot-admin-starter-client</artifactId>-->
+        <!--			<version>${spring-boot-admin.version}</version>-->
+        <!--		</dependency>-->
+        <!--断路器依赖-->
+        <!--		<dependency>-->
+        <!--			<groupId>org.springframework.cloud</groupId>-->
+        <!--			<artifactId>spring-cloud-starter-netflix-hystrix</artifactId>-->
+        <!--		</dependency>-->
+
+        <!--测试依赖-->
+        <!--		<dependency>-->
+        <!--			<groupId>org.springframework.boot</groupId>-->
+        <!--			<artifactId>spring-boot-starter-test</artifactId>-->
+        <!--			<scope>test</scope>-->
+        <!--		</dependency>-->
+    </dependencies>
+
+    <modules>
+        <module>T4Cloud-User</module>
+        <module>T4Cloud-System</module>
+        <module>T4Cloud-Gateway</module>
+        <module>T4Cloud-Gen</module>
+        <module>T4Cloud-Mock</module>
+        <module>T4Cloud-Rocketmq-Console</module>
+        <module>T4Cloud-XXL-Job</module>
+    </modules>
+
 
     <dependencyManagement>
         <dependencies>
@@ -84,54 +133,6 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
-
-    <dependencies>
-
-        <dependency>
-            <groupId>com.t4cloud</groupId>
-            <artifactId>T4Cloud-Common</artifactId>
-            <version>Hoxton.SR1.1.0.0</version>
-        </dependency>
-
-        <!--		<dependency>-->
-        <!--			<groupId>com.github.ulisesbocchio</groupId>-->
-        <!--			<artifactId>jasypt-spring-boot-starter</artifactId>-->
-        <!--			<version>${jasypt.version}</version>-->
-        <!--		</dependency>-->
-        <!--监控-->
-        <!--		<dependency>-->
-        <!--			<groupId>org.springframework.boot</groupId>-->
-        <!--			<artifactId>spring-boot-starter-actuator</artifactId>-->
-        <!--		</dependency>-->
-        <!--监控客户端-->
-        <!--		<dependency>-->
-        <!--			<groupId>de.codecentric</groupId>-->
-        <!--			<artifactId>spring-boot-admin-starter-client</artifactId>-->
-        <!--			<version>${spring-boot-admin.version}</version>-->
-        <!--		</dependency>-->
-        <!--断路器依赖-->
-        <!--		<dependency>-->
-        <!--			<groupId>org.springframework.cloud</groupId>-->
-        <!--			<artifactId>spring-cloud-starter-netflix-hystrix</artifactId>-->
-        <!--		</dependency>-->
-
-        <!--测试依赖-->
-        <!--		<dependency>-->
-        <!--			<groupId>org.springframework.boot</groupId>-->
-        <!--			<artifactId>spring-boot-starter-test</artifactId>-->
-        <!--			<scope>test</scope>-->
-        <!--		</dependency>-->
-    </dependencies>
-
-    <modules>
-        <module>T4Cloud-User</module>
-        <module>T4Cloud-System</module>
-        <module>T4Cloud-Mock</module>
-        <module>T4Cloud-Gateway</module>
-        <module>T4Cloud-Gen</module>
-        <module>T4Cloud-Rocketmq-Console</module>
-    </modules>
 
 
     <build>

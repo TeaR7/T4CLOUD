@@ -80,19 +80,17 @@
         <span>password: any</span>
       </div>
     </el-form>
-    <el-footer class="main-footer">
-        Copyright &copy; 2019-2024 Power by
-        <a href="https://t4cloud.com/" target="_blank" style="color: gray">T4Cloud</a>
-    </el-footer>
+    <TFooterBar :footerType="1"></TFooterBar>
   </div>
 </template>
 
 <script>
 import TGraphicCode from "@/components/T4Cloud/TGraphicCode";
 import { mapActions } from "vuex";
+
 // import store from '@/store/'
-// import { fetchLogin } from '@/apis/login'
 // import { validUsername } from "@/utils/validate";
+import TFooterBar from "@/components/Layout/TFooterBar"
 export default {
   name: "Login",
   data() {
@@ -144,7 +142,8 @@ export default {
     };
   },
   components: {
-    TGraphicCode
+    TGraphicCode,
+    TFooterBar
   },
   watch: {
     // $route: {
@@ -155,7 +154,7 @@ export default {
     // }
   },
   methods: {
-    ...mapActions(["Login"]),
+    ...mapActions(["Login", "GetUserPermission"]),
     showPwd() {
       if (this.passwordType === "password") {
         this.passwordType = "";
@@ -186,7 +185,7 @@ export default {
             .then(res => {
               if (res.code == 200) {
                 this.$router.push({
-                  path: "/firstpage"
+                  path: "/dashboard/analysis"
                 });
               }
               this.$message(res.message);
@@ -200,6 +199,7 @@ export default {
         }
       });
     },
+  
     generateCode(value, key) {
       this.loginForm.code = value.toLowerCase();
       this.verifiedKey = key;
@@ -326,15 +326,6 @@ $light_gray: #eee;
     color: $dark_gray;
     cursor: pointer;
     user-select: none;
-  }
-  .main-footer {
-    line-height: 60px;
-    width: 100%;
-    position: absolute;
-    bottom: 0;
-    text-align: center;
-    color: #ccc;
-    font-size: 12px;
   }
 }
 </style>

@@ -1,5 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
+  <!DOCTYPE html>
+  <html lang="en">
+
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,11 +8,115 @@
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <title><%= htmlWebpackPlugin.options.title %></title>
   </head>
+
   <body>
     <noscript>
-      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled.
+        Please enable it to continue.</strong>
     </noscript>
+    <div class="loadingBox" id="Loading">
+      <div class="innerBox"></div>
+      <div class="outerBox"></div>
+      <div class="widerBox"></div>
+    </div>
+    <div class="loadingText" id="LoadText">正在加载T4Cloud平台……</div>
+    <div class="loader-section section-left"></div>
+    <div class="loader-section section-right"></div>
     <div id="app"></div>
     <!-- built files will be auto injected -->
+    <style lang="scss">
+      @keyframes anim {
+        from {
+          transform: rotate(0deg);
+        }
+
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .loadingBox {
+        width: 80px;
+        height: 80px;
+        padding: 0px;
+        left: calc(50% - 30px);
+        top: calc(50% - 80px);
+        position: absolute;
+        z-index: 1001;
+      }
+
+      .widerBox {
+        left: calc(0% - 3px);
+        top: calc(0% - 3px);
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        border-radius: 50%;
+        border: medium rgb(240, 15, 15) solid;
+        border-right-color: transparent;
+        animation: anim 847ms cubic-bezier(0.42, 0.61, 0.58, 0.41) infinite;
+      }
+
+      .outerBox {
+        left: calc(10% - 3px);
+        top: calc(10% - 3px);
+        width: 80%;
+        height: 80%;
+        position: absolute;
+        border-radius: 50%;
+        border: medium rgb(229, 252, 27) solid;
+        border-right-color: transparent;
+        animation: anim 747ms cubic-bezier(0.42, 0.61, 0.58, 0.41) infinite;
+      }
+
+      .innerBox {
+        left: calc(20% - 3px);
+        top: calc(20% - 3px);
+        width: 60%;
+        height: 60%;
+        position: absolute;
+        border-radius: 50%;
+        border: 3px rgb(31, 244, 252) solid;
+        border-top-color: transparent;
+        animation: anim 971ms cubic-bezier(0.42, 0.61, 0.58, 0.41) infinite;
+      }
+
+      .loadingText {
+        position: absolute;
+        left: calc(50% - 80px);
+        top: calc(50% + 10px);
+        z-index: 1001;
+        color: #ccc;
+      }
+
+      .loader-section {
+        position: fixed;
+        top: 0;
+        width: 52%;
+        height: 100%;
+        background: #222222;
+        z-index: 1000;
+        transform: translateX(0);
+      }
+
+      .section-left {
+        left: 0;
+      }
+
+      .section-right {
+        right: 0;
+      }
+
+      .section-left-hide {
+        transform: translateX(-100%);
+        transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1.000);
+      }
+
+      .section-right-hide {
+        transform: translateX(100%);
+        transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1.000);
+      }
+    </style>
   </body>
-</html>
+
+  </html>

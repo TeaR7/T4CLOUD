@@ -1,7 +1,10 @@
 package com.t4cloud.t.user.mapper;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
 import com.t4cloud.t.user.entity.SysUser;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import java.util.List;
 
 /**
  * 用户表 Mapper 接口
@@ -9,8 +12,8 @@ import com.t4cloud.t.user.entity.SysUser;
  * <p>
  * --------------------
  *
- * @author TeaR
- * @date 2020/1/15 23:04
+ * @author T4Cloud
+ * @since 2020-02-19 
  */
 public interface SysUserMapper extends BaseMapper<SysUser> {
 

@@ -46,3 +46,10 @@ export function fetchChangePwd(data) {
 export function fetchExitLogin() {
   return apiAxios('DELETE',"T4Cloud-User/login/logout", null)
 }
+/**
+ * 获取用户菜单权限
+ * @returns {*}
+ */
+export function fetchUserPermission() {
+  return apiAxios('GET',"T4Cloud-System/SysPermission/userPermission")
+}
