@@ -3,7 +3,6 @@ package com.t4cloud.t.user.controller;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.json.JSONObject;
 import com.alibaba.nacos.common.util.Md5Utils;
-import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.t4cloud.t.base.annotation.AutoLog;
 import com.t4cloud.t.base.constant.CacheConstant;
 import com.t4cloud.t.base.controller.T4Controller;
@@ -20,11 +19,13 @@ import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 import static com.t4cloud.t.base.constant.CacheConstant.SYS_USERS_CHECK_CODE;
 
@@ -41,7 +42,7 @@ import static com.t4cloud.t.base.constant.CacheConstant.SYS_USERS_CHECK_CODE;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/login")
-@Api(value = "用户登录、退出、密码修改、图片验证码", tags = "登录相关接口")
+@Api(value = "用户登录、退出、密码修改、图片验证码", tags = "登录相关接口", position = 1)
 public class LoginController extends T4Controller<SysUser, ISysUserService> {
 
 
@@ -53,9 +54,9 @@ public class LoginController extends T4Controller<SysUser, ISysUserService> {
      */
     @AutoLog(value = "账号密码登录", operateType = 4, logType = 2)
     @PostMapping("/loginByPwd")
-    @ApiOperationSupport(order = 2)
-    @ApiOperation(value = "账号密码登录", notes = "根据账号密码及验证码登录")
-    public R<LoginUser> loginByPwd(@RequestBody LoginDTO loginDTO) {
+    @ApiOperation(position = 2, value = "账号密码登录", notes = "根据账号密码及验证码登录")
+    public R<LoginUser> loginByPwd(@Valid @RequestBody LoginDTO loginDTO, BindingResult bindingResult) {
+
 
         //开始验证图片验证码
         if (!service.checkCode(loginDTO.getCode(), loginDTO.getCodeKey())) {
@@ -99,8 +100,7 @@ public class LoginController extends T4Controller<SysUser, ISysUserService> {
      */
     @AutoLog(value = "退出登录", operateType = 2, logType = 2)
     @DeleteMapping("/logout")
-    @ApiOperationSupport(order = 3)
-    @ApiOperation(value = "退出登录", notes = "已登录用户退出登录，注销生效的TOKEN")
+    @ApiOperation(position = 3, value = "退出登录", notes = "已登录用户退出登录，注销生效的TOKEN")
     public R logout() {
 
         //获取当前登录的用户的用户名
@@ -123,8 +123,7 @@ public class LoginController extends T4Controller<SysUser, ISysUserService> {
      */
     @AutoLog(value = "修改密码", operateType = 3, logType = 2)
     @PostMapping("/changePwd")
-    @ApiOperationSupport(order = 4)
-    @ApiOperation(value = "修改密码", notes = "已登录用户修改密码")
+    @ApiOperation(position = 4, value = "修改密码", notes = "已登录用户修改密码")
     public R changePwd(@RequestBody LoginDTO loginDTO) {
         //开始验证图片验证码
         if (!service.checkCode(loginDTO.getCode(), loginDTO.getCodeKey())) {
@@ -148,8 +147,7 @@ public class LoginController extends T4Controller<SysUser, ISysUserService> {
      */
     @AutoLog(value = "获取用户信息", operateType = 4, logType = 2)
     @GetMapping("/userInfo")
-    @ApiOperationSupport(order = 5)
-    @ApiOperation(value = "获取用户信息", notes = "已登录的用户信息")
+    @ApiOperation(position = 5, value = "获取用户信息", notes = "已登录的用户信息")
     public R<LoginUser> userInfo() {
         return R.ok("获取用户信息成功！", UserUtil.getCurrentUser());
     }
@@ -160,8 +158,7 @@ public class LoginController extends T4Controller<SysUser, ISysUserService> {
      */
     @AutoLog(value = "图片验证码获取", operateType = 4, logType = 2)
     @GetMapping("/checkCode")
-    @ApiOperationSupport(order = 1)
-    @ApiOperation(value = "图片验证码获取", notes = "无需参数，获取图片验证码所需参数")
+    @ApiOperation(position = 1, value = "图片验证码获取", notes = "无需参数，获取图片验证码所需参数")
     public R<JSONObject> getCheckCode() {
         JSONObject data = new JSONObject();
         try {

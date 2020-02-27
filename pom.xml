@@ -20,7 +20,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.t4cloud</groupId>
-    <artifactId>t4cloud</artifactId>
+    <artifactId>T4Cloud</artifactId>
     <version>${spring-cloud.version}.${t4cloud.version}</version>
     <name>${project.artifactId}</name>
     <packaging>pom</packaging>
@@ -29,7 +29,7 @@
     <properties>
         <t4cloud.version>1.0.0</t4cloud.version>
         <t4cloud.group>t4cloud</t4cloud.group>
-        <spring-boot.version>2.2.2.RELEASE</spring-boot.version>
+        <spring-boot.version>2.2.4.RELEASE</spring-boot.version>
         <spring-cloud.version>Hoxton.SR1</spring-cloud.version>
         <spring-cloud-alibaba.version>2.2.0.RELEASE</spring-cloud-alibaba.version>
         <swagger.fox.version>2.9.2</swagger.fox.version>
@@ -37,6 +37,17 @@
         <xxl-rpc.version>1.5.0</xxl-rpc.version>
         <groovy.version>2.5.9</groovy.version>
     </properties>
+
+    <modules>
+        <module>T4Cloud-User</module>
+        <module>T4Cloud-System</module>
+        <module>T4Cloud-Gateway</module>
+        <module>T4Cloud-Mock</module>
+        <module>T4Cloud-Support</module>
+        <module>T4Cloud-Gen</module>
+        <module>T4Cloud-Rocketmq-Console</module>
+        <module>T4Cloud-XXL-Job</module>
+    </modules>
 
     <dependencies>
 
@@ -46,46 +57,7 @@
             <version>Hoxton.SR1.1.0.0</version>
         </dependency>
 
-        <!--		<dependency>-->
-        <!--			<groupId>com.github.ulisesbocchio</groupId>-->
-        <!--			<artifactId>jasypt-spring-boot-starter</artifactId>-->
-        <!--			<version>${jasypt.version}</version>-->
-        <!--		</dependency>-->
-        <!--监控-->
-        <!--		<dependency>-->
-        <!--			<groupId>org.springframework.boot</groupId>-->
-        <!--			<artifactId>spring-boot-starter-actuator</artifactId>-->
-        <!--		</dependency>-->
-        <!--监控客户端-->
-        <!--		<dependency>-->
-        <!--			<groupId>de.codecentric</groupId>-->
-        <!--			<artifactId>spring-boot-admin-starter-client</artifactId>-->
-        <!--			<version>${spring-boot-admin.version}</version>-->
-        <!--		</dependency>-->
-        <!--断路器依赖-->
-        <!--		<dependency>-->
-        <!--			<groupId>org.springframework.cloud</groupId>-->
-        <!--			<artifactId>spring-cloud-starter-netflix-hystrix</artifactId>-->
-        <!--		</dependency>-->
-
-        <!--测试依赖-->
-        <!--		<dependency>-->
-        <!--			<groupId>org.springframework.boot</groupId>-->
-        <!--			<artifactId>spring-boot-starter-test</artifactId>-->
-        <!--			<scope>test</scope>-->
-        <!--		</dependency>-->
     </dependencies>
-
-    <modules>
-        <module>T4Cloud-User</module>
-        <module>T4Cloud-System</module>
-        <module>T4Cloud-Gateway</module>
-        <module>T4Cloud-Gen</module>
-        <module>T4Cloud-Mock</module>
-        <module>T4Cloud-Rocketmq-Console</module>
-        <module>T4Cloud-XXL-Job</module>
-    </modules>
-
 
     <dependencyManagement>
         <dependencies>
@@ -103,14 +75,6 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <!--            <dependency>-->
-            <!--                <groupId>io.spring.platform</groupId>-->
-            <!--                <artifactId>platform-bom</artifactId>-->
-            <!--                <version>${spring.platform.version}</version>-->
-            <!--                <type>pom</type>-->
-            <!--                <scope>import</scope>-->
-            <!--            </dependency>-->
-            <!--spring cloud alibaba-->
             <dependency>
                 <groupId>com.alibaba.cloud</groupId>
                 <artifactId>spring-cloud-alibaba-dependencies</artifactId>
@@ -123,17 +87,31 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-web</artifactId>
                 <version>${spring-boot.version}</version>
-                <!--                <exclusions>-->
-                <!--                    &lt;!&ndash;排除tomcat依赖&ndash;&gt;-->
-                <!--                    <exclusion>-->
-                <!--                        <artifactId>spring-boot-starter-tomcat</artifactId>-->
-                <!--                        <groupId>org.springframework.boot</groupId>-->
-                <!--                    </exclusion>-->
-                <!--                </exclusions>-->
             </dependency>
         </dependencies>
     </dependencyManagement>
 
+    <profiles>
+        <!--开发环境-->
+        <profile>
+            <id>dev</id>
+            <properties>
+                <active.profile>dev</active.profile>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <!-- end -->
+        <!--生产环境-->
+        <profile>
+            <id>prod</id>
+            <properties>
+                <active.profile>prod</active.profile>
+            </properties>
+        </profile>
+        <!-- end -->
+    </profiles>
 
     <build>
         <finalName>${project.name}</finalName>
@@ -196,21 +174,23 @@
                     </execution>
                 </executions>
             </plugin>
+            <!--   自动选择环境  -->
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <configuration>
+                    <!-- 配置资源文件中的变量分隔符（标识符），这里配置了两种变量分隔符 -->
+                    <delimiters>
+                        <delimiter>${*}</delimiter> <!-- 以${}为分隔符，例如 ${jdbc.url}  -->
+                        <delimiter>@</delimiter>    <!-- 以@为分隔符，例如 @jdbc.url@ -->
+                    </delimiters>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
     <repositories>
 
-        <!--        <repository>-->
-        <!--            <id>t4cloud-maven</id>-->
-        <!--            <name>t4cloud</name>-->
-        <!--            <url>https://raw.github.com/TeaR7/T4-Repo/master</url>-->
-        <!--            <snapshots>-->
-        <!--                <enabled>true</enabled>-->
-        <!--                <updatePolicy>always</updatePolicy>-->
-        <!--            </snapshots>-->
-        <!--&lt;!&ndash;            <url>https://gitee.com/Terry7/T4-Repo/raw/master</url>&ndash;&gt;-->
-        <!--        </repository>-->
+
 
         <!-- 私服仓库 -->
         <repository>

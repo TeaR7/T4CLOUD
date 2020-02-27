@@ -105,11 +105,6 @@ CREATE TABLE `sys_log` (
 -- ----------------------------
 -- Records of sys_log
 -- ----------------------------
-INSERT INTO `sys_log` VALUES ('6209f99f74d108d93f8cb5ee020afb41', '5', '获取redis的运行信息', '4', '{\"result\":[{\"description\":\"当前运行端口\",\"sort\":10,\"value\":\"6379\",\"key\":\"tcp_port\"},{\"description\":\"Redis版本\",\"sort\":11,\"value\":\"5.0.7\",\"key\":\"redis_version\"},{\"description\":\"Redis PID\",\"sort\":12,\"value\":\"1\",\"key\":\"process_id\"},{\"description\":\"Redis的宿主操作系统\",\"sort\":20,\"value\":\"Linux 4.4.0-151-generic x86_64\",\"key\":\"os\"},{\"description\":\"架构（32 或 64 位）\",\"sort\":21,\"value\":\"64\",\"key\":\"arch_bits\"},{\"description\":\"Redis启动天数\",\"sort\":23,\"value\":\"0\",\"key\":\"uptime_in_days\"},{\"description\":\"已连接客户端数量\",\"sort\":24,\"value\":\"4\",\"key\":\"connected_clients\"},{\"description\":\"Redis内存消耗峰值\",\"sort\":30,\"value\":\"939.51K\",\"key\":\"used_memory_peak_human\"},{\"description\":\"Redis申请的内存总量\",\"sort\":31,\"value\":\"899.52K\",\"key\":\"used_memory_human\"},{\"description\":\"系统分配的内存总量\",\"sort\":32,\"value\":\"4.41M\",\"key\":\"used_memory_rss_human\"},{\"description\":\"系统总内存\",\"sort\":33,\"value\":\"7.80G\",\"key\":\"total_system_memory_human\"},{\"description\":\"运行模式\",\"sort\":41,\"value\":\"standalone\",\"key\":\"redis_mode\"},{\"description\":\"最大内存限制\",\"sort\":42,\"value\":\"0B\",\"key\":\"maxmemory_human\"},{\"description\":\"已处理的命令数\",\"sort\":43,\"value\":\"396\",\"key\":\"total_commands_processed\"},{\"description\":\"Redis内部较实时的每秒执行命令数\",\"sort\":44,\"value\":\"0\",\"key\":\"instantaneous_ops_per_sec\"},{\"description\":\"命中次数\",\"sort\":51,\"value\":\"100\",\"key\":\"keyspace_hits\"},{\"description\":\"没命中次数\",\"sort\":52,\"value\":\"0\",\"key\":\"keyspace_misses\"},{\"description\":\"当前事件处理机制\",\"sort\":61,\"value\":\"epoll\",\"key\":\"multiplexing_api\"},{\"description\":\"是否开启aof\",\"sort\":62,\"value\":\"0\",\"key\":\"aof_enabled\"},{\"description\":\"新创建连接个数\",\"sort\":63,\"value\":\"25\",\"key\":\"total_connections_received\"},{\"description\":\"拒绝的连接个数\",\"sort\":64,\"value\":\"0\",\"key\":\"rejected_connections\"}],\"code\":200,\"success\":true,\"message\":\"获取现有可用的微服务列表成功\",\"timestamp\":1582216675382}', '1', null, null, '192.168.137.1', 'com.t4cloud.t.service.controller.SysActuatorController.redisInfo()', 'http://192.168.137.1:18080/actuator/redis/info', '[]', 'GET', '17', 'MQ入库', '2020-02-21 00:37:55', null, null);
-INSERT INTO `sys_log` VALUES ('723a86585a1a0851fadece1f459eaad7', '2', '账号密码登录', '4', '{\"result\":{\"address\":\"\",\"gender\":1,\"idCard\":\"\",\"realname\":\"管理员\",\"token\":\"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1ODIyMjc2MDMsInVzZXJuYW1lIjoiYWRtaW4ifQ.Xka526SMJvCoYAO7rXR6UNHouZ-b4t9ecQrA7LowABA\",\"workNo\":\"002\",\"createBy\":\"TeaR\",\"post\":\"\",\"phone\":\"\",\"createTime\":1493731608000,\"updateBy\":\"\",\"email\":\"\",\"username\":\"admin\",\"status\":1},\"code\":200,\"success\":true,\"message\":\"登录成功\",\"timestamp\":1582225803115}', '1', null, null, '101.229.199.185,127.0.0.1', 'com.t4cloud.t.user.controller.LoginController.loginByPwd()', 'http://172.19.186.110:18080/login/loginByPwd', '[{\"codeKey\":\"ade81f455fc0691f863688db72b723f0\",\"password\":\"123456\",\"code\":\"lzvp\",\"username\":\"admin\"}]', 'POST', '1416', 'MQ入库', '2020-02-21 03:10:03', null, null);
-INSERT INTO `sys_log` VALUES ('ed977c9e1134b6c56b96e6f42804426b', '5', '获取用户菜单权限', '4', '{\"result\":[{\"sortNo\":0,\"component\":\"dashboard/Analysis\",\"hidden\":1,\"icon\":\"home\",\"name\":\"首页\",\"description\":\"首页\",\"menuType\":0,\"perms\":\"dashboard:Analysis\",\"id\":\"1\",\"url\":\"/dashboard/analysis\",\"openType\":0,\"status\":1},{\"hidden\":1,\"createTime_unix\":1581569056000,\"description\":\"菜单权限表-菜单\",\"parentId\":\"\",\"url\":\"/system/SysPermissionList\",\"openType\":0,\"sortNo\":10,\"createBy\":\"T4Cloud\",\"component\":\"system/SysPermissionList\",\"createTime\":\"2020-02-13 12:44:16\",\"children\":[{\"sortNo\":11,\"createBy\":\"T4Cloud\",\"hidden\":1,\"createTime\":\"2020-02-13 12:44:16\",\"icon\":\"plus\",\"name\":\"菜单权限表_新增\",\"description\":\"菜单权限表-新增按钮\",\"menuType\":2,\"perms\":\"system:SysPermission:ADD\",\"id\":\"1227815647354331143\",\"parentId\":\"1227815647354331142\",\"status\":1},{\"sortNo\":11,\"createBy\":\"T4Cloud\",\"hidden\":1,\"createTime\":\"2020-02-13 12:44:16\",\"icon\":\"form\",\"name\":\"菜单权限表_修改\",\"description\":\"菜单权限表-编辑按钮\",\"menuType\":2,\"perms\":\"system:SysPermission:EDIT\",\"id\":\"1227815647354331144\",\"parentId\":\"1227815647354331142\",\"status\":1},{\"sortNo\":11,\"createBy\":\"T4Cloud\",\"hidden\":1,\"createTime\":\"2020-02-13 12:44:16\",\"icon\":\"delete\",\"name\":\"菜单权限表_删除\",\"description\":\"菜单权限表-删除按钮\",\"menuType\":2,\"perms\":\"system:SysPermission:DELETE\",\"id\":\"1227815647354331145\",\"parentId\":\"1227815647354331142\",\"status\":1},{\"sortNo\":11,\"createBy\":\"T4Cloud\",\"hidden\":1,\"createTime\":\"2020-02-13 12:44:16\",\"icon\":\"file\",\"name\":\"菜单权限表_查看\",\"description\":\"菜单权限表-详情按钮\",\"menuType\":2,\"perms\":\"system:SysPermission:VIEW\",\"id\":\"1227815647354331146\",\"parentId\":\"1227815647354331142\",\"status\":1}],\"name\":\"菜单权限表\",\"menuType\":0,\"perms\":\"system:SysPermission\",\"id\":\"1227815647354331142\",\"status\":1},{\"hidden\":1,\"createTime_unix\":1582110515000,\"description\":\"用户表-菜单\",\"url\":\"/user/SysUserList\",\"openType\":0,\"sortNo\":10,\"createBy\":\"T4Cloud\",\"component\":\"user/SysUserList\",\"createTime\":\"2020-02-19 19:08:35\",\"children\":[{\"sortNo\":11,\"createBy\":\"T4Cloud\",\"hidden\":1,\"createTime\":\"2020-02-19 19:08:35\",\"icon\":\"plus\",\"name\":\"用户表_新增\",\"description\":\"用户表-新增按钮\",\"menuType\":2,\"perms\":\"user:SysUser:ADD\",\"id\":\"1230085853179052040\",\"parentId\":\"1230085853179052039\",\"status\":1},{\"sortNo\":13,\"createBy\":\"T4Cloud\",\"hidden\":1,\"createTime\":\"2020-02-19 19:08:35\",\"icon\":\"delete\",\"name\":\"用户表_删除\",\"description\":\"用户表-删除按钮\",\"menuType\":2,\"perms\":\"user:SysUser:DELETE\",\"id\":\"1230085853179052042\",\"parentId\":\"1230085853179052039\",\"status\":1},{\"sortNo\":14,\"createBy\":\"T4Cloud\",\"hidden\":1,\"createTime\":\"2020-02-19 19:08:35\",\"icon\":\"file\",\"name\":\"用户表_查看\",\"description\":\"用户表-详情按钮\",\"menuType\":2,\"perms\":\"user:SysUser:VIEW\",\"id\":\"1230085853179052043\",\"parentId\":\"1230085853179052039\",\"status\":1}],\"name\":\"用户表\",\"menuType\":0,\"perms\":\"user:SysUser\",\"id\":\"1230085853179052039\",\"status\":1}],\"code\":200,\"success\":true,\"message\":\"用户权限查询成功\",\"timestamp\":1582225804091}', '1', '14f10842654c1e343ec2447462fc3a8d', 'admin', '101.229.199.185,127.0.0.1', 'com.t4cloud.t.system.controller.SysPermissionController.userPermission()', 'http://172.19.186.110:18081/SysPermission/userPermission', '[]', 'GET', '369', 'MQ入库', '2020-02-21 03:10:04', null, null);
-INSERT INTO `sys_log` VALUES ('efc92e845eeaac40301b82748936ce70', '5', '获取redis的运行信息', '4', '{\"result\":[{\"description\":\"当前运行端口\",\"sort\":10,\"value\":\"6379\",\"key\":\"tcp_port\"},{\"description\":\"Redis版本\",\"sort\":11,\"value\":\"5.0.7\",\"key\":\"redis_version\"},{\"description\":\"Redis PID\",\"sort\":12,\"value\":\"1\",\"key\":\"process_id\"},{\"description\":\"Redis的宿主操作系统\",\"sort\":20,\"value\":\"Linux 4.4.0-151-generic x86_64\",\"key\":\"os\"},{\"description\":\"架构（32 或 64 位）\",\"sort\":21,\"value\":\"64\",\"key\":\"arch_bits\"},{\"description\":\"Redis启动天数\",\"sort\":23,\"value\":\"0\",\"key\":\"uptime_in_days\"},{\"description\":\"已连接客户端数量\",\"sort\":24,\"value\":\"4\",\"key\":\"connected_clients\"},{\"description\":\"Redis内存消耗峰值\",\"sort\":30,\"value\":\"939.51K\",\"key\":\"used_memory_peak_human\"},{\"description\":\"Redis申请的内存总量\",\"sort\":31,\"value\":\"899.52K\",\"key\":\"used_memory_human\"},{\"description\":\"系统分配的内存总量\",\"sort\":32,\"value\":\"4.41M\",\"key\":\"used_memory_rss_human\"},{\"description\":\"系统总内存\",\"sort\":33,\"value\":\"7.80G\",\"key\":\"total_system_memory_human\"},{\"description\":\"运行模式\",\"sort\":41,\"value\":\"standalone\",\"key\":\"redis_mode\"},{\"description\":\"最大内存限制\",\"sort\":42,\"value\":\"0B\",\"key\":\"maxmemory_human\"},{\"description\":\"已处理的命令数\",\"sort\":43,\"value\":\"405\",\"key\":\"total_commands_processed\"},{\"description\":\"Redis内部较实时的每秒执行命令数\",\"sort\":44,\"value\":\"0\",\"key\":\"instantaneous_ops_per_sec\"},{\"description\":\"命中次数\",\"sort\":51,\"value\":\"102\",\"key\":\"keyspace_hits\"},{\"description\":\"没命中次数\",\"sort\":52,\"value\":\"0\",\"key\":\"keyspace_misses\"},{\"description\":\"当前事件处理机制\",\"sort\":61,\"value\":\"epoll\",\"key\":\"multiplexing_api\"},{\"description\":\"是否开启aof\",\"sort\":62,\"value\":\"0\",\"key\":\"aof_enabled\"},{\"description\":\"新创建连接个数\",\"sort\":63,\"value\":\"25\",\"key\":\"total_connections_received\"},{\"description\":\"拒绝的连接个数\",\"sort\":64,\"value\":\"0\",\"key\":\"rejected_connections\"}],\"code\":200,\"success\":true,\"message\":\"获取现有可用的微服务列表成功\",\"timestamp\":1582216698016}', '1', null, null, '192.168.137.1', 'com.t4cloud.t.service.controller.SysActuatorController.redisInfo()', 'http://192.168.137.1:18080/actuator/redis/info', '[]', 'GET', '14', 'MQ入库', '2020-02-21 00:38:18', null, null);
-INSERT INTO `sys_log` VALUES ('f84598b2d7e530a680e9be6618ccd061', '2', '图片验证码获取', '4', '{\"result\":{\"code\":\"LZVp\",\"key\":\"ade81f455fc0691f863688db72b723f0\"},\"code\":200,\"success\":true,\"message\":\"验证码获取成功\",\"timestamp\":1582225799378}', '1', null, null, '101.229.199.185,127.0.0.1', 'com.t4cloud.t.user.controller.LoginController.getCheckCode()', 'http://172.19.186.110:18080/login/checkCode', '[]', 'GET', '45', 'MQ入库', '2020-02-21 03:09:59', null, null);
 
 -- ----------------------------
 -- Table structure for sys_mock
@@ -140,13 +135,13 @@ DROP TABLE IF EXISTS `sys_permission`;
 CREATE TABLE `sys_permission` (
   `id` varchar(32) NOT NULL COMMENT '主键id',
   `parent_id` varchar(32) DEFAULT NULL COMMENT '父id',
-  `name` varchar(100) DEFAULT NULL COMMENT '菜单标题',
+  `name` varchar(100) NOT NULL COMMENT '菜单标题',
   `url` varchar(255) DEFAULT NULL COMMENT '路径',
   `open_type` tinyint(2) DEFAULT NULL COMMENT '打开方式（0-框架内打开，1-新的页面打开）',
   `component` varchar(255) DEFAULT NULL COMMENT '组件',
-  `menu_type` int(11) DEFAULT NULL COMMENT '菜单类型(0:一级菜单; 1:子菜单:2:按钮权限)',
+  `menu_type` int(11) NOT NULL COMMENT '菜单类型(0:一级菜单; 1:子菜单:2:按钮权限)',
   `perms` varchar(255) DEFAULT NULL COMMENT '权限编码',
-  `sort_no` double(8,2) DEFAULT NULL COMMENT '菜单排序',
+  `sort_no` double(8,2) NOT NULL DEFAULT '10.00' COMMENT '菜单排序',
   `icon` varchar(100) DEFAULT NULL COMMENT '菜单图标',
   `description` varchar(255) DEFAULT NULL COMMENT '描述',
   `hidden` tinyint(2) DEFAULT '1' COMMENT '隐藏路由: 0-隐藏,1-展示',
@@ -166,21 +161,68 @@ CREATE TABLE `sys_permission` (
 -- ----------------------------
 -- Records of sys_permission
 -- ----------------------------
-INSERT INTO `sys_permission` VALUES ('1227815647354331142', '', '菜单权限表', '/system/SysPermissionList', '0', 'system/SysPermissionList', '0', 'system:SysPermission', '10.00', null, '菜单权限表-菜单', '1', '1', 'T4Cloud', '2020-02-13 12:44:16', null, null);
+INSERT INTO `sys_permission` VALUES ('1227815647354331142', '', '菜单权限', '/system/SysPermissionList', '0', 'system/SysPermissionList', '0', 'system:SysPermission:BASE', '11.00', 'el-icon-setting', '菜单权限表-菜单', '1', '1', 'T4Cloud', '2020-02-13 12:44:16', 'admin', '2020-02-26 17:40:03');
 INSERT INTO `sys_permission` VALUES ('1227815647354331143', '1227815647354331142', '菜单权限表_新增', null, null, null, '2', 'system:SysPermission:ADD', '11.00', 'plus', '菜单权限表-新增按钮', '1', '1', 'T4Cloud', '2020-02-13 12:44:16', null, null);
 INSERT INTO `sys_permission` VALUES ('1227815647354331144', '1227815647354331142', '菜单权限表_修改', null, null, null, '2', 'system:SysPermission:EDIT', '11.00', 'form', '菜单权限表-编辑按钮', '1', '1', 'T4Cloud', '2020-02-13 12:44:16', null, null);
 INSERT INTO `sys_permission` VALUES ('1227815647354331145', '1227815647354331142', '菜单权限表_删除', null, null, null, '2', 'system:SysPermission:DELETE', '11.00', 'delete', '菜单权限表-删除按钮', '1', '1', 'T4Cloud', '2020-02-13 12:44:16', null, null);
 INSERT INTO `sys_permission` VALUES ('1227815647354331146', '1227815647354331142', '菜单权限表_查看', null, null, null, '2', 'system:SysPermission:VIEW', '11.00', 'file', '菜单权限表-详情按钮', '1', '1', 'T4Cloud', '2020-02-13 12:44:16', null, null);
-INSERT INTO `sys_permission` VALUES ('1228186789386715143', null, 'Mock数据', '/mock/SysMockList', '0', 'mock/SysMockList', '0', 'mock:SysMock', '10.00', null, 'Mock数据-菜单', '1', '1', 'T4Cloud', '2020-02-14 13:20:09', null, null);
+INSERT INTO `sys_permission` VALUES ('1228186789386715143', null, 'Mock数据', '/mock/SysMockList', '0', 'mock/SysMockList', '0', 'mock:SysMock:BASE', '10.00', null, 'Mock数据-菜单', '1', '1', 'T4Cloud', '2020-02-14 13:20:09', null, null);
 INSERT INTO `sys_permission` VALUES ('1228186789386715144', '1228186789386715143', 'Mock数据_新增', null, null, null, '2', 'mock:SysMock:ADD', '11.00', 'plus', 'Mock数据-新增按钮', '1', '1', 'T4Cloud', '2020-02-14 13:20:09', null, null);
 INSERT INTO `sys_permission` VALUES ('1228186789386715145', '1228186789386715143', 'Mock数据_修改', null, null, null, '2', 'mock:SysMock:EDIT', '12.00', 'form', 'Mock数据-编辑按钮', '1', '1', 'T4Cloud', '2020-02-14 13:20:09', null, null);
 INSERT INTO `sys_permission` VALUES ('1228186789386715146', '1228186789386715143', 'Mock数据_删除', null, null, null, '2', 'mock:SysMock:DELETE', '13.00', 'delete', 'Mock数据-删除按钮', '1', '1', 'T4Cloud', '2020-02-14 13:20:10', null, null);
 INSERT INTO `sys_permission` VALUES ('1228186789386715147', '1228186789386715143', 'Mock数据_查看', null, null, null, '2', 'mock:SysMock:VIEW', '14.00', 'file', 'Mock数据-详情按钮', '1', '1', 'T4Cloud', '2020-02-14 13:20:10', null, null);
-INSERT INTO `sys_permission` VALUES ('1230085853179052039', null, '用户表', '/user/SysUserList', '0', 'user/SysUserList', '0', 'user:SysUser', '10.00', null, '用户表-菜单', '1', '1', 'T4Cloud', '2020-02-19 19:08:35', null, null);
+INSERT INTO `sys_permission` VALUES ('1230085853179052039', null, '用户管理', '/user/SysUserList', '0', 'user/SysUserList', '0', 'user:SysUser:BASE', '10.00', null, '用户表-菜单', '1', '1', 'T4Cloud', '2020-02-19 19:08:35', null, null);
 INSERT INTO `sys_permission` VALUES ('1230085853179052040', '1230085853179052039', '用户表_新增', null, null, null, '2', 'user:SysUser:ADD', '11.00', 'plus', '用户表-新增按钮', '1', '1', 'T4Cloud', '2020-02-19 19:08:35', null, null);
 INSERT INTO `sys_permission` VALUES ('1230085853179052041', '1230085853179052039', '用户表_修改', null, null, null, '2', 'user:SysUser:EDIT', '12.00', 'form', '用户表-编辑按钮', '1', '1', 'T4Cloud', '2020-02-19 19:08:35', null, null);
 INSERT INTO `sys_permission` VALUES ('1230085853179052042', '1230085853179052039', '用户表_删除', null, null, null, '2', 'user:SysUser:DELETE', '13.00', 'delete', '用户表-删除按钮', '1', '1', 'T4Cloud', '2020-02-19 19:08:35', null, null);
 INSERT INTO `sys_permission` VALUES ('1230085853179052043', '1230085853179052039', '用户表_查看', null, null, null, '2', 'user:SysUser:VIEW', '14.00', 'file', '用户表-详情按钮', '1', '1', 'T4Cloud', '2020-02-19 19:08:35', null, null);
+INSERT INTO `sys_permission` VALUES ('1230768750940712972', null, '角色管理', '/system/SysRole', '0', 'system/SysRoleList', '0', 'system:SysRole:BASE', '10.00', null, '角色表-菜单', '1', '1', 'T4Cloud', '2020-02-21 16:19:29', null, null);
+INSERT INTO `sys_permission` VALUES ('1230768750940712973', '1230768750940712972', '角色表_新增', null, null, null, '2', 'system:SysRole:ADD', '11.00', 'plus', '角色表-新增按钮', '1', '1', 'T4Cloud', '2020-02-21 16:19:29', null, null);
+INSERT INTO `sys_permission` VALUES ('1230768750940712974', '1230768750940712972', '角色表_修改', null, null, null, '2', 'system:SysRole:EDIT', '12.00', 'form', '角色表-编辑按钮', '1', '1', 'T4Cloud', '2020-02-21 16:19:30', null, null);
+INSERT INTO `sys_permission` VALUES ('1230768750940712975', '1230768750940712972', '角色表_删除', null, null, null, '2', 'system:SysRole:DELETE', '13.00', 'delete', '角色表-删除按钮', '1', '1', 'T4Cloud', '2020-02-21 16:19:30', null, null);
+INSERT INTO `sys_permission` VALUES ('1230768750940712976', '1230768750940712972', '角色表_查看', null, null, null, '2', 'system:SysRole:VIEW', '14.00', 'file', '角色表-详情按钮', '1', '1', 'T4Cloud', '2020-02-21 16:19:30', null, null);
+INSERT INTO `sys_permission` VALUES ('1230769977841688588', null, '角色权限表', '/system/SysRolePermission', '0', 'system/SysRolePermissionList', '0', 'system:SysRolePermission:BASE', '10.00', null, '角色权限表-菜单', '0', '1', 'T4Cloud', '2020-02-21 16:23:35', null, null);
+INSERT INTO `sys_permission` VALUES ('1230769977841688589', '1230769977841688588', '角色权限表_新增', null, null, null, '2', 'system:SysRolePermission:ADD', '11.00', 'plus', '角色权限表-新增按钮', '1', '1', 'T4Cloud', '2020-02-21 16:23:35', null, null);
+INSERT INTO `sys_permission` VALUES ('1230769977841688590', '1230769977841688588', '角色权限表_修改', null, null, null, '2', 'system:SysRolePermission:EDIT', '12.00', 'form', '角色权限表-编辑按钮', '1', '1', 'T4Cloud', '2020-02-21 16:23:35', null, null);
+INSERT INTO `sys_permission` VALUES ('1230769977841688591', '1230769977841688588', '角色权限表_删除', null, null, null, '2', 'system:SysRolePermission:DELETE', '13.00', 'delete', '角色权限表-删除按钮', '1', '1', 'T4Cloud', '2020-02-21 16:23:35', null, null);
+INSERT INTO `sys_permission` VALUES ('1230769977841688592', '1230769977841688588', '角色权限表_查看', null, null, null, '2', 'system:SysRolePermission:VIEW', '14.00', 'file', '角色权限表-详情按钮', '1', '1', 'T4Cloud', '2020-02-21 16:23:35', null, null);
+INSERT INTO `sys_permission` VALUES ('1231177799351967764', '1230085853179052039', '用户表_导出', null, null, null, '2', 'user:SysUser:EXPORT', '15.00', 'export', '用户表-导出按钮', '1', '1', 'T4Cloud', '2020-02-22 19:24:15', null, null);
+INSERT INTO `sys_permission` VALUES ('1231177799351967765', '1230085853179052039', '用户表_导入', null, null, null, '2', 'user:SysUser:IMPORT', '16.00', 'import', '用户表-导入按钮', '1', '1', 'T4Cloud', '2020-02-22 19:24:15', null, null);
+INSERT INTO `sys_permission` VALUES ('1231551481274441743', null, '资源管理表', '/support/SysResource', '0', 'support/SysResourceList', '0', 'support:SysResource:BASE', '10.00', null, '资源管理表-菜单', '1', '1', 'TeaR', '2020-02-23 20:09:19', null, null);
+INSERT INTO `sys_permission` VALUES ('1231551481274441744', '1231551481274441743', '资源管理表_新增', null, null, null, '2', 'support:SysResource:ADD', '11.00', 'plus', '资源管理表-新增按钮', '1', '1', 'TeaR', '2020-02-23 20:09:19', null, null);
+INSERT INTO `sys_permission` VALUES ('1231551481274441745', '1231551481274441743', '资源管理表_修改', null, null, null, '2', 'support:SysResource:EDIT', '12.00', 'form', '资源管理表-编辑按钮', '1', '1', 'TeaR', '2020-02-23 20:09:19', null, null);
+INSERT INTO `sys_permission` VALUES ('1231551481274441746', '1231551481274441743', '资源管理表_删除', null, null, null, '2', 'support:SysResource:DELETE', '13.00', 'delete', '资源管理表-删除按钮', '1', '1', 'TeaR', '2020-02-23 20:09:19', null, null);
+INSERT INTO `sys_permission` VALUES ('1231551481274441747', '1231551481274441743', '资源管理表_查看', null, null, null, '2', 'support:SysResource:VIEW', '14.00', 'file', '资源管理表-详情按钮', '1', '1', 'TeaR', '2020-02-23 20:09:19', null, null);
+INSERT INTO `sys_permission` VALUES ('1231551481274441748', '1231551481274441743', '资源管理表_导出', null, null, null, '2', 'support:SysResource:EXPORT', '15.00', 'export', '资源管理表-导出按钮', '1', '1', 'TeaR', '2020-02-23 20:09:19', null, null);
+INSERT INTO `sys_permission` VALUES ('1231551481274441749', '1231551481274441743', '资源管理表_导入', null, null, null, '2', 'support:SysResource:IMPORT', '16.00', 'import', '资源管理表-导入按钮', '1', '1', 'TeaR', '2020-02-23 20:09:19', null, null);
+INSERT INTO `sys_permission` VALUES ('26d525cc2f53f2a82d5aa98936d40381', '', '测试', '/test/test', '0', '/test/test', '0', null, '13.00', 'el-icon-user-solid', null, '0', '1', 'admin', '2020-02-25 14:33:52', 'admin', '2020-02-25 21:04:06');
+INSERT INTO `sys_permission` VALUES ('e1bbd3d6df87333f0b46b880e81b4e0c', '26d525cc2f53f2a82d5aa98936d40381', '子菜单', 'test/test/zi', '0', 'test/test/zi', '1', null, '0.00', 'el-icon-eleme', null, '0', '0', 'admin', '2020-02-26 16:03:15', null, null);
+
+-- ----------------------------
+-- Table structure for sys_resource
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_resource`;
+CREATE TABLE `sys_resource` (
+  `id` varchar(32) NOT NULL COMMENT '主键id',
+  `name` varchar(100) NOT NULL COMMENT '资源名称',
+  `path` varchar(500) NOT NULL COMMENT '相对路径',
+  `url` varchar(1000) NOT NULL COMMENT '完整资源路径',
+  `bucket` varchar(50) DEFAULT NULL COMMENT '桶名',
+  `mime_type` varchar(50) DEFAULT NULL COMMENT '资源类型',
+  `policy` tinyint(2) NOT NULL DEFAULT '1' COMMENT '权限策略（1-公开，2-私有）',
+  `expire_time` datetime DEFAULT NULL COMMENT '失效时间',
+  `count` int(8) NOT NULL DEFAULT '0' COMMENT '总访问次数',
+  `create_by` varchar(32) DEFAULT NULL COMMENT '创建人',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(32) DEFAULT NULL COMMENT '最后访问人',
+  `update_time` datetime DEFAULT NULL COMMENT '最后访问时间',
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE KEY `path` (`path`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='资源管理表';
+
+-- ----------------------------
+-- Records of sys_resource
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -226,21 +268,39 @@ CREATE TABLE `sys_role_permission` (
 -- ----------------------------
 -- Records of sys_role_permission
 -- ----------------------------
-INSERT INTO `sys_role_permission` VALUES ('', null, null, null, '2020-02-19 19:12:35', null, null);
-INSERT INTO `sys_role_permission` VALUES ('1', '1', '1227815647354331142', 'TeaR', '2020-02-13 12:45:27', null, null);
-INSERT INTO `sys_role_permission` VALUES ('15', '2', '1227815647354331142', 'TeaR', '2020-02-13 12:45:27', null, null);
-INSERT INTO `sys_role_permission` VALUES ('16', '2', '1227815647354331143', 'TeaR', '2020-02-13 12:45:27', null, null);
-INSERT INTO `sys_role_permission` VALUES ('17', '2', '1227815647354331144', 'TeaR', '2020-02-13 12:45:27', null, null);
-INSERT INTO `sys_role_permission` VALUES ('18', '2', '1227815647354331145', 'TeaR', '2020-02-13 12:45:27', null, null);
-INSERT INTO `sys_role_permission` VALUES ('19', '2', '1227815647354331146', 'TeaR', '2020-02-13 12:45:27', null, null);
-INSERT INTO `sys_role_permission` VALUES ('2', '1', '1227815647354331143', 'TeaR', '2020-02-13 12:45:27', null, null);
-INSERT INTO `sys_role_permission` VALUES ('20', '2', '1230085853179052039', 'TeaR', '2020-02-19 19:12:35', null, null);
-INSERT INTO `sys_role_permission` VALUES ('21', '2', '1230085853179052040', 'TeaR', '2020-02-19 19:12:35', null, null);
-INSERT INTO `sys_role_permission` VALUES ('23', '2', '1230085853179052042', 'TeaR', '2020-02-19 19:12:35', null, null);
-INSERT INTO `sys_role_permission` VALUES ('24', '2', '1230085853179052043', 'TeaR', '2020-02-19 19:12:35', null, null);
-INSERT INTO `sys_role_permission` VALUES ('3', '1', '1227815647354331144', 'TeaR', '2020-02-13 12:45:27', null, null);
-INSERT INTO `sys_role_permission` VALUES ('4', '1', '1227815647354331145', 'TeaR', '2020-02-13 12:45:27', null, null);
-INSERT INTO `sys_role_permission` VALUES ('5', '1', '1227815647354331146', 'TeaR', '2020-02-13 12:45:27', null, null);
+INSERT INTO `sys_role_permission` VALUES ('001', '1', '1227815647354331142', 'TeaR', '2020-02-13 12:45:27', null, null);
+INSERT INTO `sys_role_permission` VALUES ('002', '1', '1227815647354331143', 'TeaR', '2020-02-13 12:45:27', null, null);
+INSERT INTO `sys_role_permission` VALUES ('003', '1', '1227815647354331144', 'TeaR', '2020-02-13 12:45:27', null, null);
+INSERT INTO `sys_role_permission` VALUES ('004', '1', '1227815647354331145', 'TeaR', '2020-02-13 12:45:27', null, null);
+INSERT INTO `sys_role_permission` VALUES ('005', '1', '1227815647354331146', 'TeaR', '2020-02-13 12:45:27', null, null);
+INSERT INTO `sys_role_permission` VALUES ('015', '2', '1227815647354331142', 'TeaR', '2020-02-13 12:45:27', null, null);
+INSERT INTO `sys_role_permission` VALUES ('016', '2', '1227815647354331143', 'TeaR', '2020-02-13 12:45:27', null, null);
+INSERT INTO `sys_role_permission` VALUES ('017', '2', '1227815647354331144', 'TeaR', '2020-02-13 12:45:27', null, null);
+INSERT INTO `sys_role_permission` VALUES ('018', '2', '1227815647354331145', 'TeaR', '2020-02-13 12:45:27', null, null);
+INSERT INTO `sys_role_permission` VALUES ('019', '2', '1227815647354331146', 'TeaR', '2020-02-13 12:45:27', null, null);
+INSERT INTO `sys_role_permission` VALUES ('020', '2', '1230085853179052039', 'TeaR', '2020-02-19 19:12:35', null, null);
+INSERT INTO `sys_role_permission` VALUES ('021', '2', '1230085853179052040', 'TeaR', '2020-02-19 19:12:35', null, null);
+INSERT INTO `sys_role_permission` VALUES ('023', '2', '1230085853179052042', 'TeaR', '2020-02-19 19:12:35', null, null);
+INSERT INTO `sys_role_permission` VALUES ('024', '2', '1230085853179052043', 'TeaR', '2020-02-19 19:12:35', null, null);
+INSERT INTO `sys_role_permission` VALUES ('1230768750940712977', '2', '1230768750940712972', 'T4Cloud', '2020-02-21 16:19:30', null, null);
+INSERT INTO `sys_role_permission` VALUES ('1230768750940712978', '2', '1230768750940712973', 'T4Cloud', '2020-02-21 16:19:30', null, null);
+INSERT INTO `sys_role_permission` VALUES ('1230768750940712979', '2', '1230768750940712974', 'T4Cloud', '2020-02-21 16:19:30', null, null);
+INSERT INTO `sys_role_permission` VALUES ('1230768750940712980', '2', '1230768750940712975', 'T4Cloud', '2020-02-21 16:19:30', null, null);
+INSERT INTO `sys_role_permission` VALUES ('1230768750940712981', '2', '1230768750940712976', 'T4Cloud', '2020-02-21 16:19:30', null, null);
+INSERT INTO `sys_role_permission` VALUES ('1230769977841688593', '2', '1230769977841688588', 'T4Cloud', '2020-02-21 16:23:35', null, null);
+INSERT INTO `sys_role_permission` VALUES ('1230769977841688594', '2', '1230769977841688589', 'T4Cloud', '2020-02-21 16:23:35', null, null);
+INSERT INTO `sys_role_permission` VALUES ('1230769977841688595', '2', '1230769977841688590', 'T4Cloud', '2020-02-21 16:23:35', null, null);
+INSERT INTO `sys_role_permission` VALUES ('1230769977841688596', '2', '1230769977841688591', 'T4Cloud', '2020-02-21 16:23:35', null, null);
+INSERT INTO `sys_role_permission` VALUES ('1230769977841688597', '2', '1230769977841688592', 'T4Cloud', '2020-02-21 16:23:35', null, null);
+INSERT INTO `sys_role_permission` VALUES ('1231177799351967771', '2', '1231177799351967764', 'T4Cloud', '2020-02-22 19:24:21', null, null);
+INSERT INTO `sys_role_permission` VALUES ('1231177799351967772', '2', '1231177799351967765', 'T4Cloud', '2020-02-22 19:24:21', null, null);
+INSERT INTO `sys_role_permission` VALUES ('1231551481274441750', '2', '1231551481274441743', 'TeaR', '2020-02-23 20:09:19', null, null);
+INSERT INTO `sys_role_permission` VALUES ('1231551481274441751', '2', '1231551481274441744', 'TeaR', '2020-02-23 20:09:19', null, null);
+INSERT INTO `sys_role_permission` VALUES ('1231551481274441752', '2', '1231551481274441745', 'TeaR', '2020-02-23 20:09:19', null, null);
+INSERT INTO `sys_role_permission` VALUES ('1231551481274441753', '2', '1231551481274441746', 'TeaR', '2020-02-23 20:09:19', null, null);
+INSERT INTO `sys_role_permission` VALUES ('1231551481274441754', '2', '1231551481274441747', 'TeaR', '2020-02-23 20:09:19', null, null);
+INSERT INTO `sys_role_permission` VALUES ('1231551481274441755', '2', '1231551481274441748', 'TeaR', '2020-02-23 20:09:20', null, null);
+INSERT INTO `sys_role_permission` VALUES ('1231551481274441756', '2', '1231551481274441749', 'TeaR', '2020-02-23 20:09:20', null, null);
 
 -- ----------------------------
 -- Table structure for sys_user
@@ -275,8 +335,9 @@ CREATE TABLE `sys_user` (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES ('1', 'TeaR', 'TeaR', '700961d246e6ddf1', 'SDFyT0h3', '001', null, '2018-12-05 00:00:00', '1', 'zqr.it@t4cloud.com', '17800001111', null, null, '上海市浦东新区陆家嘴', '1', 'TeaR', '2017-05-02 21:26:48', null, null);
-INSERT INTO `sys_user` VALUES ('14f10842654c1e343ec2447462fc3a8d', 'admin', '管理员', 'cb362cfeefbf3d8d', 'RCGTeGiH', '002', null, null, '1', '', '', '', '', '', '1', 'TeaR', '2017-05-02 21:26:48', '', null);
+INSERT INTO `sys_user` VALUES ('1', 'TeaR', 'TeaR', '700961d246e6ddf1', 'SDFyT0h3', '001', 'https://git.t4cloud.com/img/favicon.png', '2018-12-05 00:00:00', '1', 'zqr.it@t4cloud.com', '17800001111', null, null, '上海市浦东新区陆家嘴', '1', 'TeaR', '2017-05-02 21:26:48', null, null);
+INSERT INTO `sys_user` VALUES ('14f10842654c1e343ec2447462fc3a8d', 'admin', '管理员', 'cb362cfeefbf3d8d', 'RCGTeGiH', '002', 'https://git.t4cloud.com/img/favicon.png', null, '1', 'TEAR1', '', '', '', '', '1', 'TeaR', '2017-05-02 21:26:48', '', null);
+INSERT INTO `sys_user` VALUES ('a72406a4656aa48db91ca3bf07d5bd43', 'TESTQ', 'TESTQ', 'TESTQ', null, 'TESTQ', null, '2020-02-06 00:00:00', '2', 'TESTQ', 'TESTQ', null, null, 'TESTQ', '1', 'admin', '2020-02-24 23:52:38', null, null);
 
 -- ----------------------------
 -- Table structure for sys_user_role

@@ -1,9 +1,8 @@
 package com.t4cloud.t.system.mapper;
 
 
-import com.t4cloud.t.system.entity.SysPermission;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.t4cloud.t.system.entity.SysPermission;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

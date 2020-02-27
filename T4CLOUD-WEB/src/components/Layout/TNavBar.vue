@@ -1,4 +1,4 @@
-<template>
+template>
   <div class="navBarWrap">
     <div class="headDiv">
       <div class="menuicon-box" @click="handleIsOpen" :style="{'transform': (!isCollapse ? 'rotate(0deg)':'rotate(180deg)')}">
@@ -30,7 +30,7 @@
 </template>
 <script>
 import { mapGetters, mapActions } from "vuex";
-import ForgetPassword from "../../views/user/Modals/ForgetPasswordModal";
+import ForgetPassword from "../../views/user/modals/ForgetPasswordModal";
 import TSettingDrawer from "../Setting/TSettingDrawer"
 
 export default {
@@ -103,10 +103,10 @@ export default {
         this.isShowPassWordCom = true;
       } else if (command == 'loginOut') {
         this.Logout().then(res => {
-          if (res.code == 200) {
+          if (res.success) {
             this.$router.push('/user/login');
           }
-          this.$message(res.message);
+          this.$message.success(res.message);
         });
       }
     }

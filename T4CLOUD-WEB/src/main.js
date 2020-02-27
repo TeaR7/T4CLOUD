@@ -10,16 +10,18 @@ import VueI18n from 'vue-i18n'
 import '@/permission' // permission control
 import Storage from 'vue-ls'
 import '../src/styles/element-variables.scss'
+import hasPermission from '@/utils/hasPermission'
 Vue.use(Storage, config.storageOptions)
 Vue.use(VueI18n)
 Vue.use(ElementUI)
+Vue.use(hasPermission)
 import { ACCESS_TOKEN } from "@/store/mutation-types"
 // import axios from 'axios';
 // import http from './http/http';
 
 
 // axios 拦截器
-import './http/axios'
+// import './http/axios'
 
 // 对后端接口 进行全局注册
 // Vue.prototype.$api = api;

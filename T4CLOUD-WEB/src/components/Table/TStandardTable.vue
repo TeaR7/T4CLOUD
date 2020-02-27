@@ -4,45 +4,56 @@
       <!-- <el-alert type="info" :show-icon="true"> -->
       <div slot="message">
         已选择&nbsp;<a style="font-weight: 600">{{ selectedRows.length }}</a>项&nbsp;&nbsp;
-        <template v-for="(item, index) in needTotalList">
-          <!-- v-if="item.needTotal" -->
-          {{ item.title }} 总计&nbsp;
-          <a :key="index" style="font-weight: 600">
-            {{ item.customRender ? item.customRender(item.total) : item.total }}
-          </a>&nbsp;&nbsp;
-        </template>
-        <a style="margin-left: 24px" @click="onClearSelected">清空</a>
+<!--        <template v-for="(item, index) in needTotalList">-->
+<!--          &lt;!&ndash; v-if="item.needTotal" &ndash;&gt;-->
+<!--          {{ item.title }} 总计&nbsp;-->
+<!--          <a :key="index" style="font-weight: 600">-->
+<!--            {{ item.customRender ? item.customRender(item.total) : item.total }}-->
+<!--          </a>&nbsp;&nbsp;-->
+<!--        </template>-->
+        <a style="margin-left: 24px" @click="handleClearTableSelected">清空</a>
+        <!-- <el-popover placement="top" width="160" v-model="visible">
+          <p>确定删除吗？</p>
+          <div style="text-align: right; margin: 0">
+            <el-button size="mini" type="text" @click="visible = false">取消</el-button>
+            <el-button type="primary" size="mini" @click="visible = false">确定</el-button>
+          </div>
+          <el-button slot="reference" type="primary" size="mini">删除</el-button>
+        </el-popover> -->
       </div>
+
       <!-- </el-alert> -->
     </div>
-    <!-- <el-table
-      :size="size"
-      :bordered="bordered"
-      :loading="loading"
-      :columns="columns"
-      :dataSource="current"
-      :rowKey="rowKey"
-      :pagination="pagination"
-      :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: updateSelect }"
-    > -->
-    <el-table :data="tableData" stripe border v-loading="loading" :header-cell-class-name="headCellStyle">
+
+    <el-table :data="tableData" stripe border v-loading="loading" :header-cell-class-name="headCellStyle" ref="multipleTable"
+      @selection-change="handleSelectRowChange">
+      <el-table-column type="selection" width="55" align="center">
+      </el-table-column>
       <template v-for="item in tableColumn">
         <el-table-column :prop="item.key" :label="item.name" :key="item.key" :width="item.width" align="center">
         </el-table-column>
       </template>
       <template>
-        <el-table-column prop="options" label="操作" align="center" width="150">
+        <el-table-column prop="options" label="操作" align="center" width="200">
           <template slot-scope="scope">
-            <el-button type="primary" size="mini" @click="editClick(scope.row.id)">编辑</el-button>
+            <el-button type="primary" size="mini" @click="editClick(scope.row)">编辑</el-button>
+            <el-popover placement="top" width="160" v-model="scope.row.deleteVisible">
+              <p>确定删除吗？</p>
+              <div style="text-align: right; margin: 0">
+                <el-button size="mini"  @click="scope.row.deleteVisible = false">取消</el-button>
+                <el-button type="primary" size="mini" @click="deleteClick(scope.row.id)">确定</el-button>
+              </div>
+              <el-button slot="reference" type="primary" size="mini" style="margin-left:10px;">删除</el-button>
+            </el-popover>
           </template>
         </el-table-column>
       </template>
     </el-table>
     <div class="footer-container clearfix">
       <div class="pagination-container fr">
-        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
-          :page-size="currentSize" :page-sizes="[5, 10, 20, 30, 40]" layout="total, sizes, prev, pager, next, jumper"
-          :total="totalSize">
+        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="ipagination.current"
+          :page-size="ipagination.pageSize" :page-sizes="ipagination.pageSizeOptions" layout="total, sizes, prev, pager, next, jumper"
+          :total="ipagination.total">
         </el-pagination>
       </div>
     </div>
@@ -54,12 +65,7 @@ export default {
   name: "TStandardTable",
   data() {
     return {
-      loading: false,
-      needTotalList: [],
-      selectedRowKeys: [],
-      currentPage: 1,
-      currentSize: 5,
-      totalSize: 0,
+      needTotalList: []
     }
   },
   props: {
@@ -69,28 +75,58 @@ export default {
     tableData: {
       type: Array
     },
+    loading: {
+      type: Boolean
+    },
     selectedRows: {
       type: Array,
-      default: null
+      default() {
+        return []
+      }
+    },
+    ipagination: {
+      type: Object
     }
+  },
+  created() {
+    this.selectedRows.forEach(row => {
+      this.$refs.multipleTable.toggleRowSelection(row);
+    })
   },
   methods: {
     headCellStyle() {
       return 'headCellStyle'
     },
-    onClearSelected() {
-      this.selectedRowKeys = []
-      // this.updateSelect([], [])
-    },
     // 编辑
-    editClick() {
-
+    editClick(record) {
+      this.$emit('onEdit', record)
     },
+    // 删除
+    deleteClick(id) {
+      this.deleteVisible = false
+      this.$emit('onDelete', [id])
+    },
+    // 清除选中的表格
+    handleClearTableSelected() {
+      this.$refs.multipleTable.clearSelection();
+    },
+    // 选择数据回调
+    handleSelectRowChange(val) {
+      this.$emit('onSelectRowChange', val)
+    },
+    //分页插件change事件-current
     handleCurrentChange(val) {
-      this.currentPage = val
+      this.$emit('pageSizeChange', {
+        current: val,
+        pageSize: this.ipagination.pageSize,
+      })
     },
+    //分页插件change事件-size
     handleSizeChange(val) {
-      this.currentSize = val
+      this.$emit('pageSizeChange', {
+        current: this.ipagination.current,
+        pageSize: val,
+      })
     }
   }
 }

@@ -2,7 +2,7 @@ server:
   port: 8010
 spring:
   application:
-    name: @project.name@
+    name: '@project.name@'
   cloud:
     nacos:
       discovery:
@@ -16,6 +16,14 @@ spring:
         locator:
           # 让gateway通过服务发现组件找到其他的微服务
           enabled: true
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowCredentials: true
+            allowedOrigins: "*"
+            allowedHeaders: "*"
+            allowedMethods:
+              - '*'
 management:
   endpoints:
     web:

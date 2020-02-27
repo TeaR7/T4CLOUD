@@ -3,7 +3,6 @@ package com.t4cloud.t.mock.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.t4cloud.t.base.annotation.AutoLog;
 import com.t4cloud.t.base.controller.T4Controller;
 import com.t4cloud.t.base.entity.dto.R;
@@ -37,7 +36,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @Slf4j
-@Api(value = "Mock数据", tags = "Mock数据接口")
+@Api(value = "Mock数据", tags = "Mock管理接口", position = 2)
 @RequestMapping("/SysMock")
 public class SysMockController extends T4Controller<SysMock, ISysMockService> {
 
@@ -46,9 +45,8 @@ public class SysMockController extends T4Controller<SysMock, ISysMockService> {
      */
     @AutoLog(value = "Mock数据-详情", operateType = 4)
     @GetMapping("/detail")
-    @ApiOperationSupport(order = 1)
-    @RequiresPermissions(value = {"mock:SysMock:VIEW"})
-    @ApiOperation(value = "Mock数据-详情", notes = "传入sysMock")
+    @RequiresPermissions("mock:SysMock:VIEW")
+    @ApiOperation(position = 1, value = "Mock数据-详情", notes = "传入sysMock")
     public R<SysMock> detail(SysMock sysMock, HttpServletRequest req) {
         QueryWrapper<SysMock> sysMockQueryWapper = T4Query.initQuery(sysMock, req.getParameterMap());
         SysMock detail = service.getOne(sysMockQueryWapper);
@@ -60,9 +58,8 @@ public class SysMockController extends T4Controller<SysMock, ISysMockService> {
      */
     @AutoLog(value = "Mock数据-全部列表", operateType = 4)
     @GetMapping("/list")
-    @ApiOperationSupport(order = 2)
-    @RequiresPermissions(value = {"mock:SysMock:VIEW"})
-    @ApiOperation(value = "Mock数据-全部列表", notes = "传入sysMock")
+    @RequiresPermissions("mock:SysMock:VIEW")
+    @ApiOperation(position = 2, value = "Mock数据-全部列表", notes = "传入sysMock")
     public R<List<SysMock>> list(SysMock sysMock, HttpServletRequest req) {
         QueryWrapper<SysMock> sysMockQueryWapper = T4Query.initQuery(sysMock, req.getParameterMap());
         List<SysMock> list = service.list(sysMockQueryWapper);
@@ -74,9 +71,8 @@ public class SysMockController extends T4Controller<SysMock, ISysMockService> {
      */
     @AutoLog(value = "Mock数据-分页查询", operateType = 4)
     @GetMapping("/page")
-    @ApiOperationSupport(order = 3)
-    @RequiresPermissions(value = {"mock:SysMock:VIEW"})
-    @ApiOperation(value = "Mock数据-分页查询", notes = "传入sysMock")
+    @RequiresPermissions("mock:SysMock:VIEW")
+    @ApiOperation(position = 3, value = "Mock数据-分页查询", notes = "传入sysMock")
     public R<IPage<SysMock>> page(SysMock sysMock,
                                   @ApiParam(name = "pageNo", required = false)
                                   @RequestParam(name = "pageNo", required = false, defaultValue = "1") Integer pageNo,
@@ -93,9 +89,8 @@ public class SysMockController extends T4Controller<SysMock, ISysMockService> {
      */
     @AutoLog(value = "Mock数据-新增", operateType = 1)
     @PutMapping("/save")
-    @ApiOperationSupport(order = 4)
-    @RequiresPermissions(value = {"mock:SysMock:ADD"})
-    @ApiOperation(value = "Mock数据-新增", notes = "传入sysMock")
+    @RequiresPermissions("mock:SysMock:ADD")
+    @ApiOperation(position = 4, value = "Mock数据-新增", notes = "传入sysMock")
     public R save(@Valid @RequestBody SysMock sysMock) {
         return R.ok("Mock数据-新增成功", service.save(sysMock));
     }
@@ -105,9 +100,8 @@ public class SysMockController extends T4Controller<SysMock, ISysMockService> {
      */
     @AutoLog(value = "Mock数据-修改", operateType = 3)
     @PostMapping("/update")
-    @ApiOperationSupport(order = 5)
     @RequiresPermissions(value = {"mock:SysMock:ADD", "mock:SysMock:EDIT"}, logical = Logical.OR)
-    @ApiOperation(value = "Mock数据-修改", notes = "传入sysMock")
+    @ApiOperation(position = 5, value = "Mock数据-修改", notes = "传入sysMock")
     public R update(@Valid @RequestBody SysMock sysMock) {
         return R.ok("Mock数据-修改成功", service.updateById(sysMock));
     }
@@ -118,10 +112,9 @@ public class SysMockController extends T4Controller<SysMock, ISysMockService> {
      */
     @AutoLog(value = "Mock数据-删除", operateType = 2)
     @DeleteMapping("/delete")
-    @ApiOperationSupport(order = 8)
     @RequiresRoles("ADMIN")
-    @RequiresPermissions(value = {"mock:SysMock:DELETE"})
-    @ApiOperation(value = "Mock数据-删除", notes = "传入ids")
+    @RequiresPermissions("mock:SysMock:DELETE")
+    @ApiOperation(position = 8, value = "Mock数据-删除", notes = "传入ids")
     public R delete(@ApiParam(value = "主键集合", required = true) @RequestParam String ids) {
         return R.ok("Mock数据-删除成功", service.removeByIds(Arrays.asList(ids.split(","))));
     }

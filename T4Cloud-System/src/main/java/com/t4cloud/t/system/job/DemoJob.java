@@ -5,7 +5,6 @@ import com.t4cloud.t.system.entity.SysPermission;
 import com.t4cloud.t.system.service.ISysPermissionService;
 import com.xxl.job.core.biz.model.ReturnT;
 import com.xxl.job.core.handler.annotation.XxlJob;
-import com.xxl.job.core.log.XxlJobLogger;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -39,8 +38,8 @@ public class DemoJob {
         log.info("param：" + param);
 
         //测试service注入
-        List<SysPermission> teaR = sysPermissionService.queryByUsername(param);
-        log.info(JSONUtil.toJsonStr(teaR));
+        List<SysPermission> sysPermissionList = sysPermissionService.queryByUsername(param);
+        log.info(JSONUtil.toJsonStr(sysPermissionList));
 
         return ReturnT.SUCCESS;
     }

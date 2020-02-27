@@ -1,5 +1,5 @@
 import Vue from "vue";
-import { ACCESS_TOKEN, USER_NAME, USER_INFO } from "@/store/mutation-types";
+import { ACCESS_TOKEN, SYS_USER_AUTH, USER_NAME, USER_INFO } from "@/store/mutation-types";
 import { fetchLogin, fetchExitLogin, fetchUserPermission } from "@/apis/login";
 const user = {
   state: {
@@ -54,6 +54,7 @@ const user = {
             if (response.code == 200) {
               const menuData = response.result;
               commit('SET_PERMISSIONLIST', menuData)
+              sessionStorage.setItem(SYS_USER_AUTH, JSON.stringify(menuData));
               resolve(response);
             } else {
               reject(response);
@@ -68,12 +69,12 @@ const user = {
     Logout({ commit }) {
       return new Promise(resolve => {
         fetchExitLogin()
-          .then(response => {
-            if (response.code == 200) {
+          .then(res => {
+            if (res.success) {
               commit("SET_TOKEN", "");
               Vue.ls.remove(ACCESS_TOKEN);
             }
-            resolve(response);
+            resolve(res);
           })
           .catch(() => {
             resolve();

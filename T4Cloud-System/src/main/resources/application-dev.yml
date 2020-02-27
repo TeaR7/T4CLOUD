@@ -12,7 +12,7 @@ spring:
   aop:
     proxy-target-class: true
   application:
-    name: @project.name@
+    name: '@project.name@'
   cloud:
     nacos:
       discovery:
@@ -122,6 +122,9 @@ rocketmq:
 t4cloud:
   #系统日志的处理方式，0：直接入库，1：通过MQ交由SYS模块集中处理
   log-type: 1
+  actuator:
+    ## 是否开启运行资源监控
+    open: true
   # 分布式任务调度器配置
   job:
     ## 是否启用定时任务
@@ -129,4 +132,4 @@ t4cloud:
     address: http://127.0.0.1:8020
     ## 端口自动配置成本项目的端口-100
     port: ${server.port}
-    appname: @project.name@
+    appname: '@project.name@'

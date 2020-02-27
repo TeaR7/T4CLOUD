@@ -6,7 +6,7 @@
 
     <parent>
         <groupId>com.t4cloud</groupId>
-        <artifactId>t4cloud</artifactId>
+        <artifactId>T4Cloud</artifactId>
         <version>${spring-cloud.version}.${t4cloud.version}</version>
     </parent>
 

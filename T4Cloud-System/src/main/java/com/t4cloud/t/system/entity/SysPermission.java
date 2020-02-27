@@ -107,18 +107,18 @@ public class SysPermission extends BaseEntity {
      */
     public static SysPermission getHomePage() {
         SysPermission home = new SysPermission();
-		home.setId("1");
-		home.setName("首页");
-		home.setUrl("/dashboard/analysis");
-		home.setOpenType(0);
-		home.setComponent("dashboard/Analysis");
-		home.setMenuType(0);
-		home.setPerms("dashboard:Analysis");
-		home.setSortNo(0.0);
-		home.setIcon("home");
-		home.setDescription("首页");
-		home.setHidden(1);
-		home.setStatus(1);
+        home.setId("1");
+        home.setName("首页");
+        home.setUrl("/dashboard/analysis");
+        home.setOpenType(0);
+        home.setComponent("dashboard/Analysis");
+        home.setMenuType(0);
+        home.setPerms("dashboard:Analysis");
+        home.setSortNo(0.0);
+        home.setIcon("home");
+        home.setDescription("首页");
+        home.setHidden(1);
+        home.setStatus(1);
         return home;
     }
 
