@@ -10,15 +10,15 @@ module.exports = {
         //     errors: true
         // },
         proxy: {
-            // '/T4Cloud-User': {
-            //     target: process.env.VUE_APP_URL,
-            //     secure: false,  // 如果是https接口，需要配置这个参数
-            //     ws: true,
-            //     changeOrigin: true,
-            //     // pathRewrite: {
-            //     //     '^/api': ''
-            //     // }
-            // }
+            '/T4Cloud-User': {
+                target: process.env.VUE_APP_URL,
+                secure: false,  // 如果是https接口，需要配置这个参数
+                ws: true,
+                changeOrigin: true,
+                // pathRewrite: {
+                //     '^/api': ''
+                // }
+            }
         }
     }
 }

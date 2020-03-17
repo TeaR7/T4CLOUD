@@ -53,3 +53,12 @@ export function fetchExitLogin() {
 export function fetchUserPermission() {
     return GET("/T4Cloud-System/SysPermission/userPermission")
 }
+
+/**
+ * 角色表-获取用户角色权限
+ * @returns {*}
+ */
+export function fetchUserRole() {
+    return GET("/T4Cloud-System/SysRole/userRole")
+}
+

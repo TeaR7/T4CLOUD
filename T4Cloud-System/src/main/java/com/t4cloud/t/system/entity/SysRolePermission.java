@@ -9,6 +9,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.NotBlank;
+
 /**
  * 角色权限表 实体类
  *
@@ -30,6 +32,7 @@ public class SysRolePermission extends BaseEntity {
 	/**
 	* 角色id
 	*/
+	@NotBlank
 	@ApiModelProperty(value = "角色id")
 	private String roleId;
 	/**

@@ -10,6 +10,7 @@ import com.t4cloud.t.base.entity.dto.R;
 import com.t4cloud.t.base.exception.T4CloudException;
 import com.t4cloud.t.base.utils.JwtUtil;
 import com.t4cloud.t.base.utils.RedisUtil;
+import com.t4cloud.t.feign.client.SupportFileClient;
 import com.t4cloud.t.support.entity.SysResource;
 import com.t4cloud.t.support.service.ISysResourceService;
 import io.minio.errors.MinioException;
@@ -27,7 +28,10 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
+import java.io.File;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.RandomAccessFile;
 import java.util.Date;
 
 /**
@@ -44,7 +48,7 @@ import java.util.Date;
 @Slf4j
 @Api(value = "资源" , tags = "资源上传下载" , position = 1)
 @RequestMapping("/file")
-public class FileController extends T4Controller<SysResource, ISysResourceService> {
+public class FileController extends T4Controller<SysResource, ISysResourceService> implements SupportFileClient {
 
     @Autowired
     private RedisUtil redisUtil;
@@ -166,7 +170,7 @@ public class FileController extends T4Controller<SysResource, ISysResourceServic
             resource.setCount(resource.getCount() + 1).setUpdateBy(username);
             service.updateById(resource);
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new MinioException("预览失败." + e.getMessage());
         }
 
@@ -227,7 +231,7 @@ public class FileController extends T4Controller<SysResource, ISysResourceServic
             resource.setCount(resource.getCount() + 1).setUpdateBy(username);
             service.updateById(resource);
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new MinioException("资源下载失败." + e.getMessage());
         }
 
@@ -269,6 +273,11 @@ public class FileController extends T4Controller<SysResource, ISysResourceServic
 
         //获取文件流
         InputStream file = service.downloadMinio(resource);
+
+        /** TODO 此处没做完
+         *
+         * -by TeaR  -2020/3/12-23:07
+         */
 
         File tempFile = FileUtil.touch("/tmp/" + resource.getBucket() + "/" + resource.getPath());
 

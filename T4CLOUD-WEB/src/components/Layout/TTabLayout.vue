@@ -30,8 +30,8 @@ export default {
         this.pageList.splice(oldIndex, 1, Object.assign({}, newRoute, { meta: oldPositionRoute.meta }))
       }
     },
-    'activePage': function(newKey) {
-        this.lastActivePage = newKey
+    'activePage': function (newKey) {
+      this.lastActivePage = newKey
     }
   },
   created() {
@@ -75,7 +75,7 @@ export default {
       this.linkList = this.linkList.filter(item => item !== key)
       index = index >= this.linkList.length ? this.linkList.length - 1 : index
       this.activePage = this.linkList[index]
-      
+
       // let index = this.linkList.lastIndexOf(tab.paneName)
       let waitRouter = this.pageList[index]
       this.$router.push(Object.assign({}, waitRouter));
@@ -88,15 +88,20 @@ export default {
 .tab-layout {
   margin-top: 5px;
   background-color: #fff;
-  height: 60px;
-  line-height: 60px;
+  height: 45px;
+  line-height: 45px;
 
   // padding: 0px 20px;
 }
 </style>
-<style>
-.el-tabs__nav {
-  left: 20px;
+<style lang="scss">
+.tab-layout {
+  .el-tabs__nav {
+    left: 20px;
+  }
+  .el-tabs__item {
+    font-size: 13px;
+  }
 }
 </style>
 

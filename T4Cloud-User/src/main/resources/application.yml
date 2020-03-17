@@ -1,6 +1,7 @@
 spring:
   profiles:
     active: ${active.profile}
+#    active: prod
 swagger:
   production: false
   basic:

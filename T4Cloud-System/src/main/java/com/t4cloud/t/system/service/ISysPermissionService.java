@@ -13,7 +13,7 @@ import java.util.List;
  * --------------------
  *
  * @author T4Cloud
- * @since 2020-02-13 
+ * @since 2020-02-13
  */
 public interface ISysPermissionService extends T4Service<SysPermission> {
 
@@ -21,7 +21,7 @@ public interface ISysPermissionService extends T4Service<SysPermission> {
      * 查询用户有的所有权限
      *
      * @param username 用户名
-     * <p>
+     *                 <p>
      * @return java.util.List<com.t4cloud.t.system.entity.SysPermission>
      * --------------------
      * @author TeaR
@@ -46,13 +46,13 @@ public interface ISysPermissionService extends T4Service<SysPermission> {
     /**
      * 获取权限的子集
      *
-     * @param ids    树状结构一级节点 id 列表
-     *                <p>
+     * @param ids 树状结构一级节点 id 列表
+     *            <p>
      * @return void
      * --------------------
      * @author TeaR
      * @date 2020/2/13 14:33
      */
-    void findChildren(List<String> ids);
+    void findChildren(List<String> ids, List<String> all);
 
 }

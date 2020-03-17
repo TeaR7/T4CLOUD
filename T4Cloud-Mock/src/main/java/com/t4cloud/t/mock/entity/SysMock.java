@@ -2,15 +2,11 @@ package com.t4cloud.t.mock.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.t4cloud.t.base.entity.BaseEntity;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
-import java.io.Serializable;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.experimental.Accessors;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 
 /**
  * Mock数据 实体类

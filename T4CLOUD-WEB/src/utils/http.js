@@ -1,9 +1,9 @@
-import {axios} from "@/utils/request";
-import {filterNull} from "@/utils/util";
+import { axios } from "@/utils/request";
+import { filterNull } from "@/utils/util";
 
 //GET请求
 export function GET(url, parameter) {
-    return httpClient("GET", url, parameter);
+  return httpClient("GET", url, parameter);
 }
 
 //PUT请求
@@ -39,13 +39,23 @@ export function httpClient(method, url, parameter) {
  * 下载文件使用，接受文件流
  */
 export function download(url, parameter) {
-    return axios({
-        url: url,
-        params: parameter,
-        method: "get",
-        responseType: "blob"
-    });
+  return axios({
+    url: url,
+    params: parameter,
+    method: "GET",
+    responseType: "blob"
+  });
 }
-
-
-
+/**
+ * 上传文件使用，接受文件流
+ */
+export function upload(url, parameter) {
+  return axios({
+    url: url,
+    headers: {
+      "Content-Type": "multipart/form-data"
+    },
+    data: parameter,
+    method: "PUT"
+  });
+}

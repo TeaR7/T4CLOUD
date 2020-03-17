@@ -1,0 +1,18 @@
+@import './theme.scss';
+.dialogForm{
+  margin-right: 30px;
+  .el-input-number{
+    width: 100%;
+  }
+  .el-select{
+    width: 100%;
+  }
+}
+.standard-table {
+  // 更多按钮
+  .el-dropdown-link {
+    margin-left: 10px;
+    cursor: pointer;
+    color: $mainColor;
+  }
+}

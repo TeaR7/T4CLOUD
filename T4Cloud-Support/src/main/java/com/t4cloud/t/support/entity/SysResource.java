@@ -1,19 +1,17 @@
 package com.t4cloud.t.support.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.t4cloud.t.base.entity.BaseEntity;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
-import java.util.Date;
-import java.io.Serializable;
 import cn.afterturn.easypoi.excel.annotation.Excel;
-import cn.afterturn.easypoi.excel.annotation.ExcelTarget;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import org.springframework.format.annotation.DateTimeFormat;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.experimental.Accessors;
+import com.t4cloud.t.base.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
 
 /**
  * 资源管理表 实体类

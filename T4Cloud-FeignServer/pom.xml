@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.t4cloud</groupId>
+        <artifactId>T4Cloud</artifactId>
+        <version>${spring-cloud.version}.${t4cloud.version}</version>
+    </parent>
+
+    <groupId>com.t4cloud</groupId>
+    <artifactId>T4Cloud-FeignServer</artifactId>
+    <name>${project.artifactId}</name>
+    <version>${spring-cloud.version}.${t4cloud.version}</version>
+    <description>feign server module for T4Cloud</description>
+    <packaging>jar</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.t4cloud</groupId>
+            <artifactId>T4Cloud-Common</artifactId>
+            <version>${spring-cloud.version}.${t4cloud.version}</version>
+        </dependency>
+    </dependencies>
+
+</project>

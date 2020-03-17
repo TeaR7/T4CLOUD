@@ -153,10 +153,4 @@ export default {
 }
 
 </style>
-<style lang="scss">
-.tableDiv {
-  .el-table .headCellStyle {
-    background-color: #eceff4;
-  }
-}
-</style>
+

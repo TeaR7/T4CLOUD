@@ -9,6 +9,10 @@ server:
       mime-types: application/javascript,application/json,application/xml,text/html,text/xml,text/plain,text/css,image/*
 
 spring:
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
   aop:
     proxy-target-class: true
   application:
@@ -90,7 +94,6 @@ management:
       exposure:
         include: metrics,httptrace
 
-
 #mybatis plus 设置
 mybatis-plus:
   mapper-locations: classpath*:com/t4cloud/t/**/*Mapper.xml
@@ -110,13 +113,43 @@ mybatis-plus:
 logging:
   level:
     com.t4cloud.t.system.mapper: debug
+    com.t4cloud.t.feign.client: debug
 
 # rocket mq 配置
 rocketmq:
+  #  name-server: 127.0.0.1:9876
   name-server: 127.0.0.1:9876
   producer:
     # 必须指定group
     group: T4Cloud
+
+# Ribbon规则配置 负载均衡器采用的是随机，（默认配置为RandomRule，如果需要变更可以开放此处配置）
+#T4Cloud-Support:
+#  ribbon:
+#    NFloadBalanceRuleClassName: com.netflix.loadbalancer.RandomRule
+
+ribbon:
+  # 配置超时时间
+  ReadTimeout: 300000
+  ConnectTimeout: 300000
+  # 开启饥饿加载
+  eager-load:
+    enabled: true
+    clients: T4Cloud-Support
+
+# feign配置
+feign:
+  client:
+    config:
+      default:
+        loggerLevel: FULL
+        requestInterceptors:
+          - com.t4cloud.t.base.authc.TokenFeignIntecepor
+  # 使用httpclient提升性能
+  httpclient:
+    enabled: true
+    max-connections: 200
+    max-connections-per-route: 40
 
 #T4CLOUD自定义配置
 t4cloud:
@@ -133,3 +166,12 @@ t4cloud:
     ## 端口自动配置成本项目的端口-100
     port: ${server.port}
     appname: '@project.name@'
+  # poi 配置
+  excel:
+    ## 导出数据的阈值，如果大于这个值，则采用大数据模式导出
+    big-data: 2
+    ## 每次导入excel的页大小
+    page-size: 1000
+  # RSA 公私钥配置（公钥一般来说是给前端或者客户端使用的，不会再服务端使用到）
+  private-key: T4CLOUD-PRIVATE
+  public-key: T4CLOUD-PUBLIC

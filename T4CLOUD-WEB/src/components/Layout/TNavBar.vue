@@ -1,4 +1,4 @@
-template>
+<template>
   <div class="navBarWrap">
     <div class="headDiv">
       <div class="menuicon-box" @click="handleIsOpen" :style="{'transform': (!isCollapse ? 'rotate(0deg)':'rotate(180deg)')}">
@@ -80,13 +80,13 @@ export default {
     },
     // 展开收缩
     handleIsOpen() {
-      console.log(this.username());
-      console.log(this.userInfo());
-      console.log(
-        this.userInfo().avatar
-          ? this.userInfo().avatar
-          : "https://git.t4cloud.com/img/favicon.png"
-      );
+      // console.log(this.username());
+      // console.log(this.userInfo());
+      // console.log(
+      //   this.userInfo().avatar
+      //     ? this.userInfo().avatar
+      //     : "https://git.t4cloud.com/img/favicon.png"
+      // );
       this.$emit("change");
       this.isCollapse = !this.isCollapse;
     },
@@ -96,7 +96,7 @@ export default {
     },
     // 退出登录
     handleCommand(command) {
-      console.log(command);
+      // console.log(command);
       if (command == 'systemSetting') {
         this.$refs.settingDrawer.drawer=true
       } else if (command == 'changePassword') {

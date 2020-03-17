@@ -1,10 +1,15 @@
-import { SYS_USER_AUTH } from "@/store/mutation-types"
+import { havePermission } from "@/utils/util"
 const hasPermission = {
   install(Vue, options) {
-    console.log('options', options);
-    Vue.directive("authz", {
+    console.log("options", options);
+    Vue.directive("auth", {
       inserted: (el, binding, vnode) => {
-        filterGlobalPermission(el, binding, vnode);
+        filterGlobalPermission(0, el, binding, vnode);
+      }
+    });
+    Vue.directive("role", {
+      inserted: (el, binding, vnode) => {
+        filterGlobalPermission(1, el, binding, vnode);
       }
     });
   }
@@ -12,24 +17,10 @@ const hasPermission = {
 /**
  * 全局权限控制
  */
-export function filterGlobalPermission(el, binding) {
-  let allAuthList = JSON.parse(sessionStorage.getItem(SYS_USER_AUTH) || "[]");
-  // console.log(allAuthList)
-  const valueArr = binding.value.split(':')
-  const valueStr = valueArr[0]+':'+valueArr[1]
-  for (var auth of allAuthList) {
-    const permsArr = auth.perms.split(':')
-    const permsStr = permsArr[0]+':'+permsArr[1]
-    if(permsStr == valueStr) {
-      if(auth.children&&auth.children.length>0){
-        auth.children.forEach(item=>{
-          if(item.perms==binding.value){
-            el.parentNode.removeChild(el);
-            return
-          }
-        })
-      }
-    }
+export function filterGlobalPermission (type, el, binding){
+  let isFind = havePermission(binding.value,type)
+  if(isFind==false){
+    el.parentNode.removeChild(el);
   }
 }
 

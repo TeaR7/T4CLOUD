@@ -118,10 +118,11 @@ public class SysPermissionController extends T4Controller<SysPermission, ISysPer
     @PermissionCacheEvict
     public R delete(@ApiParam(value = "主键集合", required = true) @RequestParam String ids) {
         List<String> idList = Arrays.asList(ids.split(","));
+        List<String> all = new ArrayList<>(idList);
         //寻找子权限
-        service.findChildren(idList);
+        service.findChildren(idList, all);
         //移除权限本身
-        service.removeByIds(idList);
+        service.removeByIds(all);
         //移除角色授权
         List<SysRolePermission> sysRolePermissions = sysRolePermissionService.lambdaQuery().in(SysRolePermission::getPermissionId, idList).list();
         List<String> sysRolePermissionList = sysRolePermissions.stream().map(BaseEntity::getId).collect(Collectors.toList());
@@ -133,9 +134,9 @@ public class SysPermissionController extends T4Controller<SysPermission, ISysPer
     /**
      * 详情
      */
-    @AutoLog(value = "获取用户菜单权限", operateType = 4)
+    @AutoLog(value = "获取用户菜单权限")
     @GetMapping("/userPermission")
-    @ApiOperation(position = 10, value = "获取用户菜单权限", notes = "通过TOKEN获取用户菜单权限")
+    @ApiOperation(position = 10, value = "菜单权限表-获取用户菜单权限", notes = "通过TOKEN获取用户菜单权限")
     public R<List<SysPermission>> userPermission() {
         LoginUser currentUser = UserUtil.getCurrentUser();
 

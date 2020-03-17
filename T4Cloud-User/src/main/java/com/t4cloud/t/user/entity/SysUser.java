@@ -2,8 +2,10 @@ package com.t4cloud.t.user.entity;
 
 import cn.afterturn.easypoi.excel.annotation.Excel;
 import cn.afterturn.easypoi.excel.annotation.ExcelTarget;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.t4cloud.t.base.annotation.Dict;
 import com.t4cloud.t.base.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
@@ -35,9 +37,9 @@ public class SysUser extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     /**
-     * 登录账号
+     * 登陆账号
      */
-    @ApiModelProperty(value = "登录账号")
+    @ApiModelProperty(value = "登陆账号")
     @Excel(name = "登陆账号", orderNum = "0")
     private String username;
     /**
@@ -49,11 +51,13 @@ public class SysUser extends BaseEntity {
     /**
      * 密码
      */
+    @JsonIgnore
     @ApiModelProperty(value = "密码")
     private String password;
     /**
      * md5密码盐
      */
+    @JsonIgnore
     @ApiModelProperty(value = "md5密码盐")
     private String salt;
     /**
@@ -74,13 +78,14 @@ public class SysUser extends BaseEntity {
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @ApiModelProperty(value = "生日")
-//	@Excel(name = "生日",width = 20,orderNum = "4",format = "yyyy-MM-dd HH:mm:ss")
+	@Excel(name = "生日",width = 20,orderNum = "4",format = "yyyy-MM-dd HH:mm:ss")
     private Date birthday;
     /**
      * 性别(0-默认未知,1-男,2-女)
      */
     @ApiModelProperty(value = "性别(0-默认未知,1-男,2-女)")
-    @Excel(name = "性别", orderNum = "5", replace = {"男_1", "女_2", "未知_0"})
+    @Excel(name = "性别", orderNum = "5", dict = "gender")
+    @Dict(code = "gender")
     private Integer gender;
     /**
      * 电子邮件
@@ -120,5 +125,9 @@ public class SysUser extends BaseEntity {
     @Excel(name = "状态", orderNum = "10", dict = "common_status")
     private Integer status;
 
+    // ----------------------------------------------- DTO字段 -----------------------------------------------
+    @TableField(exist = false)
+    @ApiModelProperty(value = "用户角色")
+    private String roles;
 
 }

@@ -27,8 +27,7 @@
     <url>https://www.t4cloud.com</url>
 
     <properties>
-        <t4cloud.version>1.0.0</t4cloud.version>
-        <t4cloud.group>t4cloud</t4cloud.group>
+        <t4cloud.version>0.0.4</t4cloud.version>
         <spring-boot.version>2.2.4.RELEASE</spring-boot.version>
         <spring-cloud.version>Hoxton.SR1</spring-cloud.version>
         <spring-cloud-alibaba.version>2.2.0.RELEASE</spring-cloud-alibaba.version>
@@ -39,6 +38,7 @@
     </properties>
 
     <modules>
+        <module>T4Cloud-FeignServer</module>
         <module>T4Cloud-User</module>
         <module>T4Cloud-System</module>
         <module>T4Cloud-Gateway</module>
@@ -50,13 +50,11 @@
     </modules>
 
     <dependencies>
-
         <dependency>
             <groupId>com.t4cloud</groupId>
             <artifactId>T4Cloud-Common</artifactId>
-            <version>Hoxton.SR1.1.0.0</version>
+            <version>${spring-cloud.version}.${t4cloud.version}</version>
         </dependency>
-
     </dependencies>
 
     <dependencyManagement>
@@ -160,20 +158,7 @@
                     </nonFilteredFileExtensions>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <layout>ZIP</layout>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>repackage</goal><!--可以把依赖的包都打包到生成的Jar包中-->
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+
             <!--   自动选择环境  -->
             <plugin>
                 <artifactId>maven-resources-plugin</artifactId>
@@ -189,9 +174,6 @@
     </build>
 
     <repositories>
-
-
-
         <!-- 私服仓库 -->
         <repository>
             <id>t4cloud</id>
@@ -206,7 +188,6 @@
                 <updatePolicy>always</updatePolicy>
             </releases>
         </repository>
-
         <!--阿里云主仓库，代理了maven central和jcenter仓库-->
         <repository>
             <id>aliyun</id>
@@ -219,6 +200,5 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
-
     </repositories>
 </project>

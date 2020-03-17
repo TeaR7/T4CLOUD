@@ -25,7 +25,7 @@ export default {
           that.$store.commit('TOGGLE_DEVICE', 'desktop')
           break
         case DEVICE_TYPE.TABLET:
-          that.$store.commit('TOGGLE_DEVICE', 'mobile')
+          that.$store.commit('TOGGLE_DEVICE', 'tablet')
           break
         case DEVICE_TYPE.MOBILE:
         default:

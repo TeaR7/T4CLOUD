@@ -82,7 +82,7 @@ public class SysPermissionServiceImpl extends T4ServiceImpl<SysPermissionMapper,
      * @date 2020/2/13 14:33
      */
     @Override
-    public void findChildren(List<String> ids) {
+    public void findChildren(List<String> ids, List<String> all) {
         //查询所有子节点
         List<String> permissions = lambdaQuery().in(SysPermission::getParentId,ids).list().stream().map(BaseEntity::getId).collect(Collectors.toList());
         //无子节点，结束
@@ -90,8 +90,8 @@ public class SysPermissionServiceImpl extends T4ServiceImpl<SysPermissionMapper,
             return;
         }
         //存在子节点，继续往下寻找
-        findChildren(permissions);
+        findChildren(permissions, all);
         //添加入原列表中
-        ids.addAll(permissions);
+        all.addAll(permissions);
     }
 }

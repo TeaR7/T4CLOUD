@@ -7,14 +7,13 @@
           <div class="text" :class="!isCollapse?'open':'close'">T4CLOUD</div>
         </div>
       </div>
-      <el-menu class="el-menu-vertical-demo" :default-active="$route.path" :default-openeds="['1']" background-color="#1d2128"
+      <el-menu class="el-menu-vertical-demo" :default-active="$route.path" :unique-opene="true" background-color="#1d2128"
         text-color="#fff" active-text-color="#ffd04b" :collapse="isCollapse" :collapse-transition="true" router>
         <TSidebarItem :routes='addRouters[0].children'></TSidebarItem>
       </el-menu>
     </div>
     <div v-else>
-      <el-drawer title="" :visible.sync="isCollapse" direction="ltr" :with-header="false" size="auto"
-        :before-close="handleClose">
+      <el-drawer title="" :visible.sync="isCollapse" direction="ltr" :with-header="false" size="auto" :before-close="handleClose">
         <div class="sideBarWrap">
           <div class="headImgDiv">
             <div class="headImgBox">
@@ -22,14 +21,13 @@
               <div class="text open">T4CLOUD</div>
             </div>
           </div>
-          <el-menu class="el-menu-vertical-demo" :default-active="$route.path" :default-openeds="['1']"
-            background-color="#1d2128" text-color="#fff" active-text-color="#ffd04b"
-            :collapse-transition="true" router @select="mobileMenuSelect">
+          <el-menu class="el-menu-vertical-demo" :default-active="$route.path" :unique-opene="true" 
+            background-color="#1d2128" text-color="#fff" active-text-color="#ffd04b" :collapse-transition="true" router @select="mobileMenuSelect">
             <TSidebarItem :routes='addRouters[0].children'></TSidebarItem>
           </el-menu>
+        </div>
+      </el-drawer>
     </div>
-    </el-drawer>
-  </div>
   </div>
 </template>
 <script>
@@ -54,7 +52,7 @@ export default {
     handleClose() {
       this.$emit('hideSideBar')
     },
-    mobileMenuSelect(){
+    mobileMenuSelect() {
       this.$emit('hideSideBar')
     }
   }

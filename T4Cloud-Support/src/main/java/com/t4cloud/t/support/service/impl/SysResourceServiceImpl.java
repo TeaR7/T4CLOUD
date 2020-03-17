@@ -127,16 +127,18 @@ public class SysResourceServiceImpl extends T4ServiceImpl<SysResourceMapper, Sys
             throw new MinioException("文件上传失败");
         }
         //相对路径
-        resource.setPath(bucket + path);
+        resource.setPath(path);
         //绝对路径
-        resource.setUrl(endpoint + bucket + path);
+        resource.setUrl(endpoint + StrUtil.C_SLASH + bucket + path);
+        //桶名
+        resource.setBucket(bucket);
     }
 
     /**
      * 从minio下载文件
      *
      * @param resource 资源对象
-     *             <p>
+     *                 <p>
      * @return void
      * --------------------
      * @author TeaR

@@ -71,6 +71,23 @@ public class ShiroConfig {
         //登录接口排除
         filterChainDefinitionMap.put("/login/checkCode", "anon"); // 图片验证码获取接口
         filterChainDefinitionMap.put("/login/loginByPwd", "anon"); // 账号密码登录
+//
+//        filterChainDefinitionMap.put("/sys/getCode", "anon");//前台获取验证码
+//        filterChainDefinitionMap.put("/sys/loginByCaptcha", "anon");//前台验证码登录/注册接口
+//
+//        filterChainDefinitionMap.put("/sys/user/checkOnlyUser", "anon");//校验用户是否存在
+//        filterChainDefinitionMap.put("/sys/user/register", "anon");//用户注册
+//        filterChainDefinitionMap.put("/sys/user/querySysUser", "anon");//根据手机号获取用户信息
+//        filterChainDefinitionMap.put("/sys/user/phoneVerification", "anon");//用户忘记密码验证手机号
+//        filterChainDefinitionMap.put("/sys/user/passwordChange", "anon");//用户更改密码
+//        filterChainDefinitionMap.put("/auth/2step-code", "anon");//登录验证码
+//        filterChainDefinitionMap.put("/sys/common/view/**", "anon");//图片预览不限制token
+//        filterChainDefinitionMap.put("/sys/common/download/**", "anon");//文件下载不限制token
+//        filterChainDefinitionMap.put("/sys/common/pdf/**", "anon");//pdf预览
+//        filterChainDefinitionMap.put("/generic/**", "anon");//pdf预览需要文件
+
+        //测试接口排除
+//        filterChainDefinitionMap.put("/SysUser/exportXls", "anon");
 
         //websocket排除
         filterChainDefinitionMap.put("/websocket/**", "anon");

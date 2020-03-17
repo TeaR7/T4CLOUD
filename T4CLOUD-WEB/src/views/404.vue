@@ -5,11 +5,10 @@
 </template>
 
 <script>
-  export default {
-    name: "404"
-  }
+export default {
+  name: "errorPage"
+}
 </script>
 
 <style scoped>
-
 </style>

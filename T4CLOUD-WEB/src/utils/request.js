@@ -7,7 +7,7 @@ import { ACCESS_TOKEN } from "@/store/mutation-types";
 // 创建 axios 实例
 const service = axios.create({
   baseURL: process.env.VUE_APP_URL, // api base_url
-  timeout: 10000 // 请求超时时间
+  timeout: 20000 // 请求超时时间
 });
 
 // request interceptor
@@ -27,6 +27,13 @@ service.interceptors.request.use(
 // response interceptor
 service.interceptors.response.use(
   response => {
+    if (response.headers["filename"]) {
+      const name = response.headers["filename"];
+      response.data.filename = decodeURI(name);
+    }
+    if (response.headers["t-access-token"]) {
+      Vue.ls.set(ACCESS_TOKEN, response.headers["t-access-token"]);
+    }
     return response.data;
   },
   error => {
@@ -54,23 +61,27 @@ service.interceptors.response.use(
           break;
         case 404:
           Notification.error({
-            message: "系统提示",
-            description: "很抱歉，资源未找到!",
-            duration: 4
+            title: "系统提示",
+            message: "很抱歉，资源未找到!",
+            duration: 2000
           });
           break;
+        case 503:
+          Notification.error({ title: "网关提示", message: "该微服务正在准备中：" + error.response.message });
+          console.log(error.response)
+          break;
         case 504:
-          Notification.error({ message: "系统提示", description: "网络超时" });
+          Notification.error({ title: "系统提示", message: "网络超时" });
           break;
         default:
           Notification.error({
-            message: "系统提示",
-            description: data.message,
-            duration: 4
+            title: "系统提示",
+            message: data.message
           });
           break;
       }
     }
+    // alert('aa')
     return Promise.reject(error);
   }
 );

@@ -1,10 +1,8 @@
 package com.t4cloud.t.support.mapper;
 
 
-import com.t4cloud.t.support.entity.SysResource;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import java.util.List;
+import com.t4cloud.t.support.entity.SysResource;
 
 /**
  * 资源管理表 Mapper 接口

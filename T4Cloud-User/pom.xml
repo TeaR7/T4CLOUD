@@ -5,7 +5,7 @@
 
     <parent>
         <groupId>com.t4cloud</groupId>
-        <artifactId>t4cloud</artifactId>
+        <artifactId>T4Cloud</artifactId>
         <version>${spring-cloud.version}.${t4cloud.version}</version>
     </parent>
 
@@ -16,11 +16,29 @@
     <description>user module for T4Cloud</description>
     <packaging>jar</packaging>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.t4cloud</groupId>
+            <artifactId>T4Cloud-FeignServer</artifactId>
+            <version>${spring-cloud.version}.${t4cloud.version}</version>
+        </dependency>
+    </dependencies>
+
     <build>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <layout>ZIP</layout>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal><!--可以把依赖的包都打包到生成的Jar包中-->
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

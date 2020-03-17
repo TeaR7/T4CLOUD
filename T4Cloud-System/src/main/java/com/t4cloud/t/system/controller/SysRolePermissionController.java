@@ -14,6 +14,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -42,7 +43,7 @@ public class SysRolePermissionController extends T4Controller<SysRolePermission,
     /**
      * 全部列表 角色权限表
      */
-    @AutoLog(value = "角色权限表-全部列表", operateType = 4)
+    @AutoLog(value = "角色权限表-全部列表")
     @GetMapping("/list")
     @RequiresPermissions("system:SysRolePermission:VIEW")
     @ApiOperation(position = 1, value = "角色权限表-全部列表", notes = "传入sysRolePermission")
@@ -57,29 +58,26 @@ public class SysRolePermissionController extends T4Controller<SysRolePermission,
      */
     @AutoLog(value = "保存 角色授权", operateType = 1)
     @PutMapping("/save")
-    @RequiresPermissions("system:SysRolePermission:ADD")
-    @ApiOperation(position = 4, value = "角色权限表-新增", notes = "传入sysRolePermission")
+    @RequiresPermissions("system:SysRolePermission:EDIT")
+    @ApiOperation(position = 4, value = "保存 角色授权", notes = "传入sysRolePermission")
     @PermissionCacheEvict
-    public R save(@Valid @RequestBody SysRolePermission sysRolePermission) {
+    public R<?> save(@Valid @RequestBody SysRolePermission sysRolePermission, BindingResult bindingResult) {
         //查询之前的所有权限
         List<SysRolePermission> sysRolePermissions = service.lambdaQuery().eq(SysRolePermission::getRoleId, sysRolePermission.getRoleId()).list();
         List<String> oldPermissionIds = sysRolePermissions.stream().map(SysRolePermission::getPermissionId).collect(Collectors.toList());
         //新的权限
         List<String> newPermissionIds = Arrays.asList(sysRolePermission.getPermissionIds().split(","));
-
         //处理新增的
         List<String> addPermissionIds = newPermissionIds.stream().filter(item -> StringUtils.isNotEmpty(item) && !oldPermissionIds.contains(item)).collect(Collectors.toList());
-        List<SysRolePermission> addPermissionIdList = new ArrayList<SysRolePermission>();
+        List<SysRolePermission> addPermissionIdList = new ArrayList<>();
         for (String permissionId : addPermissionIds) {
             SysRolePermission rolepms = new SysRolePermission().setRoleId(sysRolePermission.getRoleId()).setPermissionId(permissionId);
             addPermissionIdList.add(rolepms);
         }
         service.saveBatch(addPermissionIdList);
-
         //处理删除的
         List<String> deletePermissionIds = oldPermissionIds.stream().filter(item -> StringUtils.isNotEmpty(item) && !newPermissionIds.contains(item)).collect(Collectors.toList());
-        service.removeByIds(deletePermissionIds);
-
+        service.removeByIds(sysRolePermissions.stream().filter(item -> deletePermissionIds.contains(item.getPermissionId())).map(SysRolePermission::getId).collect(Collectors.toList()));
         return R.ok("角色授权表-保存成功");
     }
 

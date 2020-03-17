@@ -10,6 +10,10 @@
 <script>
 export default {
   name: "el-tree-select",
+  model: {
+    prop: 'value',
+    event: 'getValue'
+  },
   props: {
     /* 配置项 */
     treeProps: {

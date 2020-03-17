@@ -1,4 +1,4 @@
-package com.t4cloud.t.user.entity.dto;
+package com.t4cloud.t.feign.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

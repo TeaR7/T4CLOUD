@@ -3,8 +3,8 @@ package com.t4cloud.t.mock.service;
 
 import cn.hutool.json.JSONObject;
 import com.t4cloud.t.base.entity.dto.R;
-import com.t4cloud.t.mock.entity.SysMock;
 import com.t4cloud.t.base.service.T4Service;
+import com.t4cloud.t.mock.entity.SysMock;
 
 /**
  * Mock数据 服务类

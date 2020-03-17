@@ -13,6 +13,22 @@ spring:
     proxy-target-class: true
   application:
     name: '@project.name@'
+  mail:
+    host: smtp.exmail.qq.com
+    username: service.pop@t4cloud.com
+    nickname: TeaR<service.pop@t4cloud.com>
+    password: rsx9ATkUz4iDo42F
+    port: 465
+    protocol: smtp
+    properties:
+      mail:
+        smtp:
+          auth: true
+          ssl:
+            enable: true
+  #          starttls:
+  #            enable: true
+  #            required: true
   cloud:
     nacos:
       discovery:
@@ -94,8 +110,6 @@ management:
 mybatis-plus:
   mapper-locations: classpath*:com/t4cloud/t/**/*Mapper.xml
   check-config-location: true
-#  configuration:
-#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   global-config:
     # 关闭MP3.0自带的banner
     banner: false
@@ -114,6 +128,7 @@ logging:
 
 # rocket mq 配置
 rocketmq:
+  #  name-server: 127.0.0.1:9876
   name-server: 127.0.0.1:9876
   producer:
     # 必须指定group

@@ -1,12 +1,25 @@
 import Vue from "vue";
-import { ACCESS_TOKEN, SYS_USER_AUTH, USER_NAME, USER_INFO } from "@/store/mutation-types";
-import { fetchLogin, fetchExitLogin, fetchUserPermission } from "@/apis/login";
+import {
+  ACCESS_TOKEN,
+  SYS_USER_AUTH,
+  USER_NAME,
+  USER_INFO,
+  SYS_USER_ROLE
+} from "@/store/mutation-types";
+import {
+  fetchLogin,
+  fetchExitLogin,
+  fetchUserPermission,
+  fetchUserRole
+} from "@/apis/login";
+import { Notification } from "element-ui";
 const user = {
   state: {
     token: "",
     username: "",
     info: {},
-    permissionList: []
+    permissionList: [],
+    roleList: []
   },
   mutations: {
     SET_TOKEN: (state, token) => {
@@ -19,8 +32,11 @@ const user = {
       state.info = info;
     },
     SET_PERMISSIONLIST: (state, permissionList) => {
-      state.permissionList = permissionList
+      state.permissionList = permissionList;
     },
+    SET_ROLELIST: (state, roleList) => {
+      state.roleList = roleList;
+    }
   },
   actions: {
     // 登录
@@ -51,9 +67,9 @@ const user = {
       return new Promise((resolve, reject) => {
         fetchUserPermission()
           .then(response => {
-            if (response.code == 200) {
+            if (response.success == true) {
               const menuData = response.result;
-              commit('SET_PERMISSIONLIST', menuData)
+              commit("SET_PERMISSIONLIST", menuData);
               sessionStorage.setItem(SYS_USER_AUTH, JSON.stringify(menuData));
               resolve(response);
             } else {
@@ -61,6 +77,27 @@ const user = {
             }
           })
           .catch(error => {
+            Notification.error({ title: "网关提示", message: "微服务：系统服务，暂不可用" });
+            reject(error);
+          });
+      });
+    },
+    // 获取用户角色
+    GetUserRole({ commit }) {
+      return new Promise((resolve, reject) => {
+        fetchUserRole()
+          .then(response => {
+            if (response.code == 200) {
+              const roles = response.result;
+              commit("SET_ROLELIST", roles);
+              sessionStorage.setItem(SYS_USER_ROLE, JSON.stringify(roles));
+              resolve(response);
+            } else {
+              reject(response);
+            }
+          })
+          .catch(error => {
+            Notification.error({ title: "网关提示", message: "微服务：系统服务，暂不可用" });
             reject(error);
           });
       });
