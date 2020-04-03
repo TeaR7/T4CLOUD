@@ -16,7 +16,7 @@ Spring Cloud 快速开发脚手架项目，同时支持单体Boot快速部署，
 ```
 【当前进度更新】
 
-## `RELEASE-VERSION:0.1.0
+## RELEASE-VERSION:0.1.0
 【2020.04.03】
 
 服务端
@@ -79,7 +79,7 @@ Spring Cloud 快速开发脚手架项目，同时支持单体Boot快速部署，
 + vue config功能
 + 高级查询支持 like && eq 区分
 + 时间组件优化手机适配
-`
+
 ```
 
 

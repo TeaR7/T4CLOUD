@@ -36,7 +36,7 @@
         <el-col :span="10">
           <div class="imgAutoDiv">
             <t-graphic-code class="graphicCode" @success="generateCode" ref="jgraphicCodeRef" remote :contentHeight="contentHeight"></t-graphic-code>
-            <div style="opacity: 0;">t</div>
+            <div style="opacity: 0;width: 0;">t</div>
           </div>
         </el-col>
       </el-form-item>

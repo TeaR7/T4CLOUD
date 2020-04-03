@@ -8016,10 +8016,10 @@ swiper@^5.3.6:
     dom7 "^2.1.3"
     ssr-window "^1.0.1"
 
-t4cloud-ui@0.0.34:
-  version "0.0.34"
-  resolved "https://registry.npm.taobao.org/t4cloud-ui/download/t4cloud-ui-0.0.34.tgz#636548220c030fef2c46008148ea03f5cf9e7c49"
-  integrity sha1-Y2VIIgwDD+8sRgCBSOoD9c+efEk=
+t4cloud-ui@0.1.0:
+  version "0.1.0"
+  resolved "https://registry.npm.taobao.org/t4cloud-ui/download/t4cloud-ui-0.1.0.tgz#d64f4fa62c6cf76e4f5ba38b08036a3b3d729c5b"
+  integrity sha1-1k9Ppixs925PW6OLCANqOz1ynFs=
   dependencies:
     "@nutui/nutui" "^2.1.8"
     core-js "^2.6.10"
@@ -8030,10 +8030,10 @@ t4cloud-ui@0.0.34:
     vue-router "^3.1.3"
     vuex "^3.1.3"
 
-t4cloud-util@^0.0.48:
-  version "0.0.48"
-  resolved "https://registry.npm.taobao.org/t4cloud-util/download/t4cloud-util-0.0.48.tgz#fe425d900b828ce726bd50605415e92f6f41d95f"
-  integrity sha1-/kJdkAuCjOcmvVBgVBXpL29B2V8=
+t4cloud-util@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.npm.taobao.org/t4cloud-util/download/t4cloud-util-0.1.0.tgz#227e119c4ef78348c160ace78340a72a7edd7612"
+  integrity sha1-In4RnE73g0jBYKzng0CnKn7ddhI=
   dependencies:
     axios "^0.19.2"
     enquire.js "^2.1.6"
