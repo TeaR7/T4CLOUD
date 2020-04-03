@@ -11,7 +11,7 @@ import com.t4cloud.t.system.entity.SysDictValue;
  * --------------------
  *
  * @author TeaR
- * @since 2020-03-04 
+ * @since 2020-03-04
  */
 public interface SysDictValueMapper extends BaseMapper<SysDictValue> {
 

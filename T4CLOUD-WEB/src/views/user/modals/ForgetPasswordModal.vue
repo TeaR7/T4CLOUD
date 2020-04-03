@@ -18,17 +18,17 @@
             </div>
           </el-col>
         </el-form-item>
-        <el-form-item style="text-align:right;">
-          <el-button @click="resetForm('baseForm')">取消</el-button>
-          <el-button type="primary" @click="submitForm('baseForm')">确定</el-button>
-        </el-form-item>
       </el-form>
+      <span slot="footer">
+        <el-button @click="resetForm('baseForm')">取消</el-button>
+        <el-button type="primary" @click="submitForm('baseForm')">确定</el-button>
+      </span>
     </el-dialog>
   </div>
 </template>
 <script>
 import { fetchChangePwd } from '../../../apis/login'
-import TGraphicCode from "@/components/T4Cloud/TGraphicCode";
+// import TGraphicCode from "@/components/T4Cloud/TGraphicCode";
 import { mapGetters } from "vuex";
 export default {
   data() {
@@ -93,7 +93,7 @@ export default {
     }
   },
   components: {
-    TGraphicCode
+    // TGraphicCode
   },
   computed: {
     ...mapGetters([

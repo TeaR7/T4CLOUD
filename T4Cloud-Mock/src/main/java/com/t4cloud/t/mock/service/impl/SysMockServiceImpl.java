@@ -35,6 +35,6 @@ public class SysMockServiceImpl extends T4ServiceImpl<SysMockMapper, SysMock> im
         String returnJsonData = one.getData();
         JSONObject jsonObject = null;
         jsonObject = JSONUtil.parseObj(returnJsonData);
-        return R.ok("请求成功" , jsonObject);
+        return R.ok("请求成功", jsonObject);
     }
 }

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.t4cloud.t.support.mapper.SupMessageMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="supMessageResultMap" type="com.t4cloud.t.support.entity.SupMessage">
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="message_type" property="messageType"/>
+        <result column="target" property="target"/>
+        <result column="param" property="param"/>
+        <result column="content" property="content"/>
+        <result column="send_time" property="sendTime"/>
+        <result column="send_num" property="sendNum"/>
+        <result column="send_status" property="sendStatus"/>
+        <result column="send_result" property="sendResult"/>
+        <result column="remark" property="remark"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+
+</mapper>

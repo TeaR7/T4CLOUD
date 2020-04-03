@@ -2,6 +2,8 @@ server:
   port: 8080
   tomcat:
     max-swallow-size: -1
+    mbeanregistry:
+      enabled: true
   servlet:
 #    context-path: /t4cloud-user
     compression:
@@ -154,9 +156,11 @@ feign:
 #T4CLOUD自定义配置
 t4cloud:
   #登录接口是否强制验证图片验证码
-  check-code: true
+  check-code: false
+  #是否进行请求有效性，
+  valid-request: false
   #系统日志的处理方式，0：直接入库，1：通过MQ交由SYS模块集中处理
-  log-type: 1
+  log-type: 0
   actuator:
     ## 是否开启运行资源监控
     open: true
@@ -175,6 +179,10 @@ t4cloud:
     bigdata: 1000
     ## 每次导入excel的页大小
     group: 1000
+    ## 导出的时候OSS的前缀（任何资源管理器的END POINT）
+    oss: https://
+    ## 导出的时候某些资源管理器是不带资源后缀的，需要而easypoi需要，所以手动配置一个
+    temp-dir: /temp-pic
   # RSA 公私钥配置（公钥一般来说是给前端或者客户端使用的，不会再服务端使用到）
   private-key: T4CLOUD-PRIVATE
   public-key: T4CLOUD-PUBLIC

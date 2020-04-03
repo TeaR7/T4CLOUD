@@ -25,7 +25,7 @@
 
 
     <!-- 获取登录用户拥有的权限 -->
-    <select id="queryByUsername" parameterType="Object"  resultMap="sysPermissionResultMap">
+    <select id="queryByUsername" parameterType="Object" resultMap="sysPermissionResultMap">
 		   SELECT p.*
 		   FROM  sys_permission p
 		   WHERE exists(

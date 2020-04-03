@@ -19,9 +19,11 @@ public class T4GenCode {
         //配置参数
         GenConfig config = new GenConfig();
         //设置模块的包名，可以为空
-        config.setModuleName("system");
+        config.setModuleName("support");
         //设置表前缀，可以为空
         config.setTablePrefix("");
+        //modal表单样式
+//        config.setDrawer(true);
         //是否生成feignClient
         config.setFeignClient(true);
 
@@ -30,7 +32,7 @@ public class T4GenCode {
 
         //设置需要生成的表名,数组形式，可以多个
 //        String[] tableNames = new String[]{"sys_dict","sys_dict_value"};
-        String[] tableNames = new String[]{"sys_user"};
+//        String[] tableNames = new String[]{"sys_user"};
 //        String[] tableNames = new String[]{"sys_log"};
 //        String[] tableNames = new String[]{"sys_dict"};
 //        String[] tableNames = new String[]{"sys_dict_value"};
@@ -41,6 +43,8 @@ public class T4GenCode {
 //        String[] tableNames = new String[]{"sys_message_template"};
 
 //        String[] tableNames = new String[]{"sys_role"};
+//        String[] tableNames = new String[]{"example_common"};
+        String[] tableNames = new String[]{"sup_message"};
 
         config.setTableName(tableNames);
 

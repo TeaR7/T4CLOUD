@@ -27,7 +27,7 @@
     <url>https://www.t4cloud.com</url>
 
     <properties>
-        <t4cloud.version>0.0.4</t4cloud.version>
+        <t4cloud.version>0.0.5</t4cloud.version>
         <spring-boot.version>2.2.4.RELEASE</spring-boot.version>
         <spring-cloud.version>Hoxton.SR1</spring-cloud.version>
         <spring-cloud-alibaba.version>2.2.0.RELEASE</spring-cloud-alibaba.version>
@@ -48,14 +48,6 @@
         <module>T4Cloud-Rocketmq-Console</module>
         <module>T4Cloud-XXL-Job</module>
     </modules>
-
-    <dependencies>
-        <dependency>
-            <groupId>com.t4cloud</groupId>
-            <artifactId>T4Cloud-Common</artifactId>
-            <version>${spring-cloud.version}.${t4cloud.version}</version>
-        </dependency>
-    </dependencies>
 
     <dependencyManagement>
         <dependencies>

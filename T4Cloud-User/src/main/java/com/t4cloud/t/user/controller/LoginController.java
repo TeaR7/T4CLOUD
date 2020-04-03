@@ -52,7 +52,7 @@ public class LoginController extends T4Controller<SysUser, ISysUserService> {
     /**
      * 账号密码登录
      */
-    @AutoLog(value = "账号密码登录", operateType = 4, logType = 2)
+    @AutoLog(value = "账号密码登录", operateType = 1, logType = 2)
     @PostMapping("/loginByPwd")
     @ApiOperation(position = 2, value = "账号密码登录", notes = "根据账号密码及验证码登录")
     public R<LoginUser> loginByPwd(@Valid @RequestBody LoginDTO loginDTO, BindingResult bindingResult) {

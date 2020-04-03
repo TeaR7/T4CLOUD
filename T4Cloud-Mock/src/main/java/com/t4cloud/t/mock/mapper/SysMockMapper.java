@@ -11,7 +11,7 @@ import com.t4cloud.t.mock.entity.SysMock;
  * --------------------
  *
  * @author T4Cloud
- * @since 2020-02-14 
+ * @since 2020-02-14
  */
 public interface SysMockMapper extends BaseMapper<SysMock> {
 

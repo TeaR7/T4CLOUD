@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
  * --------------------
  *
  * @author T4Cloud
- * @since 2020-02-21 
+ * @since 2020-02-21
  */
 @Data
 @TableName("sys_role")
@@ -24,23 +24,23 @@ import lombok.experimental.Accessors;
 @ApiModel(value = "SysRole对象", description = "角色表")
 public class SysRole extends BaseEntity {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	/**
-	* 角色名称
-	*/
-	@ApiModelProperty(value = "角色名称")
-	private String roleName;
-	/**
-	* 角色编码
-	*/
-	@ApiModelProperty(value = "角色编码")
-	private String roleCode;
-	/**
-	* 描述
-	*/
-	@ApiModelProperty(value = "描述")
-	private String description;
+    /**
+     * 角色名称
+     */
+    @ApiModelProperty(value = "角色名称")
+    private String roleName;
+    /**
+     * 角色编码
+     */
+    @ApiModelProperty(value = "角色编码")
+    private String roleCode;
+    /**
+     * 描述
+     */
+    @ApiModelProperty(value = "描述")
+    private String description;
 
 
 }

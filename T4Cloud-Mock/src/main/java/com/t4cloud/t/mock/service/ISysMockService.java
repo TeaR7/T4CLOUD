@@ -13,16 +13,16 @@ import com.t4cloud.t.mock.entity.SysMock;
  * --------------------
  *
  * @author T4Cloud
- * @since 2020-02-14 
+ * @since 2020-02-14
  */
 public interface ISysMockService extends T4Service<SysMock> {
 
     /**
      * TODO
      *
-     * @param url mock的接口
+     * @param url    mock的接口
      * @param method mock的接口调用方法
-     * <p>
+     *               <p>
      * @return cn.hutool.json.JSONObject
      * --------------------
      * @author Qiming

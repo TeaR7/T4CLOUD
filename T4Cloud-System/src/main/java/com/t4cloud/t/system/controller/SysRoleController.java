@@ -41,7 +41,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @Slf4j
-@Api(value = "角色表" , tags = "角色表接口" , position = 11)
+@Api(value = "角色表", tags = "角色表接口", position = 11)
 @RequestMapping("/SysRole")
 public class SysRoleController extends T4Controller<SysRole, ISysRoleService> {
 
@@ -51,81 +51,81 @@ public class SysRoleController extends T4Controller<SysRole, ISysRoleService> {
     /**
      * 详情
      */
-    @AutoLog(value = "角色表-详情" , operateType = 4)
+    @AutoLog(value = "角色表-详情", operateType = 4)
     @GetMapping("/detail")
     @RequiresPermissions("system:SysRole:VIEW")
-    @ApiOperation(position = 1, value = "角色表-详情" , notes = "传入sysRole")
+    @ApiOperation(position = 1, value = "角色表-详情", notes = "传入sysRole")
     public R<SysRole> detail(SysRole sysRole, HttpServletRequest req) {
         QueryWrapper<SysRole> sysRoleQueryWapper = T4Query.initQuery(sysRole, req.getParameterMap());
         SysRole detail = service.getOne(sysRoleQueryWapper);
-        return R.ok("角色表-详情查询成功" , detail);
+        return R.ok("角色表-详情查询成功", detail);
     }
 
     /**
      * 全部列表 角色表
      */
-    @AutoLog(value = "角色表-全部列表" , operateType = 4)
+    @AutoLog(value = "角色表-全部列表", operateType = 4)
     @GetMapping("/list")
     @RequiresPermissions("system:SysRole:VIEW")
-    @ApiOperation(position = 2, value = "角色表-全部列表" , notes = "传入sysRole")
+    @ApiOperation(position = 2, value = "角色表-全部列表", notes = "传入sysRole")
     public R<List<SysRole>> list(SysRole sysRole, HttpServletRequest req) {
         QueryWrapper<SysRole> sysRoleQueryWapper = T4Query.initQuery(sysRole, req.getParameterMap());
         List<SysRole> list = service.list(sysRoleQueryWapper);
-        return R.ok("角色表-全部列表查询成功" , list);
+        return R.ok("角色表-全部列表查询成功", list);
     }
 
     /**
      * 分页查询 角色表
      */
-    @AutoLog(value = "角色表-分页查询" , operateType = 4)
+    @AutoLog(value = "角色表-分页查询", operateType = 4)
     @GetMapping("/page")
     @RequiresPermissions("system:SysRole:VIEW")
-    @ApiOperation(position = 3, value = "角色表-分页查询" , notes = "传入sysRole")
+    @ApiOperation(position = 3, value = "角色表-分页查询", notes = "传入sysRole")
     public R<IPage<SysRole>> page(SysRole sysRole,
-                                  @ApiParam(name = "pageNo" , required = false)
-                                  @RequestParam(name = "pageNo" , required = false, defaultValue = "1") Integer pageNo,
-                                  @ApiParam(name = "pageSize" , required = false)
-                                  @RequestParam(name = "pageSize" , required = false, defaultValue = "10") Integer pageSize,
+                                  @ApiParam(name = "pageNo", required = false)
+                                  @RequestParam(name = "pageNo", required = false, defaultValue = "1") Integer pageNo,
+                                  @ApiParam(name = "pageSize", required = false)
+                                  @RequestParam(name = "pageSize", required = false, defaultValue = "10") Integer pageSize,
                                   HttpServletRequest req) {
         QueryWrapper<SysRole> sysRoleQueryWapper = T4Query.initQuery(sysRole, req.getParameterMap());
         IPage<SysRole> pages = service.page(new Page<>(pageNo, pageSize), sysRoleQueryWapper);
-        return R.ok("角色表-分页查询查询成功" , pages);
+        return R.ok("角色表-分页查询查询成功", pages);
     }
 
     /**
      * 新增 角色表
      */
-    @AutoLog(value = "角色表-新增" , operateType = 1)
+    @AutoLog(value = "角色表-新增", operateType = 1)
     @PutMapping("/save")
     @RequiresPermissions("system:SysRole:ADD")
-    @ApiOperation(position = 4, value = "角色表-新增" , notes = "传入sysRole")
+    @ApiOperation(position = 4, value = "角色表-新增", notes = "传入sysRole")
     public R save(@Valid @RequestBody SysRole sysRole, BindingResult bindingResult) {
 
-        return R.ok("角色表-新增成功" , service.save(sysRole));
+        return R.ok("角色表-新增成功", service.save(sysRole));
     }
 
     /**
      * 修改 角色表
      */
-    @AutoLog(value = "角色表-修改" , operateType = 3)
+    @AutoLog(value = "角色表-修改", operateType = 3)
     @PostMapping("/update")
-    @RequiresPermissions(value = {"system:SysRole:ADD" , "system:SysRole:EDIT"}, logical = Logical.OR)
-    @ApiOperation(position = 5, value = "角色表-修改" , notes = "传入sysRole")
+    @RequiresPermissions(value = {"system:SysRole:ADD", "system:SysRole:EDIT"}, logical = Logical.OR)
+    @ApiOperation(position = 5, value = "角色表-修改", notes = "传入sysRole")
     public R update(@Valid @RequestBody SysRole sysRole, BindingResult bindingResult) {
-        return R.ok("角色表-修改成功" , service.updateById(sysRole));
+        return R.ok("角色表-修改成功", service.updateById(sysRole));
     }
 
 
     /**
      * 删除 角色表
      */
-    @AutoLog(value = "角色表-删除" , operateType = 2)
+    @AutoLog(value = "角色表-删除", operateType = 2)
     @DeleteMapping("/delete")
     @RequiresRoles("ADMIN")
     @RequiresPermissions("system:SysRole:DELETE")
-    @ApiOperation(position = 8, value = "角色表-删除" , notes = "传入ids")
-    public R delete(@ApiParam(value = "主键集合" , required = true) @RequestParam String ids) {
-        return R.ok("角色表-删除成功" , service.removeByIds(Arrays.asList(ids.split(","))));
+    @ApiOperation(position = 8, value = "角色表-删除", notes = "传入ids")
+    public R delete(@ApiParam(value = "主键集合", required = true) @RequestParam String ids) {
+        return R.ok("角色表-删除成功", service.removeByIds(Arrays.asList(ids.split(","))));
     }
 
 
@@ -134,12 +134,12 @@ public class SysRoleController extends T4Controller<SysRole, ISysRoleService> {
      */
     @AutoLog(value = "获取用户角色权限")
     @GetMapping("/userRole")
-    @ApiOperation(position = 9, value = "角色表-获取用户角色权限" , notes = "通过TOKEN获取用户角色权限")
+    @ApiOperation(position = 9, value = "角色表-获取用户角色权限", notes = "通过TOKEN获取用户角色权限")
     public R userRole() {
         LoginUser currentUser = UserUtil.getCurrentUser();
         //获取用户角色的绑定关系
         List<SysRole> sysRoleList = sysUserRoleService.getUserRoleList(currentUser.getUsername());
-        return R.ok("获取用户角色权限成功" , sysRoleList);
+        return R.ok("获取用户角色权限成功", sysRoleList);
     }
 
     /**

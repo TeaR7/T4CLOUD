@@ -11,7 +11,7 @@ import com.t4cloud.t.system.entity.SysRolePermission;
  * --------------------
  *
  * @author T4Cloud
- * @since 2020-02-21 
+ * @since 2020-02-21
  */
 public interface SysRolePermissionMapper extends BaseMapper<SysRolePermission> {
 

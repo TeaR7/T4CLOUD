@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
  * --------------------
  *
  * @author T4Cloud
- * @since 2020-02-13 
+ * @since 2020-02-13
  */
 @Slf4j
 @Service
@@ -65,7 +65,7 @@ public class SysPermissionServiceImpl extends T4ServiceImpl<SysPermissionMapper,
                 continue;
             }
             //排序
-            permissions = permissions.stream().sorted(Comparator.comparing(SysPermission:: getSortNo)).collect(Collectors.toList());
+            permissions = permissions.stream().sorted(Comparator.comparing(SysPermission::getSortNo)).collect(Collectors.toList());
             tree(permissions, allData);
             sysPermission.setChildren(permissions);
         }
@@ -74,8 +74,8 @@ public class SysPermissionServiceImpl extends T4ServiceImpl<SysPermissionMapper,
     /**
      * 获取权限的子集
      *
-     * @param ids    树状结构一级节点 id 列表
-     *                <p>
+     * @param ids 树状结构一级节点 id 列表
+     *            <p>
      * @return void
      * --------------------
      * @author TeaR
@@ -84,9 +84,9 @@ public class SysPermissionServiceImpl extends T4ServiceImpl<SysPermissionMapper,
     @Override
     public void findChildren(List<String> ids, List<String> all) {
         //查询所有子节点
-        List<String> permissions = lambdaQuery().in(SysPermission::getParentId,ids).list().stream().map(BaseEntity::getId).collect(Collectors.toList());
+        List<String> permissions = lambdaQuery().in(SysPermission::getParentId, ids).list().stream().map(BaseEntity::getId).collect(Collectors.toList());
         //无子节点，结束
-        if (CollectionUtil.isEmpty(permissions)){
+        if (CollectionUtil.isEmpty(permissions)) {
             return;
         }
         //存在子节点，继续往下寻找

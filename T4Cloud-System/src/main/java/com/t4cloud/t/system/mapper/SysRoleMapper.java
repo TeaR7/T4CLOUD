@@ -14,7 +14,7 @@ import java.util.List;
  * --------------------
  *
  * @author T4Cloud
- * @since 2020-02-21 
+ * @since 2020-02-21
  */
 public interface SysRoleMapper extends BaseMapper<SysRole> {
 

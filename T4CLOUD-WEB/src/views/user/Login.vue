@@ -28,7 +28,7 @@
       <el-form-item prop="code">
         <el-col :span="14">
           <span class="svg-container">
-            <i class="el-icon-chat-dot-round"></i>
+            <i class="el-icons-yanzhengma" style="font-size:14px"></i>
           </span>
           <el-input name="code" ref="code" v-model="loginForm.code" placeholder="验证码" />
         </el-col>
@@ -36,9 +36,11 @@
         <el-col :span="10">
           <div class="imgAutoDiv">
             <t-graphic-code class="graphicCode" @success="generateCode" ref="jgraphicCodeRef" remote :contentHeight="contentHeight"></t-graphic-code>
+            <div style="opacity: 0;">t</div>
           </div>
         </el-col>
       </el-form-item>
+     
 
       <el-button :loading="loading" type="primary" style="width:100%;margin-top:10px;margin-bottom:30px;"
         @click.native.prevent="handleLogin">{{$t('login.login')}}
@@ -49,22 +51,23 @@
               <span>password: any</span>
             </div> -->
     </el-form>
-    <TFooterBar :footerType="1"></TFooterBar>
+    <t-footer :footerType="1"></t-footer>
   </div>
 </template>
 
 <script>
-import TGraphicCode from "@/components/T4Cloud/TGraphicCode";
+// import TGraphicCode from "@/components/T4Cloud/TGraphicCode";
+import Vue from 'vue'
+import { SYS_LOGIN_BACK_PATH } from "@/store/mutation-types";
 import { mapActions } from "vuex";
-// import store from '@/store/'
-// import { validUsername } from "@/utils/validate";
-import TFooterBar from "@/components/Layout/TFooterBar"
+// import TFooter from "@/components/T4Cloud/TFooter"
+
+const verifiedCode = process.env.VUE_APP_VERIFIED_CODE === 'true';
 
 export default {
   name: "Login",
   data() {
     const validateUsername = (rule, value, callback) => {
-      // if (!validUsername(value)) {
       if (value == null || value.length <= 0) {
         callback(new Error("请输入用户名"));
       } else {
@@ -91,8 +94,8 @@ export default {
       contentHeight: 44,
       verifiedKey: "",
       loginForm: {
-        username: "admin",
-        password: "123456",
+        username: "",
+        password: "",
         code: ""
       },
       verifiedCode: "",
@@ -111,19 +114,11 @@ export default {
     };
   },
   components: {
-    TGraphicCode,
-    TFooterBar
-  },
-  watch: {
-    // $route: {
-    //   handler: function (route) {
-    //     this.redirect = route.query && route.query.redirect
-    //   },
-    //   immediate: true
-    // }
+    // TGraphicCode
+    // TFooter
   },
   methods: {
-    ...mapActions(["Login", "GetUserRole"]),
+    ...mapActions(["Login"]),
     showPwd() {
       if (this.passwordType === "password") {
         this.passwordType = "";
@@ -153,10 +148,14 @@ export default {
           this.Login(data)
             .then(res => {
               if (res.success) {
+                var path = '/dashboard/analysis'
+                if (Vue.ls.get(SYS_LOGIN_BACK_PATH)) {
+                  path = Vue.ls.get(SYS_LOGIN_BACK_PATH)
+                  Vue.ls.remove(SYS_LOGIN_BACK_PATH)
+                }
                 this.$router.push({
-                  path: "/dashboard/analysis"
+                  path: path
                 });
-                this.getRole()
               }
               this.$message.success(res.message);
             })
@@ -169,15 +168,13 @@ export default {
         }
       });
     },
-    // 获取用户角色
-    getRole() {
-      this.GetUserRole().then().catch(error => {
-        this.$message.error(error.message);
-      })
-    },
-
     generateCode(value, key) {
-      this.loginForm.code = value.toLowerCase();
+      //是否自动填充
+      if (verifiedCode) {
+        this.loginForm.code = value.toLowerCase();
+        this.loginForm.username = "admin";
+        this.loginForm.password = "123456";
+      }
       this.verifiedKey = key;
       this.verifiedCode = value.toLowerCase();
     }
@@ -220,7 +217,6 @@ $cursor: #fff;
       }
     }
   }
-
   .el-form-item {
     border: 1px solid rgba(255, 255, 255, 0.1);
     background: rgba(0, 0, 0, 0.1);
@@ -234,24 +230,30 @@ $cursor: #fff;
 $bg: #2d3a4b;
 $dark_gray: #889aa4;
 $light_gray: #eee;
+$footHeight: 50px;
 .login-container {
-  min-height: 100%;
+  // height: 100%;
   width: 100%;
   background-color: $bg;
   overflow: hidden;
-
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
   .login-form {
+    // height: calc(100% - #{$footHeight});
     position: relative;
     width: 520px;
     max-width: 100%;
     padding: 130px 35px 0;
     margin: 0 auto;
     overflow: hidden;
+    flex-grow: 1;
 
     .imgAutoDiv {
       margin-top: 4px;
       height: 44px;
       width: 100%;
+      cursor: pointer;
 
       .graphicCode {
         float: right;
@@ -281,6 +283,7 @@ $light_gray: #eee;
 
     .title-container {
       position: relative;
+      margin-bottom: 20px;
       top: -20px;
       display: flex;
       align-items: center;

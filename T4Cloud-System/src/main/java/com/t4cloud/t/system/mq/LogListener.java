@@ -20,7 +20,7 @@ import static com.t4cloud.t.base.constant.MqConstant.T_CONSUMER_GROUP;
  * @date 2020/2/17 14:52
  */
 @Service
-@RocketMQMessageListener(consumerGroup = T_CONSUMER_GROUP,topic = TOPIC_LOG)
+@RocketMQMessageListener(consumerGroup = T_CONSUMER_GROUP, topic = TOPIC_LOG)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class LogListener implements RocketMQListener<T4Log> {
 

@@ -65,12 +65,12 @@ public class SysUserController extends T4Controller<SysUser, ISysUserService> {
         QueryWrapper<SysUser> sysUserQueryWapper = T4Query.initQuery(sysUser, req.getParameterMap());
         SysUser detail = service.getOne(sysUserQueryWapper);
         //查询用户角色
-        if(detail == null){
+        if (detail == null) {
             return R.error("用户表-详情查询失败,找不到符合条件的用户");
         }
         //调用feignclient查询用户角色
         R<List<SysRoleDTO>> result = systemSysUserRoleClient.getRoleList(detail.getUsername());
-        if(result.isSuccess()){
+        if (result.isSuccess()) {
             List<SysRoleDTO> sysRoleDTOS = result.getResult();
             List<String> roleIds = sysRoleDTOS.stream().map(SysRoleDTO::getId).collect(Collectors.toList());
             detail.setRoles(StringUtils.join(roleIds.toArray(), StrUtil.C_COMMA));
@@ -120,7 +120,7 @@ public class SysUserController extends T4Controller<SysUser, ISysUserService> {
         //先新增
         boolean save = service.save(sysUser);
         //编辑权限
-        if(save){
+        if (save) {
             //调用feignclient编辑用户权限
             SysUserRoleDTO sysUserRoleDTO = new SysUserRoleDTO()
                     .setUserId(sysUser.getId())
@@ -143,7 +143,7 @@ public class SysUserController extends T4Controller<SysUser, ISysUserService> {
         //先更新
         boolean update = service.updateById(sysUser);
         //编辑权限
-        if(update){
+        if (update) {
             //调用feignclient编辑用户权限
             SysUserRoleDTO sysUserRoleDTO = new SysUserRoleDTO()
                     .setUserId(sysUser.getId())

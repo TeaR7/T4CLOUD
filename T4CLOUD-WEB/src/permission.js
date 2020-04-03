@@ -3,8 +3,8 @@ import router from './router'
 import store from './store'
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
-import { ACCESS_TOKEN } from '@/store/mutation-types'
-import { generateIndexRoute } from "@/utils/util"
+import { ACCESS_TOKEN, SYS_LOGIN_BACK_PATH } from '@/store/mutation-types'
+import utils from "t4cloud-util/lib/util";
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
@@ -27,7 +27,7 @@ router.beforeEach((to, from, next) => {
                 return;
               }
               let constRoutes = [];
-              constRoutes = generateIndexRoute(menuData);
+              constRoutes = utils.generateIndexRoute(menuData);
               // 添加主界面路由
               store.dispatch('UpdateAppRouter',  { constRoutes }).then(() => {
                 // 根据roles权限生成可访问的路由表
@@ -64,6 +64,7 @@ router.beforeEach((to, from, next) => {
       // 在免登录白名单，直接进入
       next()
     } else {
+      Vue.ls.set(SYS_LOGIN_BACK_PATH, window.location.pathname);
       next({ path: '/user/login' })
       NProgress.done() // if current page is login will not trigger afterEach hook, so manually handle it
     }

@@ -16,7 +16,7 @@
 
 
     <!-- 获取登录用户拥有的角色 -->
-    <select id="queryByUsername" parameterType="Object"  resultMap="sysRoleResultMap">
+    <select id="queryByUsername" parameterType="Object" resultMap="sysRoleResultMap">
 		   SELECT p.*
 		   FROM  sys_role p
 		   WHERE exists(

@@ -69,8 +69,8 @@ public class SysUserDTO implements Serializable {
 	* 生日
 	 */
 	@ApiModelProperty(value = "生日")
-	@JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date birthday;
 	/**
 	* 性别(0-默认未知,1-男,2-女)

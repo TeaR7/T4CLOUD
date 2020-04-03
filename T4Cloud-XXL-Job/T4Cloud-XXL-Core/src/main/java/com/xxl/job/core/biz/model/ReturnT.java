@@ -39,14 +39,16 @@ public class ReturnT<T> implements Serializable {
 	public String getMsg() {
 		return msg;
 	}
-	public void setMsg(String msg) {
+	public ReturnT setMsg(String msg) {
 		this.msg = msg;
+		return this;
 	}
 	public T getContent() {
 		return content;
 	}
-	public void setContent(T content) {
+	public ReturnT setContent(T content) {
 		this.content = content;
+		return this;
 	}
 
 	@Override

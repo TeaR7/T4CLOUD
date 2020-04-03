@@ -18,7 +18,7 @@ import javax.validation.constraints.NotBlank;
  * --------------------
  *
  * @author T4Cloud
- * @since 2020-02-21 
+ * @since 2020-02-21
  */
 @Data
 @TableName("sys_role_permission")
@@ -27,26 +27,26 @@ import javax.validation.constraints.NotBlank;
 @ApiModel(value = "SysRolePermission对象", description = "角色权限表")
 public class SysRolePermission extends BaseEntity {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	/**
-	* 角色id
-	*/
-	@NotBlank
-	@ApiModelProperty(value = "角色id")
-	private String roleId;
-	/**
-	* 权限id
-	*/
-	@ApiModelProperty(value = "权限id")
-	private String permissionId;
+    /**
+     * 角色id
+     */
+    @NotBlank
+    @ApiModelProperty(value = "角色id")
+    private String roleId;
+    /**
+     * 权限id
+     */
+    @ApiModelProperty(value = "权限id")
+    private String permissionId;
 
-	/**
-	 * 批量传入权限ID
-	 */
-	@TableField(exist = false)
-	@ApiModelProperty(value = "批量传入权限ID，用,分割")
-	private String permissionIds;
+    /**
+     * 批量传入权限ID
+     */
+    @TableField(exist = false)
+    @ApiModelProperty(value = "批量传入权限ID，用,分割")
+    private String permissionIds;
 
 
 }

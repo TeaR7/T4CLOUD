@@ -1,19 +1,19 @@
 <template>
   <div>
     <!-- 搜索，可在下方开启 -->
-    <TTableSearch :search-col="tableColumn" :query-param="queryParam" @search="search"></TTableSearch>
+    <t-table-search :search-col="tableColumn" :query-param="queryParam" @search="search"></t-table-search>
     <!-- 操作按钮，可直接在标签中定义新按钮 -->
-    <TTableOperator :selectedRows="selectionRows" :add="hasAuth(['system:SysRole:ADD'])" @onAdd="handleAdd" :delete="hasAuth(['system:SysRole:DELETE'])"
-      @onDelete="handleDelete"></TTableOperator>
+    <t-table-operator :selectedRows="selectionRows" :add="hasAuth(['system:SysRole:ADD'])" @onAdd="handleAdd" :delete="hasAuth(['system:SysRole:DELETE'])"
+      @onDelete="handleDelete"></t-table-operator>
     <!-- 表格区域 -->
-    <TStandardTable :selectedRows="selectionRows" :tableData="tableData" :tableColumn="tableColumn" :ipagination="ipagination"
+    <t-standard-table :selectedRows="selectionRows" :tableData="tableData" :tableColumn="tableColumn" :ipagination="ipagination"
       :url="url" :loading="loading" :import="hasAuth(['system:SysRole:IMPORT'])" :export="hasAuth(['system:SysRole:EXPORT'])"
       @pageSizeChange="handPageSizeChange" @onSelectRowChange="handSelectRowChange" @onTableHeadCommand="handlerTableHeadCommand">
       <!-- 操作按钮 -->
       <template #options="{row}">
         <el-button type="primary" size="mini" @click="handleEdit(row)" v-auth="['system:SysRole:ADD','system:SysRole:EDIT']">编辑</el-button>
         <el-button type="primary" size="mini" @click="handleAuth(row)" v-auth="['system:SysRolePermission:VIEW']">授权</el-button>
-        <el-button type="primary" size="mini" @click="handleEdit(row)" v-auth="['system:SysUserRole:VIEW']">用户</el-button>
+        <el-button type="primary" size="mini" @click="handleRelationship(row,'roleId')" v-auth="['system:SysUserRole:VIEW']">用户</el-button>
         <el-dropdown>
           <span class="el-dropdown-link">
             更多<i class="el-icon-arrow-down"></i>
@@ -24,30 +24,34 @@
           </el-dropdown-menu>
         </el-dropdown>
       </template>
-    </TStandardTable>
+    </t-standard-table>
     <!-- 编辑modal -->
     <SysRoleModal ref="entityModal" @success="loadData"></SysRoleModal>
     <!-- 授权modal -->
     <SysRolePermModal ref="rolePermModal" @success="loadData"></SysRolePermModal>
+    <!--  -->
+    <SysRoleUserModal ref="relationshipList"></SysRoleUserModal>
   </div>
 </template>
 <script>
-import TTableSearch from '@/components/Table/TTableSearch'
-import TTableOperator from '@/components/Table/TTableOperator'
-import TStandardTable from '@/components/Table/TStandardTable'
+// import TTableSearch from '@/components/Table/TTableSearch'
+// import TTableOperator from '@/components/Table/TTableOperator'
+// import TStandardTable from '@/components/Table/TStandardTable'
 import { T4CloudListMixin } from '../../mixins/T4CloudListMixin'
 import SysRoleModal from './modals/SysRoleModal'
 import SysRolePermModal from './modals/SysRolePermModal'
+import SysRoleUserModal from './modals/SysRoleUserModal_Drawer'
 
 export default {
   name: 'SysRoleList',
   mixins: [T4CloudListMixin],
   components: {
-    TTableSearch,
-    TTableOperator,
-    TStandardTable,
+    // TTableSearch,
+    // TTableOperator,
+    // TStandardTable,
     SysRoleModal,
-    SysRolePermModal
+    SysRolePermModal,
+    SysRoleUserModal
   },
   data() {
     return {
@@ -80,7 +84,7 @@ export default {
     handleAuth(row) {
       this.$refs.rolePermModal.isShow = true;
       this.$refs.rolePermModal.title = "角色权限配置";
-      this.$refs.rolePermModal.disableSubmit = false;
+      this.$refs.rolePermModal.disableSubmit = this.hasAuth(['system:SysRole:EDIT']);
       this.$refs.rolePermModal.getList({
         id: null,
         roleId: row.id,

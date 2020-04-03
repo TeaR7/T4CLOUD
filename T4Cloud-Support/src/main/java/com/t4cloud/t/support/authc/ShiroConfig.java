@@ -18,6 +18,7 @@ import java.util.Map;
  *
  * <p>
  * --------------------
+ *
  * @author TeaR
  * @date 2020/2/9 12:34
  */
@@ -62,6 +63,7 @@ public class ShiroConfig {
 
         //性能监控
         filterChainDefinitionMap.put("/actuator/metrics/**", "anon");
+        filterChainDefinitionMap.put("/actuator/env/**", "anon");
         filterChainDefinitionMap.put("/actuator/httptrace/**", "anon");
         filterChainDefinitionMap.put("/actuator/redis/**", "anon");
         filterChainDefinitionMap.put("/druid/**", "anon");

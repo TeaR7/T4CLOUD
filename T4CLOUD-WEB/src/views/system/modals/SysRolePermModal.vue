@@ -1,19 +1,20 @@
 <template>
-  <div>
+  <div :class="{fixedDialog:true,fixedHeightDialog:device!='mobile'}">
     <el-dialog :title="title" :visible.sync="isShow" :before-close="close" :fullscreen="device=='mobile'">
-      <el-tree ref="tree" :data="treeList" show-checkbox node-key="id" default-expand-all :check-strictly="true" :props="defaultProps"
-        @check="handleCheck">
-      </el-tree>
-      <span slot="footer" class="dialog-footer">
+      <!-- <div class="dialog__body"> -->
+        <el-tree ref="tree" :data="treeList" show-checkbox node-key="id" default-expand-all :check-strictly="true"
+          :props="defaultProps" @check="handleCheck">
+        </el-tree>
+      <!-- </div> -->
+      <span slot="footer" class="dialog__footer">
         <el-button @click="close">取 消</el-button>
-        <el-button type="primary" @click="save">确 定</el-button>
+        <el-button type="primary" @click="save" :disabled="loading">确 定</el-button>
       </span>
     </el-dialog>
   </div>
 </template>
 <script>
 import { T4CloudModalMixin } from '@/mixins/T4CloudModalMixin'
-import { GET } from '../../../utils/http'
 export default {
   name: 'SysRolePermModal',
   mixins: [T4CloudModalMixin],
@@ -44,7 +45,7 @@ export default {
         return;
       }
       this.loading = true;
-      GET(this.url.tree, {}).then(res => {
+      this.$http.GET(this.url.tree, {}).then(res => {
         if (res.success) {
           this.treeList = res.result;
           this.getSelectList()
@@ -62,7 +63,7 @@ export default {
         return;
       }
       this.loading = true;
-      GET(this.url.select, { roleId: this.forms.roleId }).then(res => {
+      this.$http.GET(this.url.select, { roleId: this.forms.roleId }).then(res => {
         if (res.success) {
           let arr = []
           res.result.forEach(item => {

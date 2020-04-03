@@ -11,26 +11,24 @@ import Fragment from 'vue-fragment'
 import '@/permission' // permission control
 import Storage from 'vue-ls'
 import '../src/styles/element-variables.scss'
-import hasPermission from '@/utils/hasPermission'
-import './utils/log'
-
-import {ACCESS_TOKEN} from "@/store/mutation-types"
+import hasPermission from 't4cloud-util/lib/hasPermission'
+import 't4cloud-util/lib/log'
+import 't4cloud-util/lib/rsa'
+import T4CloudUI from 't4cloud-ui'
+import http from  "t4cloud-util/lib/http";
+import util from  "t4cloud-util/lib/util";
+import 't4cloud-ui/lib/t4cloudui.css'
+import { ACCESS_TOKEN } from "@/store/mutation-types"
 
 Vue.use(Storage, config.storageOptions)
 Vue.use(VueI18n)
-Vue.use(ElementUI, {size: 'medium'})
+Vue.use(ElementUI, { size: 'medium' })
 Vue.use(hasPermission)
 Vue.use(Fragment.Plugin)
-
-
-//字典注册
-import Dict from '@/components/T4Cloud/TDict'
-const TDict = {
-    install: function (Vue) {
-        Vue.component('TDict',Dict);
-    }
-}
-Vue.use(TDict)
+Vue.use(T4CloudUI)
+Vue.prototype.$http=http;
+Vue.prototype.$util=util;
+console.log(util)
 
 const i18n = new VueI18n({
     locale: 'zh-CN', // 语言表示，通过切换local来切换本地语言

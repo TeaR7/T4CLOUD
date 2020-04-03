@@ -14,11 +14,11 @@
         <el-form-item label="状态" prop="status">
           <t-dict v-model="forms.status" type="radio" dictCode="common_status" :readonly="disableSubmit"></t-dict>
         </el-form-item>
-        <el-form-item style="text-align:right;">
-          <el-button @click="close">取消</el-button>
-          <el-button type="primary" @click="submitForm('baseForm')" :disabled="disableSubmit" v-auth="['system:SysDict:ADD','system:SysDict:EDIT']">确定</el-button>
-        </el-form-item>
       </el-form>
+      <span slot="footer">
+        <el-button @click="close">取消</el-button>
+        <el-button type="primary" @click="submitForm('baseForm')" :disabled="disableSubmit" v-auth="['system:SysDict:ADD','system:SysDict:EDIT']">确定</el-button>
+      </span>
     </el-dialog>
   </div>
 </template>
@@ -28,24 +28,7 @@ export default {
   name: 'SysDictModal',
   mixins: [T4CloudModalMixin],
   data() {
-    var validateCode = (rule, value, callback) => {
-      const key = rule.field
-      if (value==null||value === '') {
-        callback(new Error('字典编码不允许为空'));
-      } else {
-        if (!this.forms.id) {
-          this.ckeckFieldInfo(key, value).then(res => {
-            if (res == false) {
-              callback(new Error('已存在该字典编码'));
-            } else {
-              callback();
-            }
-          })
-        } else {
-          callback();
-        }
-      }
-    };
+    var validateCode = this.valiteValue('字典编码');
     return {
       rules: {
         name: { required: true, message: '字典名称不允许为空', trigger: 'blur' },

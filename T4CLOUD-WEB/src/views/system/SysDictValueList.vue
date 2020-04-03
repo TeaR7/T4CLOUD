@@ -1,5 +1,5 @@
 <template>
-  <div class="scrollDialog">
+  <div class="noFixedDrawer">
     <el-drawer :visible.sync="relationshipVisible" direction="rtl" :size="device=='mobile'?'100%':'900px'"
       :before-close="handleRelationshipClose" @open="loadData">
       <!--     title       -->
@@ -7,12 +7,12 @@
         <h2 class="el-drawer__title">{{relationData.name}} - 字典详情管理</h2>
       </div>
       <!-- 搜索，可在下方开启 -->
-      <TTableSearch :search-col="tableColumn" :query-param="queryParam" @search="search"></TTableSearch>
+      <t-table-search :search-col="tableColumn" :query-param="queryParam" @search="search"></t-table-search>
       <!-- 操作按钮，可直接在标签中定义新按钮 -->
-      <TTableOperator :selectedRows="selectionRows" :add="hasAuth(['system:SysDictValue:ADD'])" @onAdd="handleAdd"
-        :delete="hasAuth(['system:SysDictValue:DELETE'])" @onDelete="handleDelete"></TTableOperator>
+      <t-table-operator :selectedRows="selectionRows" :add="hasAuth(['system:SysDictValue:ADD'])" @onAdd="handleAdd"
+        :delete="hasAuth(['system:SysDictValue:DELETE'])" @onDelete="handleDelete"></t-table-operator>
       <!-- 表格区域 -->
-      <TStandardTable :selectedRows="selectionRows" :tableData="tableData" :tableColumn="tableColumn" :ipagination="ipagination"
+      <t-standard-table :selectedRows="selectionRows" :tableData="tableData" :tableColumn="tableColumn" :ipagination="ipagination"
         :url="url" :loading="loading" :import="hasAuth(['system:SysDictValue:IMPORT'])" :export="hasAuth(['system:SysDictValue:EXPORT'])"
         @pageSizeChange="handPageSizeChange" @onSelectRowChange="handSelectRowChange" @onTableHeadCommand="handlerTableHeadCommand">
         <!-- 操作按钮 -->
@@ -34,16 +34,16 @@
         <template #text="{col,row}">
           <el-tag>{{row.text}} - {{row.value}}</el-tag>
         </template>
-      </TStandardTable>
+      </t-standard-table>
     </el-drawer>
     <!-- 编辑modal -->
     <SysDictValueModal ref="entityModal" @success="loadData"></SysDictValueModal>
   </div>
 </template>
 <script>
-import TTableSearch from '@/components/Table/TTableSearch'
-import TTableOperator from '@/components/Table/TTableOperator'
-import TStandardTable from '@/components/Table/TStandardTable'
+// import TTableSearch from '@/components/Table/TTableSearch'
+// import TTableOperator from '@/components/Table/TTableOperator'
+// import TStandardTable from '@/components/Table/TStandardTable'
 import { T4CloudListMixin } from '../../mixins/T4CloudListMixin'
 import SysDictValueModal from './modals/SysDictValueModal'
 
@@ -51,9 +51,9 @@ export default {
   name: 'SysDictValueList',
   mixins: [T4CloudListMixin],
   components: {
-    TTableSearch,
-    TTableOperator,
-    TStandardTable,
+    // TTableSearch,
+    // TTableOperator,
+    // TStandardTable,
     SysDictValueModal
   },
   data() {
@@ -73,6 +73,11 @@ export default {
       /* 自定义分页参数 */
       ipagination: {
         pageSize: 20,
+      },
+      /* 排序参数 */
+      sorter: {
+        column: "position",
+        order: "asc"
       },
       url: {
         page: '/T4Cloud-System/SysDictValue/page',

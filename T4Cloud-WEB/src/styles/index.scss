@@ -1,0 +1,100 @@
+@import './element-variables.scss';
+@import './custom.scss';
+html,
+body,
+#app {
+  height: 100%;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: #fafafa;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+  // font-family: 'Microsoft Yahei', '\65B0\5B8B\4F53', '\5B8B\4F53', Verdana;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol,
+i,
+b,
+em,
+strong,
+dl,
+dd,
+input {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-style: normal;
+}
+
+li {
+  list-style: none;
+}
+
+ol,
+ul {
+  list-style-type: none;
+}
+
+img{
+  vertical-align: middle;
+}
+
+
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+a:focus,
+a:active {
+  outline: none;
+}
+
+a,
+a:focus,
+a:hover {
+  cursor: pointer;
+  color: $--color-primary;
+  text-decoration: none;
+  outline: none;
+}
+
+.clearfix {
+  &:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+  }
+}
+
+.fl {
+  float: left;
+}
+
+.fr {
+  float: right;
+}
+
+.scrollDialog {
+  .el-drawer__open .el-drawer.rtl {
+    overflow-y: scroll;
+  }
+}

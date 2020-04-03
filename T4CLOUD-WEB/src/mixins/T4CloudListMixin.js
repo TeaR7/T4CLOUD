@@ -1,24 +1,27 @@
 /**
  * 新增修改完成调用 直接调用loadData刷新
  */
-import {filterNull, havePermission} from "@/utils/util";
-import {DELETE, download, GET} from "@/utils/http";
-import {mapGetters} from "vuex";
+// import { filterNull, isPermission, changePrefix } from "t4cloud-util/lib/util";
+import { mapGetters } from "vuex";
 
 export const T4CloudListMixin = {
   data() {
     return {
+      /* 加载就加载数据 默认为true false的情况是页面里面的内联表*/
+      openRefresh: true,
       /* 树表参数 */
       treeProps: {
         children: "children",
         hasChildren: "hasChildren"
       },
+      /* 高级查询条件前缀 */
+      prefixQueryParam: {},
       /* 查询条件*/
       queryParam: {},
       /* 排序参数 */
-      sorter:{
-        column: 'createTime',
-        order: 'desc',
+      sorter: {
+        column: "createTime",
+        order: "desc"
       },
       /* 数据源 */
       tableData: [],
@@ -38,19 +41,19 @@ export const T4CloudListMixin = {
       selectionRows: [],
       selectionRowKeys: [],
       /* 关联表可见状态 & 关联数据 */
-      relationshipVisible:false,
-      relationData:{},
-      relationId:null,
+      relationshipVisible: false,
+      relationData: {},
+      relationId: null
     };
   },
   computed: {
-    ...mapGetters([
-      'device'
-    ])
+    ...mapGetters(["device"])
   },
   created() {
     //尝试加载数据
-    this.loadData();
+    if (this.openRefresh) {
+      this.loadData();
+    }
     //判断是否为子项
     // this.handleRelationshipModal()
   },
@@ -65,7 +68,7 @@ export const T4CloudListMixin = {
         this.loadTree();
       }
       //判断是否为子项
-      this.handleRelationshipModal()
+      this.handleRelationshipModal();
     },
     //加载普通表数据
     loadTable(arg) {
@@ -80,21 +83,24 @@ export const T4CloudListMixin = {
       var params = this.getQueryParams(); //查询条件
       this.loading = true;
       // console.log("params", params);
-      GET(this.url.page, params).then(res => {
-        if (res.success) {
-          if (res.result.records) {
-            this.tableData = res.result.records;
-            this.ipagination.total = res.result.total;
+      this.$http
+        .GET(this.url.page, params)
+        .then(res => {
+          if (res.success) {
+            if (res.result.records) {
+              this.tableData = res.result.records;
+              this.ipagination.total = res.result.total;
+            } else {
+              this.tableData = res.result;
+            }
           } else {
-            this.tableData = res.result;
+            this.$message.warning(res.message);
           }
-        } else {
-          this.$message.warning(res.message);
-        }
-        this.loading = false;
-      }).catch(()=>{
-        this.loading = false
-      });
+          this.loading = false;
+        })
+        .catch(() => {
+          this.loading = false;
+        });
     },
     //加载树状表数据
     loadTree() {
@@ -105,25 +111,71 @@ export const T4CloudListMixin = {
       var params = this.getQueryParams(); //查询条件
       this.loading = true;
       // console.log("params", params);
-      GET(this.url.tree, params).then(res => {
-        if (res.success) {
-          this.tableData = res.result;
-          this.ipagination.total = res.result.total;
-        } else {
-          this.$message.warning(res.message);
-        }
-        this.loading = false;
-      }).catch(()=>{
-        this.loading = false
-      });
+      this.$http
+        .GET(this.url.tree, params)
+        .then(res => {
+          if (res.success) {
+            this.tableData = res.result;
+            this.ipagination.total = res.result.total;
+          } else {
+            this.$message.warning(res.message);
+          }
+          this.loading = false;
+        })
+        .catch(() => {
+          this.loading = false;
+        });
     },
     //获取查询参数
     getQueryParams() {
       //获取查询条件
-      var param = Object.assign(this.sorter, this.queryParam, this.filters);
+      const params = this.combineQueryParams();
+      const sorter = { ...this.sorter };
+      var param = Object.assign(sorter, params, this.filters);
       param.pageNo = this.ipagination.current;
       param.pageSize = this.ipagination.pageSize;
-      return filterNull(param);
+      return this.$util.filterNull(param);
+    },
+    // 合并查询参数
+    combineQueryParams() {
+      let dic = { ...this.queryParam };
+      let deleteArr = [];
+      for (var key in this.queryParam) {
+        const prefix = this.prefixQueryParam[key];
+        // if (prefix == "between") {
+        //   if (dic[key + "_begin"]) {
+        //     delete dic[key + "_begin"];
+        //   } else if (dic[key + "_end"]) {
+        //     delete dic[key + "_end"];
+        //   }
+        // }
+        if (dic[key] && dic[key].length > 0 && prefix) {
+          if (prefix == "between") {
+            if (dic[key].length > 0) {
+              dic[key + "_ge"] = dic[key][0];
+            }
+            if (dic[key].length > 1) {
+              dic[key + "_le"] = dic[key][1];
+            }
+            deleteArr.push(key);
+          } else {
+            const backP = this.$util.changePrefix(prefix);
+            if (backP.length > 0) {
+              deleteArr.push(key);
+              if (backP == "_in") {
+                dic[key + backP] = dic[key].join(",");
+              } else {
+                dic[key + backP] = dic[key];
+              }
+            }
+          }
+        }
+      }
+      deleteArr.forEach(key => {
+        delete dic[key];
+      });
+      // console.log("aaa", dic);
+      return dic;
     },
     // table 选中的行修改
     handSelectRowChange(selectionRows) {
@@ -135,17 +187,27 @@ export const T4CloudListMixin = {
       // console.log("this.selectionRows", this.selectionRows);
       // console.log("this.selectionRowKeys", this.selectionRowKeys);
     },
-    //删除事件
-    handleDelete: function(idArr) {
+    /* 删除事件
+     * idArr 要删除的数据id
+     * params 可以自定义删除的参数
+     */
+    handleDelete: function(idArr, params) {
       if (!this.url.delete) {
         this.$message.error("删除需要配置data中url.delete的属性!");
         return;
       }
-      if (!idArr) {
-        idArr = this.selectionRowKeys;
+      let data = {
+        ids: idArr.join(",")
+      };
+      if (params) {
+        data = { ...params };
       }
+      // if (!idArr) {
+      //   idArr = this.selectionRowKeys;
+      // }
+
       var that = this;
-      DELETE(that.url.delete, { ids: idArr.join(",") }).then(res => {
+      this.$http.DELETE(that.url.delete, data).then(res => {
         if (res.success) {
           that.$message.success(res.message);
           that.loadData();
@@ -193,18 +255,19 @@ export const T4CloudListMixin = {
         this.loadData();
       } else if (type == "export") {
         this.handleExportXls();
-      } else if(type=='templteExport'){
+      } else if (type == "templteExport") {
         this.handleExportXls(-1);
       } else if (type == "tableColumn") {
         this.tableColumn = JSON.parse(JSON.stringify(arr));
       }
     },
-    search(queryParam) {
-      this.queryParam = queryParam;
+    search(queryParam, prefixQueryParam) {
+      this.queryParam = { ...queryParam };
+      this.prefixQueryParam = { ...prefixQueryParam };
       // console.log("this.$parent.relationshipVisible",this.$parent.relationshipVisible)
       // console.log("this.$parent.relationId",this.$parent.relationId)
       //在存在父级的情况下，保持关联ID的查询限定
-      if (this.relationshipVisible){
+      if (this.relationshipVisible) {
         this.queryParam[this.relationId] = this.relationData.id;
       }
       // console.log("queryParam",queryParam)
@@ -212,25 +275,25 @@ export const T4CloudListMixin = {
     },
     // 判断是否有权限
     hasAuth(permission) {
-      return havePermission(permission, 0);
+      return this.$util.isPermission(permission, 0);
     },
     hasRole(role) {
-      return havePermission(role, 1);
+      return this.$util.isPermission(role, 1);
     },
     //文件导出 rowType -1 下载模板
     handleExportXls(rowType) {
       //判断导出URL
-      if(!this.url.exportXls){
+      if (!this.url.exportXls) {
         this.$message.error("导入功能需要配置data中url.exportXls");
         return;
       }
-      let param = { ...this.queryParam };
+      let param = this.combineQueryParams();
       // 导出 指定行
       if (this.selectionRowKeys && this.selectionRowKeys.length > 0) {
         param.selectedRowKeys = this.selectionRowKeys.join(",");
       }
-      if(rowType==-1){
-        param.selectedRowKeys = '-1'
+      if (rowType == -1) {
+        param.selectedRowKeys = "-1";
       }
       // 导出 指定列
       if (this.tableColumn && this.tableColumn.length > 0) {
@@ -248,16 +311,16 @@ export const T4CloudListMixin = {
         }
       }
       // console.log("导出参数", param);
-      download(this.url.exportXls, param).then(data => {
-        if (!data) {
+      this.$http.download(this.url.exportXls, param).then(data => {
+        if (!data || data.type == 'application/json') {
           this.$message.warning("文件下载失败");
           return;
         }
-        var fileName = data.filename
-        if(rowType==-1){
-          fileName = fileName+'模版'
+        var fileName = data.filename;
+        if (rowType == -1) {
+          fileName = fileName + "模版";
         }
-        delete data.filename
+        delete data.filename;
         if (typeof window.navigator.msSaveBlob !== "undefined") {
           window.navigator.msSaveBlob(new Blob([data]), fileName + ".xls");
         } else {
@@ -274,7 +337,7 @@ export const T4CloudListMixin = {
       });
     },
     //打开关联表List
-    handleRelationship(record,relationId){
+    handleRelationship(record, relationId) {
       //传递主表数据
       this.$refs.relationshipList.relationData = record;
       this.$refs.relationshipList.relationId = relationId;
@@ -283,18 +346,20 @@ export const T4CloudListMixin = {
       this.$refs.relationshipList.relationshipVisible = true;
     },
     //处理父级关联参数
-    handleRelationshipModal(){
+    handleRelationshipModal() {
       this.$nextTick(() => {
-        if (this.relationshipVisible){
-          this.$refs.entityModal.relationForm[this.relationId] = this.relationData.id;
+        if (this.relationshipVisible && this.$refs.entityModal) {
+          this.$refs.entityModal.relationForm[
+            this.relationId
+          ] = this.relationData.id;
           this.$refs.entityModal.relationData = this.relationData;
           // console.log("forms",this.$refs.entityModal.forms)
           // console.log("relationData",this.$refs.entityModal.relationData)
         }
-      })
+      });
     },
     //关闭关联表List
-    handleRelationshipClose(){
+    handleRelationshipClose() {
       //传递主表数据
       this.relationData = {};
       this.relationshipVisible = false;

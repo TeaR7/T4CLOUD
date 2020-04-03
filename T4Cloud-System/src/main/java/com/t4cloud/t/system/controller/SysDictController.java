@@ -182,7 +182,7 @@ public class SysDictController extends T4Controller<SysDict, ISysDictService> {
         if (sysDict == null) {
             return R.error("该字典不存在");
         }
-        List<SysDictValue> sysDictValueList = sysDictValueService.lambdaQuery().select(SysDictValue::getText, SysDictValue::getValue, SysDictValue::getPosition).eq(SysDictValue::getDictId, sysDict.getId()).eq(SysDictValue::getStatus, 1).list();
+        List<SysDictValue> sysDictValueList = sysDictValueService.lambdaQuery().select(SysDictValue::getText, SysDictValue::getValue, SysDictValue::getPosition, SysDictValue::getStatus).eq(SysDictValue::getDictId, sysDict.getId()).list();
         return R.ok("字典-查询所有值成功", sysDictValueList);
     }
 

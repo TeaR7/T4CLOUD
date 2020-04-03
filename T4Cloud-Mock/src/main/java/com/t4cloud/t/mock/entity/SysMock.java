@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
  * --------------------
  *
  * @author T4Cloud
- * @since 2020-02-14 
+ * @since 2020-02-14
  */
 @Data
 @TableName("sys_mock")
@@ -24,23 +24,23 @@ import lombok.experimental.Accessors;
 @ApiModel(value = "SysMock对象", description = "Mock数据")
 public class SysMock extends BaseEntity {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	/**
-	* MOCK对应的URL
-	*/
-	@ApiModelProperty(value = "MOCK对应的URL")
-	private String url;
-	/**
-	* MOCK对应的DATA数据
-	*/
-	@ApiModelProperty(value = "MOCK对应的DATA数据")
-	private String data;
-	/**
-	* MOCK对应的URL的请求方法
-	*/
-	@ApiModelProperty(value = "MOCK对应的URL的请求方法")
-	private String method;
+    /**
+     * MOCK对应的URL
+     */
+    @ApiModelProperty(value = "MOCK对应的URL")
+    private String url;
+    /**
+     * MOCK对应的DATA数据
+     */
+    @ApiModelProperty(value = "MOCK对应的DATA数据")
+    private String data;
+    /**
+     * MOCK对应的URL的请求方法
+     */
+    @ApiModelProperty(value = "MOCK对应的URL的请求方法")
+    private String method;
 
 
 }

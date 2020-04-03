@@ -17,7 +17,7 @@ import lombok.experimental.Accessors;
  * --------------------
  *
  * @author TeaR
- * @since 2020-02-27 
+ * @since 2020-02-27
  */
 @Data
 @TableName("sys_user_role")
@@ -26,35 +26,35 @@ import lombok.experimental.Accessors;
 @ApiModel(value = "SysUserRole对象", description = "用户角色表")
 public class SysUserRole extends BaseEntity {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
 
-	/**
-	* 用户id
-	 */
-	@Excel(name = "用户id", width = 10.0, orderNum = "0")
-	@ApiModelProperty(value = "用户id")
-	private String userId;
-	/**
-	* 角色id
-	 */
-	@Excel(name = "角色id", width = 10.0, orderNum = "1")
-	@ApiModelProperty(value = "角色id")
-	private String roleId;
+    /**
+     * 用户id
+     */
+    @Excel(name = "用户id", width = 10.0, orderNum = "0")
+    @ApiModelProperty(value = "用户id")
+    private String userId;
+    /**
+     * 角色id
+     */
+    @Excel(name = "角色id", width = 10.0, orderNum = "1")
+    @ApiModelProperty(value = "角色id")
+    private String roleId;
 
-	/**
-	 * 角色id集合
-	 */
-	@TableField(exist = false)
-	@ApiModelProperty(value = "角色id集合，用[,]分割")
-	private String roleIds = "";
+    /**
+     * 角色id集合
+     */
+    @TableField(exist = false)
+    @ApiModelProperty(value = "角色id集合，用[,]分割")
+    private String roleIds = "";
 
-	/**
-	 * 用户id集合
-	 */
-	@TableField(exist = false)
-	@ApiModelProperty(value = "用户id集合，用[,]分割")
-	private String userIds;
+    /**
+     * 用户id集合
+     */
+    @TableField(exist = false)
+    @ApiModelProperty(value = "用户id集合，用[,]分割")
+    private String userIds;
 
 
 }

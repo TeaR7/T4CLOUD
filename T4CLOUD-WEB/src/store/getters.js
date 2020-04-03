@@ -8,7 +8,8 @@ const getters = {
   permissionList: state => state.user.permissionList,
   addRouters: state => state.permission.addRouters,
   routers: state => state.permission.routers,
-  color: state => state.app.color
+  color: state => state.app.color,
+  reduceTimes: state => state.app.reduceTimes
 }
 
 export default getters

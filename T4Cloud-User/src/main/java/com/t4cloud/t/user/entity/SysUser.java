@@ -75,10 +75,10 @@ public class SysUser extends BaseEntity {
     /**
      * 生日
      */
-    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @ApiModelProperty(value = "生日")
-	@Excel(name = "生日",width = 20,orderNum = "4",format = "yyyy-MM-dd HH:mm:ss")
+    @Excel(name = "生日", width = 20, orderNum = "4", format = "yyyy-MM-dd")
     private Date birthday;
     /**
      * 性别(0-默认未知,1-男,2-女)

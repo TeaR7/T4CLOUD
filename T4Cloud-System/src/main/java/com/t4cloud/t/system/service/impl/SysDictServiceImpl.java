@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
  * --------------------
  *
  * @author TeaR
- * @since 2020-03-04 
+ * @since 2020-03-04
  */
 @Slf4j
 @Service

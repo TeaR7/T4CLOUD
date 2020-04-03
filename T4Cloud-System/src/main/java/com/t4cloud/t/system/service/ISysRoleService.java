@@ -11,7 +11,7 @@ import com.t4cloud.t.system.entity.SysRole;
  * --------------------
  *
  * @author T4Cloud
- * @since 2020-02-21 
+ * @since 2020-02-21
  */
 public interface ISysRoleService extends T4Service<SysRole> {
 

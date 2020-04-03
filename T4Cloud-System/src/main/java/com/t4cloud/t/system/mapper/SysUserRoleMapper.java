@@ -11,7 +11,7 @@ import com.t4cloud.t.system.entity.SysUserRole;
  * --------------------
  *
  * @author TeaR
- * @since 2020-02-27 
+ * @since 2020-02-27
  */
 public interface SysUserRoleMapper extends BaseMapper<SysUserRole> {
 

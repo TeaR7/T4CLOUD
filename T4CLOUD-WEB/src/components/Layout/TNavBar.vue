@@ -9,10 +9,10 @@
       <div>
         <el-dropdown class="nameSpan" @command="handleCommand">
           <span class="el-dropdown-link">
-            <img class="userImg" :src="this.userInfo().avatar ? this.userInfo().avatar : 'https://git.t4cloud.com/img/favicon.png'"
+            <img class="userImg" :src="this.backAvatar()"
               alt="avatar" />
             <span class="web">
-              {{welcome}}，{{username()}}
+              {{welcome}}，{{username}}
               <i class="el-icon-arrow-down el-icon--right"></i>
             </span>
           </span>
@@ -48,13 +48,14 @@ export default {
     ForgetPassword,
     TSettingDrawer
   },
+  computed:{
+    ...mapGetters(["username","userInfo"])
+  },
   //页面加载时
   created() {
     this.getWelcome();
   },
   methods: {
-    ...mapGetters(["username"]),
-    ...mapGetters(["userInfo"]),
     ...mapActions(["Logout"]),
     // 问候语句
     getWelcome() {
@@ -98,7 +99,7 @@ export default {
     handleCommand(command) {
       // console.log(command);
       if (command == 'systemSetting') {
-        this.$refs.settingDrawer.drawer=true
+        this.$refs.settingDrawer.drawer = true
       } else if (command == 'changePassword') {
         this.isShowPassWordCom = true;
       } else if (command == 'loginOut') {
@@ -109,6 +110,18 @@ export default {
           this.$message.success(res.message);
         });
       }
+    },
+    // 获取头像
+    backAvatar() {
+      let avatar = 'https://git.t4cloud.com/img/favicon.png';
+      if (this.userInfo.avatar) {
+        if (this.userInfo.avatar.indexOf('http') >= 0) {
+          avatar = this.userInfo.avatar
+        } else {
+          avatar = process.env.VUE_APP_URL + '/T4Cloud-Support/file/view/' + this.userInfo.avatar
+        }
+      }
+      return avatar
     }
   }
 };

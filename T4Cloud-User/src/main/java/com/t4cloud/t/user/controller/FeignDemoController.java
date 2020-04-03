@@ -28,7 +28,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/test")
-@Api(value = "测试接口" , tags = "测试接口" , position = 0)
+@Api(value = "测试接口", tags = "测试接口", position = 0)
 public class FeignDemoController {
 
     @Autowired
@@ -37,9 +37,9 @@ public class FeignDemoController {
     /**
      * 修改密码
      */
-    @AutoLog(value = "获取用户信息" , operateType = 4, logType = 2)
+    @AutoLog(value = "获取用户信息", operateType = 4, logType = 2)
     @GetMapping("/testSysRoleList")
-    @ApiOperation(position = 5, value = "获取用户信息" , notes = "已登录的用户信息")
+    @ApiOperation(position = 5, value = "获取用户信息", notes = "已登录的用户信息")
     public R<List<SysRoleDTO>> userInfo(SysRoleDTO sysRole) {
         return systemSysRoleClient.list(sysRole);
     }

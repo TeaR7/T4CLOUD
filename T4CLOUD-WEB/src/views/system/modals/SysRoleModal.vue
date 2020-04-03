@@ -12,11 +12,11 @@
           <el-input placeholder="输入描述" v-model="forms.description" type="textarea" :rows="2" :readonly="disableSubmit">
           </el-input>
         </el-form-item>
-        <el-form-item style="text-align:right;">
-          <el-button @click="close">取消</el-button>
-          <el-button type="primary" @click="submitForm('baseForm')" :disabled="disableSubmit" v-auth="['system:SysRole:ADD','system:SysRole:EDIT']">确定</el-button>
-        </el-form-item>
       </el-form>
+      <span slot="footer">
+        <el-button @click="close">取消</el-button>
+        <el-button type="primary" @click="submitForm('baseForm')" :disabled="disableSubmit" v-auth="['system:SysRole:ADD','system:SysRole:EDIT']">确定</el-button>
+      </span>
     </el-dialog>
   </div>
 </template>
@@ -27,24 +27,7 @@ export default {
   name: 'SysRoleModal',
   mixins: [T4CloudModalMixin],
   data() {
-    var validateCheck = (rule, value, callback) => {
-      const key = rule.field
-      if (value == null || value === '') {
-        callback(new Error('角色编码不允许为空'));
-      } else {
-        if (!this.forms.id) {
-          this.ckeckFieldInfo(key, value).then(res => {
-            if (res == false) {
-              callback(new Error('已存在该角色编码'));
-            } else {
-              callback();
-            }
-          })
-        } else {
-          callback();
-        }
-      }
-    };
+    var validateCheck = this.valiteValue('角色编码');
     return {
       rules: {
         roleName: { required: true, message: '角色名称不允许为空', trigger: 'blur' },

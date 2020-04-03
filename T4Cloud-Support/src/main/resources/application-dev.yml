@@ -2,6 +2,8 @@ server:
   port: 8083
   tomcat:
     max-swallow-size: -1
+    mbeanregistry:
+      enabled: true
   servlet:
 #    context-path: /t4cloud-support
     compression:
@@ -15,9 +17,9 @@ spring:
     name: '@project.name@'
   mail:
     host: smtp.exmail.qq.com
-    username: service.pop@t4cloud.com
-    nickname: TeaR<service.pop@t4cloud.com>
-    password: rsx9ATkUz4iDo42F
+    username: example@t4cloud.com
+    nickname: T4Cloud<example@t4cloud.com>
+    password: 123456
     port: 465
     protocol: smtp
     properties:
@@ -136,6 +138,8 @@ rocketmq:
 
 #T4CLOUD自定义配置
 t4cloud:
+  #是否进行请求有效性，
+  valid-request: false
   #系统日志的处理方式，0：直接入库，1：通过MQ交由SYS模块集中处理
   log-type: 1
   actuator:
@@ -149,6 +153,16 @@ t4cloud:
     ## 端口自动配置成本项目的端口-100
     port: ${server.port}
     appname: '@project.name@'
+  # poi 配置
+  excel:
+    ## 导出数据的阈值，如果大于这个值，则采用大数据模式导出
+    big-data: 1000
+    ## 每次导入excel的页大小
+    page-size: 1000
+    ## 导出的时候OSS的前缀（任何资源管理器的END POINT）
+    oss: https://
+    ## 导出的时候某些资源管理器是不带资源后缀的，需要而easypoi需要，所以手动配置一个
+    temp-dir: /temp-pic
   minio:
     ## 是否开启minio客户端操作
     open: true

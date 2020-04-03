@@ -2,6 +2,8 @@ server:
   port: 8082
   tomcat:
     max-swallow-size: -1
+    mbeanregistry:
+      enabled: true
   servlet:
     #    context-path: /t4cloud-mock
     compression:
@@ -110,7 +112,6 @@ logging:
   level:
     com.t4cloud.t.mock.mapper: debug
 
-
 # rocket mq 配置
 rocketmq:
   name-server: 127.0.0.1:9876
@@ -120,6 +121,8 @@ rocketmq:
 
 #T4CLOUD自定义配置
 t4cloud:
+  #是否进行请求有效性
+  valid-request: false
   #系统日志的处理方式，0：直接入库，1：通过MQ交由SYS模块集中处理
   log-type: 1
   actuator:
@@ -134,3 +137,9 @@ t4cloud:
     ## 端口自动配置成本项目的端口-100
     port: ${server.port}
     appname: '@project.name@'
+    # poi 配置
+    excel:
+      ## 导出的时候OSS的前缀（任何资源管理器的END POINT）
+      oss: https://api.cloud.t4cloud.com/T4Cloud-Support/file/view/
+      ## 导出的时候某些资源管理器是不带资源后缀的，需要而easypoi需要，所以手动配置一个
+      temp-dir: /temp-pic

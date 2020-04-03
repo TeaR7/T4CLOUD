@@ -11,7 +11,7 @@ import com.t4cloud.t.user.entity.SysUser;
  * --------------------
  *
  * @author T4Cloud
- * @since 2020-02-19 
+ * @since 2020-02-19
  */
 public interface SysUserMapper extends BaseMapper<SysUser> {
 

@@ -1,11 +1,10 @@
-import {DELETE, GET, POST} from '../utils/http'
-
+import http from  "t4cloud-util/lib/http";
 /**
  * 获取图片验证码
  * @returns {*}
  */
 export function fetchCode(data) {
-    return GET("/T4Cloud-User/login/checkCode", data)
+    return http.GET("/T4Cloud-User/login/checkCode", data)
 }
 
 /**
@@ -19,7 +18,7 @@ export function fetchCode(data) {
  * @returns {*}
  */
 export function fetchLogin(data) {
-    return POST("/T4Cloud-User/login/loginByPwd", data)
+    return http.POST("/T4Cloud-User/login/loginByPwd", data)
 }
 
 /**
@@ -27,7 +26,7 @@ export function fetchLogin(data) {
  * @returns {*}
  */
 export function fetchGetUserInfo() {
-    return GET("/T4Cloud-User/login/userInfo", null)
+    return http.GET("/T4Cloud-User/login/userInfo", null)
 }
 
 /**
@@ -35,7 +34,7 @@ export function fetchGetUserInfo() {
  * @returns {*}
  */
 export function fetchChangePwd(data) {
-    return POST("/T4Cloud-User/login/changePwd", data)
+    return http.POST("/T4Cloud-User/login/changePwd", data)
 }
 
 /**
@@ -43,7 +42,7 @@ export function fetchChangePwd(data) {
  * @returns {*}
  */
 export function fetchExitLogin() {
-    return DELETE("/T4Cloud-User/login/logout", null)
+    return http.DELETE("/T4Cloud-User/login/logout", null)
 }
 
 /**
@@ -51,7 +50,7 @@ export function fetchExitLogin() {
  * @returns {*}
  */
 export function fetchUserPermission() {
-    return GET("/T4Cloud-System/SysPermission/userPermission")
+    return http.GET("/T4Cloud-System/SysPermission/userPermission")
 }
 
 /**
@@ -59,6 +58,6 @@ export function fetchUserPermission() {
  * @returns {*}
  */
 export function fetchUserRole() {
-    return GET("/T4Cloud-System/SysRole/userRole")
+    return http.GET("/T4Cloud-System/SysRole/userRole")
 }
 

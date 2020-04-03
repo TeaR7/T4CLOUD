@@ -1,13 +1,21 @@
 <template>
   <div class="tab-layout">
-    <el-tabs v-model="activePage" @tab-click="handleClick" closable @tab-remove="removeTab">
+    <el-tabs :class="{hidden: device!='desktop'}" v-model="activePage" @tab-click="handleClick" closable @tab-remove="removeTab">
       <el-tab-pane v-for="item in pageList" :key="item.path" :label="item.name" :name="item.path">
         <!-- {{item.content}} -->
       </el-tab-pane>
     </el-tabs>
+    <div style="margin: 12px;">
+      <transition name="page-toggle">
+        <keep-alive>
+          <router-view />
+        </keep-alive>
+      </transition>
+    </div>
   </div>
 </template>
 <script>
+import { mapGetters } from "vuex";
 const indexKey = '/dashboard/analysis'
 export default {
   data() {
@@ -34,6 +42,9 @@ export default {
       this.lastActivePage = newKey
     }
   },
+  computed: {
+    ...mapGetters(["device"])
+  },
   created() {
     if (this.$route.path != indexKey) {
       this.pageList.push({
@@ -51,6 +62,11 @@ export default {
     this.linkList.push(this.$route.fullPath)
     this.activePage = this.$route.fullPath
   },
+  provide() {
+    return {
+      closeCurrentTab: this.closeCurrentTab
+    }
+  },
   methods: {
     // tab点击事件
     handleClick(tab) {
@@ -60,12 +76,16 @@ export default {
         this.$router.push(Object.assign({}, waitRouter));
       }
     },
+    closeCurrentTab() {
+      this.removeTab(this.activePage);
+    },
     // 删除标签
     removeTab(key) {
       if (key == indexKey) {
         this.$message.warning('首页不能关闭!')
         return
       }
+      console.log(key)
       // if (this.pageList.length === 1) {
       //   this.$message.warning('这是最后一页，不能再关闭了啦')
       //   return
@@ -87,11 +107,15 @@ export default {
 <style lang="scss" scoped>
 .tab-layout {
   margin-top: 5px;
-  background-color: #fff;
-  height: 45px;
-  line-height: 45px;
-
-  // padding: 0px 20px;
+  // background-color: #fff;
+  .el-tabs {
+    height: 45px;
+    line-height: 45px;
+    background-color: #fff;
+  }
+  .hidden {
+    display: none;
+  }
 }
 </style>
 <style lang="scss">
@@ -101,6 +125,9 @@ export default {
   }
   .el-tabs__item {
     font-size: 13px;
+  }
+  .el-tabs__nav-wrap::after{
+    background-color: #fafafa;
   }
 }
 </style>

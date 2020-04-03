@@ -1,9 +1,8 @@
 /**
  *  弹框
  */
-import { removeSame } from "@/utils/util";
 import { mapGetters } from "vuex";
-import { httpClient, GET } from "@/utils/http";
+import http from "t4cloud-util/lib/http";
 
 export const T4CloudModalMixin = {
   data() {
@@ -14,6 +13,7 @@ export const T4CloudModalMixin = {
       loading: false,
       disableSubmit: false,
       forms: {},
+      rules: {},
       relationForm: {},
       relationData: {}
     };
@@ -32,17 +32,21 @@ export const T4CloudModalMixin = {
     //新增方法
     add() {
       //新增的时候合并父类的值
-      this.edit(removeSame(this.initForm(), this.relationForm));
+      this.edit(this.$util.removeFormSame(this.initForm(), this.relationForm));
     },
     //编辑
     edit(record) {
       //填充记录，以后者为准
-      this.forms = removeSame(this.initForm(), record);
+      this.forms = this.$util.removeFormSame(this.initForm(), record);
       if (this.refresh == true && this.forms.id) {
         this.getDetail();
+      } else {
+        this.beforeShow();
       }
       this.isShow = true;
     },
+    // 特殊数据页面处理
+    beforeShow() {},
     //提交表单
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
@@ -82,7 +86,7 @@ export const T4CloudModalMixin = {
       //loading开启
       this.loading = true;
       //调用接口
-      httpClient(method, url, data)
+      http.httpClient(method, url, null, data)
         .then(res => {
           if (res.success) {
             this.$message.success(res.message);
@@ -102,14 +106,15 @@ export const T4CloudModalMixin = {
     },
     //关闭窗口
     close() {
-      //如果有树状选择框的话，清除该组件的选择项
-      if (this.$refs.treeSelect) {
-        this.$refs.treeSelect.clearHandle();
-      }
       // 如果有表单的话，清除表单的值
       if (this.$refs.baseForm) {
         this.$refs["baseForm"].resetFields();
       }
+      //如果有树状选择框的话，清除该组件的选择项
+      if (this.$refs.treeSelect) {
+        this.$refs.treeSelect.clearHandle();
+      }
+
       this.isShow = false;
     },
     // 根据id获取详情
@@ -122,9 +127,10 @@ export const T4CloudModalMixin = {
       const params = {
         id: this.forms.id
       };
-      GET(this.url.detail, params).then(res => {
+      http.GET(this.url.detail, params).then(res => {
         if (res.success) {
-          this.forms = removeSame(this.initForm(), res.result);
+          this.forms = this.$util.removeFormSame(this.initForm(), res.result);
+          this.beforeShow();
         } else {
           this.$message.warning(res.message);
         }
@@ -142,7 +148,7 @@ export const T4CloudModalMixin = {
         value
       };
       return new Promise(resolve => {
-        GET(this.url.check, data).then(res => {
+        http.GET(this.url.check, data).then(res => {
           if (res.success) {
             resolve(res.result);
           } else {
@@ -150,6 +156,27 @@ export const T4CloudModalMixin = {
           }
         });
       });
+    },
+    // 通过服务器验证该字段的值是否存在
+    valiteValue(name) {
+      return (rule, value, callback) => {
+        const key = rule.field;
+        if (value == null || value === "") {
+          callback(new Error("请输入" + name));
+        } else {
+          if (!this.forms.id) {
+            this.ckeckFieldInfo(key, value).then(res => {
+              if (res == false) {
+                callback(new Error("已存在该" + name));
+              } else {
+                callback();
+              }
+            });
+          } else {
+            callback();
+          }
+        }
+      };
     }
   }
 };

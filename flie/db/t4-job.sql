@@ -32,12 +32,13 @@ CREATE TABLE `xxl_job_group` (
   `address_type` tinyint(4) NOT NULL DEFAULT '0' COMMENT '执行器地址类型：0=自动注册、1=手动录入',
   `address_list` varchar(512) DEFAULT NULL COMMENT '执行器地址列表，多地址逗号分隔',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of xxl_job_group
 -- ----------------------------
-INSERT INTO `xxl_job_group` VALUES ('3', 't4cloud-system', 'System模块', '10', '0', '192.168.137.1:17981');
+INSERT INTO `xxl_job_group` VALUES ('3', 't4cloud-system', 'System模块', '3', '0', '172.19.186.110:17981');
+INSERT INTO `xxl_job_group` VALUES ('4', 't4cloud-support', 'Support模块', '4', '0', '172.19.186.110:17983');
 
 -- ----------------------------
 -- Table structure for xxl_job_info
@@ -67,12 +68,13 @@ CREATE TABLE `xxl_job_info` (
   `trigger_last_time` bigint(13) NOT NULL DEFAULT '0' COMMENT '上次调度时间',
   `trigger_next_time` bigint(13) NOT NULL DEFAULT '0' COMMENT '下次调度时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of xxl_job_info
 -- ----------------------------
 INSERT INTO `xxl_job_info` VALUES ('3', '3', '0/10 * * * * ?', '测试任务', '2020-02-20 07:38:16', '2020-02-20 10:49:08', 'T4Cloud', '', 'FIRST', 'demoJob', 'TeaR', 'SERIAL_EXECUTION', '0', '3', 'BEAN', '', 'GLUE代码初始化', '2020-02-20 07:38:16', '', '0', '0', '0');
+INSERT INTO `xxl_job_info` VALUES ('4', '4', '0/5 * * * * ?', '定时消息推送', '2020-03-31 22:21:00', '2020-03-31 23:19:07', 'T4Cloud', '', 'FIRST', 'messageSender', '', 'SERIAL_EXECUTION', '0', '0', 'BEAN', '', 'GLUE代码初始化', '2020-03-31 22:21:00', '', '1', '1585901900000', '1585901905000');
 
 -- ----------------------------
 -- Table structure for xxl_job_lock
@@ -111,11 +113,13 @@ CREATE TABLE `xxl_job_log` (
   PRIMARY KEY (`id`),
   KEY `I_trigger_time` (`trigger_time`),
   KEY `I_handle_code` (`handle_code`)
-) ENGINE=InnoDB AUTO_INCREMENT=3607 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=40055 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of xxl_job_log
 -- ----------------------------
+INSERT INTO `xxl_job_log` VALUES ('40053', '4', '4', '172.19.186.110:17983', 'messageSender', '', null, '0', '2020-04-03 03:18:10', '200', '任务触发类型：Cron触发<br>调度机器：172.19.186.110<br>执行器-注册方式：自动注册<br>执行器-地址列表：[172.19.186.110:17983]<br>路由策略：第一个<br>阻塞处理策略：单机串行<br>任务超时时间：0<br>失败重试次数：0<br><br><span style=\"color:#00c0ef;\" > >>>>>>>>>>>触发调度<<<<<<<<<<< </span><br>触发调度：<br>address：172.19.186.110:17983<br>code：200<br>msg：定时推送消息成功', '2020-04-03 03:18:10', '200', '定时推送消息成功', '0');
+INSERT INTO `xxl_job_log` VALUES ('40054', '4', '4', '172.19.186.110:17983', 'messageSender', '', null, '0', '2020-04-03 03:18:15', '200', '任务触发类型：Cron触发<br>调度机器：172.19.186.110<br>执行器-注册方式：自动注册<br>执行器-地址列表：[172.19.186.110:17983]<br>路由策略：第一个<br>阻塞处理策略：单机串行<br>任务超时时间：0<br>失败重试次数：0<br><br><span style=\"color:#00c0ef;\" > >>>>>>>>>>>触发调度<<<<<<<<<<< </span><br>触发调度：<br>address：172.19.186.110:17983<br>code：200<br>msg：定时推送消息成功', '2020-04-03 03:18:15', '200', '定时推送消息成功', '0');
 
 -- ----------------------------
 -- Table structure for xxl_job_logglue
@@ -148,14 +152,14 @@ CREATE TABLE `xxl_job_log_report` (
   `fail_count` int(11) NOT NULL DEFAULT '0' COMMENT '执行失败-日志数量',
   PRIMARY KEY (`id`),
   UNIQUE KEY `i_trigger_day` (`trigger_day`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of xxl_job_log_report
 -- ----------------------------
-INSERT INTO `xxl_job_log_report` VALUES ('7', '2020-02-20 10:00:00', '1', '4', '374');
-INSERT INTO `xxl_job_log_report` VALUES ('8', '2020-02-19 10:00:00', '0', '0', '240');
-INSERT INTO `xxl_job_log_report` VALUES ('9', '2020-02-18 10:00:00', '0', '0', '0');
+INSERT INTO `xxl_job_log_report` VALUES ('49', '2020-03-31 11:00:00', '1', '8398', '25');
+INSERT INTO `xxl_job_log_report` VALUES ('50', '2020-04-01 11:00:00', '0', '17260', '20');
+INSERT INTO `xxl_job_log_report` VALUES ('51', '2020-04-02 11:00:00', '19', '10640', '84');
 
 -- ----------------------------
 -- Table structure for xxl_job_registry
@@ -169,13 +173,15 @@ CREATE TABLE `xxl_job_registry` (
   `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `i_g_k_v` (`registry_group`,`registry_key`,`registry_value`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=104 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of xxl_job_registry
 -- ----------------------------
-INSERT INTO `xxl_job_registry` VALUES ('24', 'EXECUTOR', 't4cloud-user', '192.168.137.1:17980', '2020-02-20 10:53:24');
-INSERT INTO `xxl_job_registry` VALUES ('25', 'EXECUTOR', 't4cloud-system', '192.168.137.1:17981', '2020-02-20 10:53:27');
+INSERT INTO `xxl_job_registry` VALUES ('100', 'EXECUTOR', 't4cloud-user', '172.19.186.110:17980', '2020-04-03 03:18:07');
+INSERT INTO `xxl_job_registry` VALUES ('101', 'EXECUTOR', 't4cloud-system', '172.19.186.110:17981', '2020-04-03 03:18:24');
+INSERT INTO `xxl_job_registry` VALUES ('102', 'EXECUTOR', 't4cloud-support', '172.19.186.110:17983', '2020-04-03 03:18:05');
+INSERT INTO `xxl_job_registry` VALUES ('103', 'EXECUTOR', 't4cloud-mock', '172.19.186.110:17982', '2020-04-03 03:18:15');
 
 -- ----------------------------
 -- Table structure for xxl_job_user
@@ -195,5 +201,3 @@ CREATE TABLE `xxl_job_user` (
 -- Records of xxl_job_user
 -- ----------------------------
 INSERT INTO `xxl_job_user` VALUES ('1', 't4cloud', 'e10adc3949ba59abbe56e057f20f883e', '1', null);
-
-
