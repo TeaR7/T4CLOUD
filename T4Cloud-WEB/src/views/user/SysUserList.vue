@@ -1,10 +1,11 @@
 <template>
   <div>
-    <TTableSearch :search-col="tableColumn" :query-param="queryParam" @search="search"></TTableSearch>
-    <TTableOperator :selectedRows="selectionRows" @onAdd="handleAdd" :add="hasAuth('user:SysUser:ADD')" @onDelete="handleDelete" :delete="hasAuth('user:SysUser:DELETE')">
-    </TTableOperator>
+    <t-table-search :search-col="tableColumn" :query-param="queryParam" :query-perfix-param="prefixQueryParam" @search="search"></t-table-search>
+    <t-table-operator :selectedRows="selectionRows" @onAdd="handleAdd" :add="hasAuth('user:SysUser:ADD')" @onDelete="handleDelete"
+      :delete="hasAuth('user:SysUser:DELETE')">
+    </t-table-operator>
     <!-- 表格区域 -->
-    <TStandardTable :selectedRows="selectionRows" :tableData="tableData" :tableColumn="tableColumn" :ipagination="ipagination"
+    <t-standard-table :selectedRows="selectionRows" :tableData="tableData" :tableColumn="tableColumn" :ipagination="ipagination"
       :url="url" :loading="loading" :import="hasAuth(['user:SysUser:IMPORT'])" :export="hasAuth(['user:SysUser:EXPORT'])"
       @pageSizeChange="handPageSizeChange" @onSelectRowChange="handSelectRowChange" @onTableHeadCommand="handlerTableHeadCommand">
       <template #options="{row}">
@@ -25,25 +26,30 @@
       <template #account="{col,row}">
         <el-tag>{{row[col.property]}}</el-tag>
       </template>
-    </TStandardTable>
+      <template #avatar="{col,row}">
+        <t-image :width="'45px'" :height="'45px'" :url="row.avatar" :srcList="[row.avatar]">
+        </t-image>
+      </template>
+    </t-standard-table>
     <SysUserModal ref="entityModal" @success="loadData" :refresh="true"></SysUserModal>
   </div>
 </template>
 <script>
-import TTableSearch from '@/components/Table/TTableSearch'
-import TTableOperator from '@/components/Table/TTableOperator'
-import TStandardTable from '@/components/Table/TStandardTable'
+// import TTableSearch from '@/components/Table/TTableSearch'
+// import TTableOperator from '@/components/Table/TTableOperator'
+// import TStandardTable from '@/components/Table/TStandardTable'
 import { T4CloudListMixin } from '../../mixins/T4CloudListMixin'
 import SysUserModal from './modals/SysUserModal_Drawer'
-
+// import  TImage  from '../../components/T4Cloud/TImage'
 export default {
   name: 'SysUserList',
   mixins: [T4CloudListMixin],
   components: {
-    TTableSearch,
-    TTableOperator,
-    TStandardTable,
-    SysUserModal
+    // TTableSearch,
+    // TTableOperator,
+    // TStandardTable,
+    SysUserModal,
+    // TImage
   },
   data() {
     return {
@@ -52,7 +58,8 @@ export default {
           key: 'username',
           name: '登录账号',
           query: true,
-          width: '200',
+          advanceQuery: "ne",
+          width: '150',
           renderHeader: 'accountHead',
           render: 'account'
         }, {
@@ -63,20 +70,31 @@ export default {
           key: 'phone',
           name: '电话',
           width: '130',
-          query: true,
-          type: 'Number'
+          query: true
         }, {
           key: 'email',
           name: '邮箱'
-        }, {
-          key: 'address',
-          name: '地址'
         }, {
           key: 'gender_dict',
           name: '性别',
           query: true,
           dict: 'gender',
           dictType: 'radio',
+        }, {
+          key: 'avatar',
+          name: '头像',
+          render: 'avatar'
+        }, {
+          key: 'birthday',
+          name: '生日',
+          query: true,
+          type: 'Date',
+          advanceQuery: "eq"
+        }, {
+          key: 'createTime',
+          name: '注册时间',
+          query: true,
+          type: 'DateTime',
         }, {
           key: 'status_dict',
           name: '状态',

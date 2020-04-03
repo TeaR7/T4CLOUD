@@ -1,5 +1,6 @@
 @import './element-variables.scss';
 @import './custom.scss';
+
 html,
 body,
 #app {
@@ -48,7 +49,7 @@ ul {
   list-style-type: none;
 }
 
-img{
+img {
   vertical-align: middle;
 }
 
@@ -93,8 +94,54 @@ a:hover {
   float: right;
 }
 
-.scrollDialog {
-  .el-drawer__open .el-drawer.rtl {
-    overflow-y: scroll;
+/*dialog和drawer*/
+.el-drawer__open{
+  :focus {
+    outline: 0;
   }
 }
+.fixedDialog {
+  .el-dialog__body, .dialog__body {
+    position: absolute;
+    top: 60px;
+    bottom: 55px;
+    width: 100%;
+    overflow-y: scroll;
+    // dialog 里面的日期类组件
+    .el-date-editor.el-input{
+      width: 100%;
+    }
+  }
+
+  .dialog__footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    text-align: right;
+    height: 55px;
+    line-height: 55px;
+    width: 100%;
+    padding-right: 20px;
+    background-color: #f7f9fa;
+  }
+}
+
+.noFixedDrawer {
+  // .el-drawer__open .el-drawer.rtl, .el-drawer__open .el-drawer.ltr {
+  .el-drawer__body{
+    overflow-y: auto;
+  }
+}
+
+.fixedHeightDialog {
+  .el-dialog {
+    height: 75%;
+  }
+}
+
+.tips {
+  margin: 0px;
+  font-size: 12px;
+  color: $mainColor;
+}
+

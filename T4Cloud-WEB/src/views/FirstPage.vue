@@ -1,30 +1,25 @@
 <template>
   <el-container style="height: 100%;">
-    <TSideBar :isCollapse="isCollapse" @hideSideBar="handleIsOpen"></TSideBar>
+    <!-- <TSideBar :isCollapse="isCollapse" @hideSideBar="handleIsOpen"></TSideBar> -->
+    <t-sidebar :isCollapse="isCollapse" @hideSideBar="handleIsOpen" :logo="require('@/assets/logos/logo-o-w.png')"></t-sidebar>
     <el-container>
       <el-header>
         <TNavBar @change="handleIsOpen"></TNavBar>
       </el-header>
       <el-main style="padding: 0px">
-        <TTabLayout class="web"></TTabLayout>
-        <div style="margin:12px;">
-          <router-view></router-view>
-        </div>
+        <TTabLayout></TTabLayout>
+        <t-footer :footerType="0"></t-footer>
       </el-main>
-      <el-footer>
-        <TFooterBar :footerType="0"></TFooterBar>
-      </el-footer>
-
     </el-container>
   </el-container>
 </template>
 
 <script>
-import TSideBar from "../components/Layout/TSideBar";
+// import TSideBar from "../components/Layout/TSideBar";
 import TNavBar from "../components/Layout/TNavBar";
 import TTabLayout from "../components/Layout/TTabLayout"
-import TFooterBar from "../components/Layout/TFooterBar"
 import { mapActions } from "vuex";
+// import TFooter from "@/components/T4Cloud/TFooter"
 export default {
   data() {
     return {
@@ -32,9 +27,9 @@ export default {
     }
   },
   components: {
-    TSideBar,
+    // TSideBar,
+    // TFooter,
     TNavBar,
-    TFooterBar,
     TTabLayout
   },
   created() {
@@ -58,10 +53,5 @@ export default {
 <style rel="stylesheet/scss" lang="scss">
 .el-header {
   background-color: #fff;
-}
-@media screen and (max-width: 650px) {
-  .web {
-    display: none;
-  }
 }
 </style>

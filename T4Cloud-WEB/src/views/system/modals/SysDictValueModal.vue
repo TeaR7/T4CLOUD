@@ -25,12 +25,12 @@
         <el-form-item label="状态" prop="status">
           <t-dict v-model="forms.status" type="radio" dictCode="common_status" :readonly="disableSubmit"></t-dict>
         </el-form-item>
-        <el-form-item style="text-align:right;">
-          <el-button @click="close">取消</el-button>
-          <el-button type="primary" @click="submitForm('baseForm')" :disabled="disableSubmit" v-auth="['system:SysDictValue:ADD','system:SysDictValue:EDIT']">确定
-          </el-button>
-        </el-form-item>
       </el-form>
+      <span slot="footer">
+        <el-button @click="close">取消</el-button>
+        <el-button type="primary" @click="submitForm('baseForm')" :disabled="disableSubmit" v-auth="['system:SysDictValue:ADD','system:SysDictValue:EDIT']">确定
+        </el-button>
+      </span>
     </el-dialog>
   </div>
 </template>

@@ -1,48 +1,44 @@
 <template>
   <div class="sysPermissionList">
-    <TTableOperator :selectedRows="selectionRows" @onAdd="handleAdd" @onDelete="handleDelete">
-      <template>
-        <!-- v-if="hasAuth(['system:SysPermission:EDIT']) -->
-        <!-- v-auth="'system:SysPermission:EDIT'" -->
-        <el-button type="primary" icon="el-icon-plus" v-role="'ADMIN'">创建单据</el-button>
-      </template>
-    </TTableOperator>
+    <t-table-operator :selectedRows="selectionRows" :add="hasAuth(['system:SysPermission:ADD'])" @onAdd="handleAdd"
+      :delete="hasAuth(['system:SysPermission:DELETE'])" @onDelete="handleDelete">
+    </t-table-operator>
     <!-- 表格区域 -->
-    <TStandardTable :tableType="3" :tableData="tableData" :tableColumn="tableColumn" :selectedRows="selectionRows"
+    <t-standard-table :tableType="3" :tableData="tableData" :tableColumn="tableColumn" :selectedRows="selectionRows"
       :ipagination="ipagination" :loading="loading" :treeProps="treeProps" @onSelectRowChange="handSelectRowChange"
-      @onTableHeadCommand="handlerTableHeadCommand">
-      <template #name="{row}" >
+      @onTableHeadCommand="handlerTableHeadCommand" :import="hasAuth(['system:SysPermission:IMPORT'])" :export="hasAuth(['system:SysPermission:EXPORT'])">
+      <template #name="{row}">
         <el-tag><i :class="row.icon"></i> {{row.name}}</el-tag>
       </template>
-      <template #options="{row}" >
-        <el-button type="primary" size="mini" @click="handleEdit(row)">编辑</el-button>
-        <el-dropdown >
+      <template #options="{row}">
+        <el-button type="primary" size="mini" v-auth="['system:SysPermission:ADD','system:SysPermission:EDIT']" @click="handleEdit(row)">编辑</el-button>
+        <el-dropdown>
           <span class="el-dropdown-link">
             更多<i class="el-icon-arrow-down"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item @click.native="handleDetail(row)">详情</el-dropdown-item>
-            <el-dropdown-item @click.native="handleAddSub(row)">添加子项</el-dropdown-item>
-            <el-dropdown-item @click.native="handleDelete([row.id])">删除</el-dropdown-item>
+            <el-dropdown-item @click.native="handleAddSub(row)" v-auth="'system:SysPermission:ADD'">添加子项</el-dropdown-item>
+            <el-dropdown-item @click.native="handleDelete([row.id])" v-auth="'system:SysPermission:DELETE'">删除</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </template>
 
-    </TStandardTable>
+    </t-standard-table>
 
     <SysPermissionModal ref="entityModal" @success="loadData" :tableData="tableData"></SysPermissionModal>
   </div>
 </template>
 <script>
-import TTableOperator from '../../components/Table/TTableOperator'
+// import TTableOperator from '../../components/Table/TTableOperator'
 import { T4CloudListMixin } from '../../mixins/T4CloudListMixin'
-import TStandardTable from '../../components/Table/TStandardTable'
+// import TStandardTable from '../../components/Table/TStandardTable'
 import SysPermissionModal from './modals/SysPermissionModal'
 export default {
   mixins: [T4CloudListMixin],
   components: {
-    TTableOperator,
-    TStandardTable,
+    // TTableOperator,
+    // TStandardTable,
     SysPermissionModal
   },
   data() {

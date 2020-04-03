@@ -2,7 +2,8 @@
   <div>
     <div class="timestamp">
       <i class="el-icon-info" style="color: teal"></i>
-      上次更新时间：{{timeStr}}
+      上次更新时间：
+      <div v-if="device!='mobile'" class="table-time">{{timeStr}}</div>
       <el-divider direction="vertical"></el-divider>
       <el-button
         icon="el-icon-refresh"
@@ -11,9 +12,10 @@
         style="color: #99cccc;font-size: 12px;"
         @click="manualUpdate"
       ></el-button>
+      <div v-if="device=='mobile'">{{timeStr}}</div>
     </div>
     <div class="table-title">服务器配置</div>
-    <div class="cpu-table">
+    <div :class="device=='mobile' ? 'table-mobile':'table-pc'">
       <el-table
         :data="tableData"
         v-loading="dataLoading"
@@ -21,47 +23,66 @@
         element-loading-text="数据正在加载中"
         element-loading-spinner="el-icon-loading"
       >
-        <el-table-column prop="key" label="参数" min-width="20%">
+        <el-table-column prop="key" label="参数" min-width="40%">
           <template slot-scope="scope">
             <el-tag size="medium">{{ scope.row.key}}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="description" label="描述" min-width="40%"></el-table-column>
-        <el-table-column prop="value" label="当前量" min-width="20%"></el-table-column>
+        <el-table-column prop="description" label="描述" min-width="30%"></el-table-column>
+        <el-table-column prop="value" label="当前量" min-width="30%"></el-table-column>
       </el-table>
     </div>
     <div class="table-title">磁盘使用量</div>
-    <!-- <div class="echart-box"> -->
-    <!-- </div> -->
-    <div class="swiper-widebox">
-      <div class="swiper-container">
-        <div class="swiper-wrapper">
-          <div class="swiper-slide" v-for="(single,index) of gaugeData" :key="index">
-            <div class="slide-single">
-              <div :id="'echartGauge'+index" class="echart-pic"></div>
-            </div>
+    <div class="swiper-widebox" v-if="gaugeData.length>0">
+      <t-swiper ref="swiper">
+        <div
+          v-for="(single,index) of gaugeData"
+          :key="index"
+          class="swiper-slide"
+          slot="swiper-slot"
+        >
+          <div class="slide-single">
+            <div :id="'echartGauge'+index" class="echart-pic"></div>
           </div>
         </div>
-        <div class="swiper-pagination"></div>
-      </div>
+      </t-swiper>
+    </div>
+    <div class="nodata-box" v-else>
+      <div class="nodata-text">暂不提供磁盘监控</div>
     </div>
   </div>
 </template>
 
 <script>
-import { httpClient } from "@/utils/http";
 import echarts from "echarts";
-import Swiper from "swiper";
-import "swiper/css/swiper.min.css";
+import { mapGetters } from "vuex";
+// import TSwiper from "@/components/T4Cloud/TSwiper";
 
 var cpuLive; //redis计时器
+var echartObj = {};
 
 export default {
   name: "CpuTab",
+  // components: {
+  //   TSwiper
+  // },
   props: ["dynamicUrl"],
+  computed: {
+    ...mapGetters(["device"])
+  },
   data() {
     return {
       tableData: [
+        {
+          key: "os.name",
+          description: "系统名称",
+          value: ""
+        },
+        {
+          key: "os.version",
+          description: "系统版本号",
+          value: ""
+        },
         {
           key: "system.cpu.count",
           description: "CPU数量",
@@ -91,6 +112,7 @@ export default {
       gaugeData: [],
       serviceUrl: "T4Cloud-Support",
       cpuinfo: "/actuator/metrics/",
+      osinfo: "/actuator/env/",
       diskInfo: "/actuator/system/diskInfo",
       hasService: true,
       dataLoading: false,
@@ -99,9 +121,9 @@ export default {
         title: {
           subtext: ""
         },
-        tooltip: {
-          formatter: "{a} <br/>{b} : {c}%"
-        },
+        // tooltip: {
+        //   formatter: "{a} <br/>{b} : {c}%"
+        // },
         toolbox: {},
         series: [
           {
@@ -113,20 +135,28 @@ export default {
       }
     };
   },
-  mounted() {},
-  destroyed() {},
   methods: {
     getCPUInfo() {
+      let centerUrl;
       for (let i = 0; i < this.tableData.length; i++) {
+        if (this.tableData[i]["key"].indexOf("os") != -1) {
+          centerUrl = this.osinfo;
+        } else {
+          centerUrl = this.cpuinfo;
+        }
         let finalUrl =
-          "/" + this.serviceUrl + this.cpuinfo + this.tableData[i]["key"];
+          "/" + this.serviceUrl + centerUrl + this.tableData[i]["key"];
         this.dataLoading = true;
         setTimeout(() => {
-          httpClient("GET", finalUrl, null).then(
+          this.$http.GET(finalUrl, null).then(
             res => {
               if (res) {
                 this.dataLoading = false;
-                this.tableData[i]["value"] = res.measurements[0]["value"];
+                if (!res.name) {
+                  this.tableData[i]["value"] = res.property.value;
+                } else {
+                  this.tableData[i]["value"] = res.measurements[0]["value"];
+                }
                 //数据处理
                 this.dateDispose(i, res.name);
               }
@@ -146,30 +176,39 @@ export default {
     },
     getDiskInfo() {
       let finalUrl = "/" + this.serviceUrl + this.diskInfo;
-      httpClient("GET", finalUrl, null).then(res => {
-        if (res.success) {
-          this.hasService = true;
-          this.gaugeData = res.result["diskInfo"];
-          //增加测试数据
-          // for (let i = 0; i < 4; i++) {
-          //   this.gaugeData.push(this.gaugeData[0]);
-          // }
-          for (let i = 0; i < this.gaugeData.length; i++) {
-            this.gaugeData[i]["echartsId"] = "echartGauge" + i;
+      this.$http.GET(finalUrl, null).then(
+        res => {
+          if (res.success) {
+            this.hasService = true;
+            this.gaugeData = res.result["diskInfo"];
+            for (let i = 0; i < this.gaugeData.length; i++) {
+              this.gaugeData[i]["echartsId"] = "echartGauge" + i;
+            }
+            this.timeStr = this.timeTrans(res.timestamp);
+            setTimeout(() => {
+              this.drawEcharts();
+              this.$refs.swiper.initSwiper();
+            }, 1000);
           }
-          this.timeStr = this.timeTrans(res.timestamp);
-          setTimeout(() => {
-            this.drawEchart();
-            this.initSwiper();
-          }, 1000);
+        },
+        err => {
+          //err处理
+          let errRes = err.response;
+          if (errRes.status) {
+            //未开通服务
+            this.hasService = false;
+            this.gaugeData = [];
+          }
+          this.drawEcharts();
         }
-      });
+      );
     },
-    drawEchart() {
+    drawEcharts() {
       let vm = this;
       for (let i = 0; i < this.gaugeData.length; i++) {
         vm.cpuChart = echarts.init(document.getElementById("echartGauge" + i));
-        vm.cpuChart.setOption(vm.gaugeOptions);
+        echartObj[i] = vm.cpuChart;
+        echartObj[i].setOption(vm.gaugeOptions);
         window.onresize = vm.cpuChart.resize;
         vm.cpuChart.showLoading({
           text: "loading...",
@@ -188,9 +227,9 @@ export default {
           vm.gaugeOptions.title["subtext"] = diskinfo;
           vm.gaugeOptions.series[0]["data"][0]["value"] = percentNum;
           vm.gaugeOptions.series[0]["data"][0]["name"] = diskname;
-          vm.cpuChart.setOption(vm.gaugeOptions);
+          echartObj[i].setOption(vm.gaugeOptions);
           window.onresize = vm.cpuChart.resize;
-          vm.cpuChart.hideLoading();
+          echartObj[i].hideLoading();
         }, 1000);
       }
     },
@@ -211,16 +250,6 @@ export default {
     },
     stopTimer() {
       window.clearInterval(cpuLive);
-    },
-    initSwiper() {
-      new Swiper(".swiper-container", {
-        slidesPerView: 3,
-        pagination: {
-          el: ".swiper-pagination"
-        },
-        observer: true,
-        observeParents: true
-      });
     },
     //时间戳格式转换
     timeTrans(time) {
@@ -256,12 +285,15 @@ export default {
           break;
         case "system.cpu.usage":
         case "process.cpu.usage":
-          this.tableData[i]["value"] = Number(
-            this.tableData[i]["value"] * 100
-          ).toFixed(2)+"%";
+          this.tableData[i]["value"] =
+            Number(this.tableData[i]["value"] * 100).toFixed(2) + "%";
           break;
         case "process.start.time":
-          this.tableData[i]["value"] = new Date(parseInt(this.tableData[i]["value"]) * 1000).toLocaleString().replace(/:\d{1,2}$/,' ');
+          this.tableData[i]["value"] = new Date(
+            parseInt(this.tableData[i]["value"]) * 1000
+          )
+            .toLocaleString()
+            .replace(/:\d{1,2}$/, " ");
           break;
         case "process.uptime":
           this.tableData[i]["value"] = this.dayHourMin(
@@ -292,12 +324,7 @@ export default {
   width: 320px;
   height: 320px;
 }
-.cpu-table {
-  width: 90%;
-  margin: 5%;
-}
 .swiper-widebox {
-  // overflow: hidden;
   margin: 3% 0;
 }
 .swiper-container {
@@ -312,5 +339,19 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.table-time {
+  display: inline;
+}
+.nodata-box {
+  height: 320px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.nodata-text {
+  color: #666;
+  font-size: 18px;
 }
 </style>

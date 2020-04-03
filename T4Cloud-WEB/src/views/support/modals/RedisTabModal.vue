@@ -2,7 +2,8 @@
   <div>
     <div class="timestamp">
       <i class="el-icon-info" style="color: teal"></i>
-      上次更新时间：{{timeStr}}
+      上次更新时间：
+      <div v-if="device!='mobile'" class="table-time">{{timeStr}}</div>
       <el-divider direction="vertical"></el-divider>
       <el-button
         icon="el-icon-refresh"
@@ -11,12 +12,13 @@
         style="color: #99cccc;font-size: 12px;"
         @click="manualUpdate"
       ></el-button>
+      <div v-if="device=='mobile'">{{timeStr}}</div>
     </div>
     <div class="echart-box">
-      <div id="echarts" class="echart-pic"></div>
+      <div id="redisEchartId" class="echart-pic"></div>
     </div>
     <div class="table-title">Redis 状态记录</div>
-    <div class="redis-table">
+    <div :class="device=='mobile' ? 'table-mobile':'table-pc'">
       <el-table
         :data="tableData"
         v-loading="dataLoading"
@@ -24,7 +26,7 @@
         element-loading-text="数据正在加载中"
         element-loading-spinner="el-icon-loading"
       >
-        <el-table-column prop="key" label="Key" min-width="20%">
+        <el-table-column prop="key" label="Key" min-width="40%">
           <template slot-scope="scope">
             <el-tag size="medium">{{ scope.row.key}}</el-tag>
           </template>
@@ -37,14 +39,17 @@
 </template>
 
 <script>
-import { httpClient } from "@/utils/http";
 import echarts from "echarts";
+import { mapGetters } from "vuex";
 
 var redisLive; //redis计时器
 
 export default {
   name: "RedisTab",
   props: ["dynamicUrl"],
+  computed: {
+    ...mapGetters(["device"])
+  },
   data() {
     return {
       tableData: [],
@@ -118,16 +123,13 @@ export default {
       }
     };
   },
-  destroyed() {
-    // window.clearInterval(redisLive);
-  },
   methods: {
     //redis运行信息
     getRedisInfo() {
       let finalUrl = "/" + this.serviceUrl + this.infoUrl;
       this.dataLoading = true;
       setTimeout(() => {
-        httpClient("GET", finalUrl, null).then(
+        this.$http.GET(finalUrl, null).then(
           res => {
             if (res.success) {
               this.dataLoading = false;
@@ -148,7 +150,7 @@ export default {
     //redis实时存储信息
     getRedisLiveInfo() {
       let finalUrl = "/" + this.serviceUrl + this.liveInfoUrl;
-      httpClient("GET", finalUrl, null).then(
+      this.$http.GET(finalUrl, null).then(
         res => {
           if (res.success) {
             this.lineData = res.result;
@@ -189,7 +191,7 @@ export default {
     },
     drawEchart() {
       let vm = this;
-      vm.redisChart = echarts.init(document.getElementById("echarts"));
+      vm.redisChart = echarts.init(document.getElementById("redisEchartId"));
       vm.redisChart.setOption(vm.echartsOptions);
       window.onresize = vm.redisChart.resize;
       vm.redisChart.showLoading({
@@ -202,6 +204,14 @@ export default {
         vm.echartsOptions.xAxis["data"] = vm.echartArrs.xtimeArr;
         vm.echartsOptions.series[0]["data"] = vm.echartArrs.ykeySizeArr;
         vm.echartsOptions.series[1]["data"] = vm.echartArrs.ymemoryArr;
+        //mobile show
+        if (vm.device == "mobile") {
+          vm.echartsOptions.legend = {
+            left: 50,
+            top: "10%",
+            data: ["Key(个)", "Memory(MB)"]
+          };
+        }
         vm.redisChart.setOption(vm.echartsOptions);
         window.onresize = vm.redisChart.resize;
         vm.redisChart.hideLoading();
@@ -291,11 +301,6 @@ export default {
   padding-left: 8px;
 }
 
-.redis-table {
-  width: 90%;
-  margin: 10px 5% 0 5%;
-}
-
 .timestamp {
   background-color: rgba(0, 128, 128, 0.2);
   border: 1px solid rgba(0, 128, 128, 0.4);
@@ -305,5 +310,8 @@ export default {
   font-weight: 700;
   font-size: 14px;
   margin-bottom: 20px;
+}
+.table-time {
+  display: inline;
 }
 </style>

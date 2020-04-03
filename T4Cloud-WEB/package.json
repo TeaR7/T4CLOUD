@@ -1,6 +1,6 @@
 {
   "name": "T4Cloud-WEB",
-  "version": "0.1.0",
+  "version": "0.0.4",
   "private": true,
   "scripts": {
     "pre": "cnpm install || yarn --registry https://registry.npm.taobao.org || npm install --registry https://registry.npm.taobao.org ",
@@ -10,13 +10,14 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "axios": "^0.19.2",
     "core-js": "^3.6.4",
     "echarts": "^4.6.0",
     "element-ui": "^2.13.0",
-    "enquire.js": "^2.1.6",
+    "jsencrypt": "^3.0.0-rc.1",
     "nprogress": "^0.2.0",
     "swiper": "^5.3.6",
+    "t4cloud-util": "^0.0.48",
+    "t4cloud-ui": "0.0.34",
     "vue": "^2.6.11",
     "vue-fragment": "^1.5.1",
     "vue-i18n": "^8.15.3",
@@ -33,7 +34,7 @@
     "eslint-plugin-vue": "^6.1.2",
     "vue-template-compiler": "^2.6.11",
     "node-sass": "^4.13.1",
-    "sass-loader": "^7.3.1"
+    "sass-loader": "^8.0.2"
   },
   "eslintConfig": {
     "root": true,

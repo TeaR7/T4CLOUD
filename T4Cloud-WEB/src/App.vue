@@ -6,10 +6,12 @@
 </template>
 
 <script>
-import { deviceEnquire, DEVICE_TYPE } from '@/utils/device'
+import device from "t4cloud-util/lib/device";
+import { fetchCode } from '@/apis/login'
 export default {
   name: "App",
   created() {
+    this.getServeTime()
     let loading = document.getElementById("Loading");
     let LoadText = document.getElementById("LoadText");
     if (loading != null) {
@@ -19,15 +21,15 @@ export default {
       document.body.removeChild(LoadText);
     }
     let that = this
-    deviceEnquire(deviceType => {
+    device.deviceEnquire(deviceType => {
       switch (deviceType) {
-        case DEVICE_TYPE.DESKTOP:
+        case device.DEVICE_TYPE.DESKTOP:
           that.$store.commit('TOGGLE_DEVICE', 'desktop')
           break
-        case DEVICE_TYPE.TABLET:
+        case device.DEVICE_TYPE.TABLET:
           that.$store.commit('TOGGLE_DEVICE', 'tablet')
           break
-        case DEVICE_TYPE.MOBILE:
+        case device.DEVICE_TYPE.MOBILE:
         default:
           that.$store.commit('TOGGLE_DEVICE', 'mobile')
           break
@@ -38,13 +40,22 @@ export default {
     let loadSection = document.getElementsByClassName("loader-section");
     loadSection[0].classList.add("section-left-hide");
     loadSection[1].classList.add("section-right-hide");
+  },
+  methods: {
+    getServeTime(){
+      fetchCode().then(res=>{
+        const timestamp = res.timestamp
+        const myTimes = Date.parse(new Date())
+        this.$store.commit('TOGGLE_TIMES', timestamp-myTimes)
+      })
+    }
   }
 };
 </script>
 
 <style>
 /* 引入新的icon，更换链接 */
-@import "//at.alicdn.com/t/font_1633797_740ybyibj7y.css";
+@import "//at.alicdn.com/t/font_1633797_lrbl0z0udgr.css";
 /* 为了class里面少加iconfont */
 [class^="el-icons"],
 [class^=" el-icons"] {

@@ -25,20 +25,51 @@
       <el-tab-pane label="服务器" name="cpu">
         <CpuTab :dynamicUrl="dynamicUrl" ref="cpu"></CpuTab>
       </el-tab-pane>
+      <el-tab-pane label="容器信息" name="container">
+        <ContainerTabModel :dynamicUrl="dynamicUrl" ref="container"></ContainerTabModel>
+      </el-tab-pane>
+      <el-tab-pane label="请求追踪" name="request">
+        <RequestTabModel :dynamicUrl="dynamicUrl" ref="request"></RequestTabModel>
+      </el-tab-pane>
+      <el-tab-pane label="在线文档" name="onlineWord">
+        <div v-if="dynamicUrl=='T4Cloud-Gateway'">该微服务暂未提供在线文档</div>
+        <iframe
+          v-else-if="recordTab=='onlineWord'"
+          :src="onlineWordUrl"
+          frameborder="0"
+          width="100%"
+          height="800px"
+          scrolling="auto"
+        ></iframe>
+      </el-tab-pane>
+      <el-tab-pane label="SQL监控" name="sqlMonitor">
+        <div v-if="dynamicUrl=='T4Cloud-Gateway'">该微服务暂未提供监控</div>
+        <iframe
+          v-else
+          :src="sqlMonitorUrl"
+          frameborder="0"
+          width="100%"
+          height="800px"
+          scrolling="auto"
+        ></iframe>
+      </el-tab-pane>
     </el-tabs>
   </div>
 </template>
-
 <script>
-import { httpClient } from "@/utils/http";
+//tab组件
 import RedisTab from "./modals/RedisTabModal";
 import CpuTab from "./modals/CpuTabModel";
+import ContainerTabModel from "./modals/ContainerTabModel";
+import RequestTabModel from "./modals/RequestTabModel";
 
 export default {
   name: "Monitor",
   components: {
     RedisTab,
-    CpuTab
+    CpuTab,
+    ContainerTabModel,
+    RequestTabModel
   },
   data() {
     return {
@@ -49,11 +80,17 @@ export default {
       url: {
         serviceList: "/T4Cloud-Support/actuator/serviceList"
       },
-      recordTab: "redis"
+      recordTab: "redis",
+      onlineWordUrl: "",
+      sqlMonitorUrl: ""
     };
   },
   created() {
+    this.setUrlPath();
     this.getServiceList();
+  },
+  beforeDestroy() {
+    this.$refs[this.recordTab].stopTimer();
   },
   mounted() {
     //默认Redis30秒自动刷新
@@ -62,7 +99,7 @@ export default {
   methods: {
     //滑块数据
     getServiceList() {
-      httpClient("GET", this.url.serviceList, null).then(res => {
+      this.$http.GET(this.url.serviceList, null).then(res => {
         if (res.success) {
           this.serviceArrs = res.result;
           //数据处理
@@ -76,14 +113,28 @@ export default {
     carouselChange() {
       this.activeIndex = this.$refs.carousel.activeIndex;
       this.dynamicUrl = this.serviceArrs[this.activeIndex]["name"];
+      this.setUrlPath();
     },
     //tab选中开始30秒自动刷新
     chooseTab(tab) {
       if (tab.name != this.recordTab) {
-        this.$refs[this.recordTab].stopTimer();
-        this.$refs[tab.name].autoUpdate();
+        // 在线文档 和 SQL监控 没有定时器
+        if (this.recordTab != "onlineWord" && this.recordTab != "sqlMonitor") {
+          this.$refs[this.recordTab].stopTimer();
+        }
+        if (tab.name != "onlineWord" && tab.name != "sqlMonitor") {
+          this.$refs[tab.name].autoUpdate();
+        }
         this.recordTab = tab.name;
       }
+    },
+    //在线文档 和 SQL监控 url赋值
+    setUrlPath() {
+      this.onlineWordUrl =
+        process.env.VUE_APP_URL + "/" + this.dynamicUrl + "/doc.html";
+      // console.log(this.onlineWordUrl);
+      this.sqlMonitorUrl =
+        process.env.VUE_APP_URL + "/" + this.dynamicUrl + "/druid/login.html";
     }
   }
 };
@@ -114,5 +165,15 @@ export default {
 
 .el-carousel__item:nth-child(2n + 1) {
   background-color: #d3dce6;
+}
+
+.table-pc {
+  width: 90%;
+  margin: 10px 5% 0 5%;
+}
+
+.table-mobile {
+  width: 100%;
+  margin: 10px 0 0 0;
 }
 </style>
