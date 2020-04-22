@@ -74,7 +74,7 @@ CREATE TABLE `xxl_job_info` (
 -- Records of xxl_job_info
 -- ----------------------------
 INSERT INTO `xxl_job_info` VALUES ('3', '3', '0/10 * * * * ?', '测试任务', '2020-02-20 07:38:16', '2020-02-20 10:49:08', 'T4Cloud', '', 'FIRST', 'demoJob', 'TeaR', 'SERIAL_EXECUTION', '0', '3', 'BEAN', '', 'GLUE代码初始化', '2020-02-20 07:38:16', '', '0', '0', '0');
-INSERT INTO `xxl_job_info` VALUES ('4', '4', '0/5 * * * * ?', '定时消息推送', '2020-03-31 22:21:00', '2020-03-31 23:19:07', 'T4Cloud', '', 'FIRST', 'messageSender', '', 'SERIAL_EXECUTION', '0', '0', 'BEAN', '', 'GLUE代码初始化', '2020-03-31 22:21:00', '', '1', '1585901900000', '1585901905000');
+INSERT INTO `xxl_job_info` VALUES ('4', '4', '0/5 * * * * ?', '定时消息推送', '2020-03-31 22:21:00', '2020-04-16 03:07:13', 'T4Cloud', '', 'ROUND', 'messageSender', '', 'SERIAL_EXECUTION', '0', '0', 'BEAN', '', 'GLUE代码初始化', '2020-03-31 22:21:00', '', '1', '1587534040000', '1587534045000');
 
 -- ----------------------------
 -- Table structure for xxl_job_lock

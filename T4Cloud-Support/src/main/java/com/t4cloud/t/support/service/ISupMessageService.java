@@ -27,4 +27,16 @@ public interface ISupMessageService extends T4Service<SupMessage> {
      */
     int mailSender(int size);
 
+    /**
+     * 短信发送
+     *
+     * @param size 单次发送数量
+     *             <p>
+     * @return int 成功发送数量
+     * --------------------
+     * @author TeaR
+     * @date 2020/4/1 11:35
+     */
+    int smsSender(int size);
+
 }

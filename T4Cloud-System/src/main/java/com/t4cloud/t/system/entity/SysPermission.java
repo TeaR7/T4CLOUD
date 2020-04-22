@@ -2,6 +2,7 @@ package com.t4cloud.t.system.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.t4cloud.t.base.annotation.Dict;
 import com.t4cloud.t.base.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -24,7 +25,7 @@ import java.util.List;
 @TableName("sys_permission")
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-@ApiModel(value = "SysPermission对象", description = "菜单权限表")
+@ApiModel(value = "SysPermission对象" , description = "菜单权限表")
 public class SysPermission extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
@@ -48,6 +49,7 @@ public class SysPermission extends BaseEntity {
      * 打开方式（0-框架内打开，1-新的页面打开）
      */
     @ApiModelProperty(value = "打开方式（0-框架内打开，1-新的页面打开）")
+    @Dict(code = "open_type")
     private Integer openType;
     /**
      * 组件
@@ -58,6 +60,7 @@ public class SysPermission extends BaseEntity {
      * 菜单类型(0:一级菜单; 1:子菜单:2:按钮权限)
      */
     @ApiModelProperty(value = "菜单类型(0:一级菜单; 1:子菜单:2:按钮权限)")
+    @Dict(code = "menu_type")
     private Integer menuType;
     /**
      * 权限编码

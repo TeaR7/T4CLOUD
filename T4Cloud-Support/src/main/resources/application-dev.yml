@@ -170,3 +170,7 @@ t4cloud:
     accessKey: T4Cloud
     secretKey: 123456
     bucket: t4cloud
+  ## 短信相关参数
+  sms:
+    access-key: T4Cloud
+    access-secret: T4Cloud

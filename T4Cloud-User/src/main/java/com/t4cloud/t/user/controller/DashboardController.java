@@ -37,7 +37,7 @@ import java.util.Map;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/dashboard")
-@Api(value = "访问统计等数据接口", tags = "数据统计", position = 0)
+@Api(value = "访问统计等数据接口" , tags = "数据统计" , position = 0)
 public class DashboardController extends T4Controller<SysUser, ISysUserService> {
 
 
@@ -46,12 +46,12 @@ public class DashboardController extends T4Controller<SysUser, ISysUserService> 
      */
     @AutoLog(value = "注册量统计")
     @GetMapping("/registryInfo")
-    @ApiOperation(position = 1, value = "注册量统计", notes = "注册量统计、提供用户近期注册量、总量、周期环比、注册曲线等")
+    @ApiOperation(position = 1, value = "注册量统计" , notes = "注册量统计、提供用户近期注册量、总量、周期环比、注册曲线等")
     public R registryInfo(
             @ApiParam("开始时间")
-            @RequestParam(name = "start", required = false) String start,
+            @RequestParam(name = "start" , required = false) String start,
             @ApiParam("结束时间")
-            @RequestParam(name = "end", required = false) String end
+            @RequestParam(name = "end" , required = false) String end
     ) {
 
         //结果集
@@ -75,8 +75,8 @@ public class DashboardController extends T4Controller<SysUser, ISysUserService> 
         //N天每天的注册量
         QueryWrapper<SysUser> queryWrapper = new QueryWrapper<SysUser>();
         queryWrapper.select("DATE_FORMAT(create_time,'%Y-%m-%d') create_time,count(1) cc ");
-        queryWrapper.ge("create_time", startDate);
-        queryWrapper.le("create_time", DateUtil.endOfDay(endDate));
+        queryWrapper.ge("create_time" , startDate);
+        queryWrapper.le("create_time" , DateUtil.endOfDay(endDate));
         queryWrapper.groupBy("DATE_FORMAT(create_time,'%Y-%m-%d')");
         queryWrapper.orderByAsc("DATE_FORMAT(create_time,'%Y-%m-%d')");
         List<Map<String, Object>> list = service.listMaps(queryWrapper);
@@ -90,65 +90,65 @@ public class DashboardController extends T4Controller<SysUser, ISysUserService> 
                 dateTmp = DateUtil.offsetDay(startDate, i);
             }
             JSONObject tmp = new JSONObject();
-            tmp.put("x", DateUtil.format(dateTmp, "YYYY.MM.dd"));
-            tmp.put("y", 0);
+            tmp.put("x" , DateUtil.format(dateTmp, "YYYY.MM.dd"));
+            tmp.put("y" , 0);
             for (Map<String, Object> item : list) {
                 if (DateUtil.format(dateTmp, "YYYY-MM-dd").equals(item.get("create_time"))) {
-                    tmp.put("y", Integer.parseInt(item.get("cc").toString()));
+                    tmp.put("y" , Integer.parseInt(item.get("cc").toString()));
                 }
             }
             dayCount.add(tmp);
         }
 
         //放入结果集
-        data.put("dayCount", dayCount);
+        data.put("dayCount" , dayCount);
 
 
         //总用户数
         queryWrapper = new QueryWrapper<SysUser>();
-        queryWrapper.eq("status", 1);
+        queryWrapper.eq("status" , 1);
         int total = service.count(queryWrapper);
         //放入结果集
-        data.put("total", total);
+        data.put("total" , total);
 
         //最近注册用户数
         queryWrapper = new QueryWrapper<SysUser>();
-        queryWrapper.eq("status", 1);
-        queryWrapper.ge("create_time", startDate);
-        queryWrapper.le("create_time", DateUtil.endOfDay(endDate));
+        queryWrapper.eq("status" , 1);
+        queryWrapper.ge("create_time" , startDate);
+        queryWrapper.le("create_time" , DateUtil.endOfDay(endDate));
         int lastRegistry = service.count(queryWrapper);
         //放入结果集
-        data.put("lastRegistry", lastRegistry);
+        data.put("lastRegistry" , lastRegistry);
 
         //上一个N天增长用户数
         long offset = DateUtil.betweenDay(startDate, endDate, true) + 1;
         queryWrapper = new QueryWrapper<SysUser>();
-        queryWrapper.eq("status", 1);
-        queryWrapper.ge("create_time", DateUtil.offsetDay(startDate, Integer.parseInt(String.valueOf(-offset))));
-        queryWrapper.lt("create_time", startDate);
+        queryWrapper.eq("status" , 1);
+        queryWrapper.ge("create_time" , DateUtil.offsetDay(startDate, Integer.parseInt(String.valueOf(-offset))));
+        queryWrapper.lt("create_time" , startDate);
         int preRegistry = service.count(queryWrapper);
         //放入结果集
-        data.put("lastRegistryTrend", lastRegistry >= preRegistry ? "up" : "down");
+        data.put("lastRegistryTrend" , lastRegistry >= preRegistry ? "up" : "down");
 
         //今天注册用户数
         queryWrapper = new QueryWrapper<SysUser>();
-        queryWrapper.eq("status", 1);
-        queryWrapper.ge("create_time", DateUtil.beginOfDay(DateUtil.date()));
-        queryWrapper.lt("create_time", DateUtil.endOfDay(DateUtil.date()));
+        queryWrapper.eq("status" , 1);
+        queryWrapper.ge("create_time" , DateUtil.beginOfDay(DateUtil.date()));
+        queryWrapper.lt("create_time" , DateUtil.endOfDay(DateUtil.date()));
         int todayRegistry = service.count(queryWrapper);
         //放入结果集
-        data.put("todayRegistry", todayRegistry);
+        data.put("todayRegistry" , todayRegistry);
 
         //昨天注册用户数
         queryWrapper = new QueryWrapper<SysUser>();
-        queryWrapper.eq("status", 1);
-        queryWrapper.ge("create_time", DateUtil.beginOfDay(DateUtil.offsetDay(DateUtil.date(), -1)));
-        queryWrapper.lt("create_time", DateUtil.endOfDay(DateUtil.offsetDay(DateUtil.date(), -1)));
+        queryWrapper.eq("status" , 1);
+        queryWrapper.ge("create_time" , DateUtil.beginOfDay(DateUtil.offsetDay(DateUtil.date(), -1)));
+        queryWrapper.lt("create_time" , DateUtil.endOfDay(DateUtil.offsetDay(DateUtil.date(), -1)));
         int yesterdayRegistry = service.count(queryWrapper);
         //放入结果集
-        data.put("todayRegistryTrend", todayRegistry >= yesterdayRegistry ? "up" : "down");
+        data.put("todayRegistryTrend" , todayRegistry >= yesterdayRegistry ? "up" : "down");
 
-        return R.ok("注册量统计成功！", data);
+        return R.ok("注册量统计成功！" , data);
     }
 
 }

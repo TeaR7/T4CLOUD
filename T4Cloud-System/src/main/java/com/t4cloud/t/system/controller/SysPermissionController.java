@@ -10,9 +10,11 @@ import com.t4cloud.t.base.entity.dto.R;
 import com.t4cloud.t.base.query.T4Query;
 import com.t4cloud.t.base.utils.UserUtil;
 import com.t4cloud.t.system.entity.SysPermission;
+import com.t4cloud.t.system.entity.SysRole;
 import com.t4cloud.t.system.entity.SysRolePermission;
 import com.t4cloud.t.system.service.ISysPermissionService;
 import com.t4cloud.t.system.service.ISysRolePermissionService;
+import com.t4cloud.t.system.service.ISysUserRoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -46,77 +48,79 @@ import java.util.stream.Collectors;
 @RestController
 @AllArgsConstructor
 @Slf4j
-@Api(value = "菜单权限表", tags = "菜单权限表接口", position = 10)
+@Api(value = "菜单权限表" , tags = "菜单权限表接口" , position = 10)
 @RequestMapping("/SysPermission")
 public class SysPermissionController extends T4Controller<SysPermission, ISysPermissionService> {
 
     @Autowired
     private ISysRolePermissionService sysRolePermissionService;
+    @Autowired
+    private ISysUserRoleService sysUserRoleService;
 
     /**
      * 详情
      */
-    @AutoLog(value = "菜单权限表-详情", operateType = 4)
+    @AutoLog(value = "菜单权限表-详情" , operateType = 4)
     @GetMapping("/detail")
     @RequiresPermissions("system:SysPermission:VIEW")
-    @ApiOperation(position = 1, value = "菜单权限表-详情", notes = "传入sysPermission")
+    @ApiOperation(position = 1, value = "菜单权限表-详情" , notes = "传入sysPermission")
     public R<SysPermission> detail(SysPermission sysPermission, HttpServletRequest req) {
-        QueryWrapper<SysPermission> sysPermissionQueryWapper = T4Query.initQuery(sysPermission, req.getParameterMap());
-        SysPermission detail = service.getOne(sysPermissionQueryWapper);
-        return R.ok("菜单权限表-详情查询成功", detail);
+        QueryWrapper<SysPermission> sysPermissionQueryWrapper = T4Query.initQuery(sysPermission, req.getParameterMap());
+        SysPermission detail = service.getOne(sysPermissionQueryWrapper);
+        return R.ok("菜单权限表-详情查询成功" , detail);
     }
 
     /**
      * 全部列表 菜单权限表
      */
-    @AutoLog(value = "菜单权限表-全部列表", operateType = 4)
+    @AutoLog(value = "菜单权限表-全部列表" , operateType = 4)
     @GetMapping("/list")
     @RequiresPermissions("system:SysPermission:VIEW")
-    @ApiOperation(position = 2, value = "菜单权限表-全部列表", notes = "传入sysPermission")
+    @ApiOperation(position = 2, value = "菜单权限表-全部列表" , notes = "传入sysPermission")
     public R<List<SysPermission>> list(SysPermission sysPermission, HttpServletRequest req) {
-        QueryWrapper<SysPermission> sysPermissionQueryWapper = T4Query.initQuery(sysPermission, req.getParameterMap());
-        List<SysPermission> list = service.list(sysPermissionQueryWapper);
-        return R.ok("菜单权限表-全部列表查询成功", list);
+        QueryWrapper<SysPermission> sysPermissionQueryWrapper = T4Query.initQuery(sysPermission, req.getParameterMap());
+        List<SysPermission> list = service.list(sysPermissionQueryWrapper);
+        return R.ok("菜单权限表-全部列表查询成功" , list);
     }
 
     /**
      * 新增 菜单权限表
      */
-    @AutoLog(value = "菜单权限表-新增", operateType = 1)
+    @AutoLog(value = "菜单权限表-新增" , operateType = 1)
     @PutMapping("/save")
     @RequiresPermissions("system:SysPermission:ADD")
-    @ApiOperation(position = 4, value = "菜单权限表-新增", notes = "传入sysPermission")
+    @ApiOperation(position = 4, value = "菜单权限表-新增" , notes = "传入sysPermission")
     public R save(@Valid @RequestBody SysPermission sysPermission, BindingResult bindingResult) {
 
-        return R.ok("菜单权限表-新增成功", service.save(sysPermission));
+        return R.ok("菜单权限表-新增成功" , service.save(sysPermission));
     }
 
     /**
      * 修改 菜单权限表
      */
-    @AutoLog(value = "菜单权限表-修改", operateType = 3)
+    @AutoLog(value = "菜单权限表-修改" , operateType = 3)
     @PostMapping("/update")
-    @RequiresPermissions(value = {"system:SysPermission:ADD", "system:SysPermission:EDIT"}, logical = Logical.OR)
-    @ApiOperation(position = 5, value = "菜单权限表-修改", notes = "传入sysPermission")
+    @RequiresPermissions(value = {"system:SysPermission:ADD" , "system:SysPermission:EDIT"}, logical = Logical.OR)
+    @ApiOperation(position = 5, value = "菜单权限表-修改" , notes = "传入sysPermission")
     @PermissionCacheEvict
     public R update(@Valid @RequestBody SysPermission sysPermission, BindingResult bindingResult) {
         if (StringUtils.isEmpty(sysPermission.getParentId())) {
             sysPermission.setParentId("");
         }
-        return R.ok("菜单权限表-修改成功", service.updateById(sysPermission));
+        return R.ok("菜单权限表-修改成功" , service.updateById(sysPermission));
     }
 
 
     /**
      * 删除 菜单权限表
      */
-    @AutoLog(value = "菜单权限表-删除", operateType = 2)
+    @AutoLog(value = "菜单权限表-删除" , operateType = 2)
     @DeleteMapping("/delete")
     @RequiresRoles("ADMIN")
     @RequiresPermissions("system:SysPermission:DELETE")
-    @ApiOperation(position = 8, value = "菜单权限表-删除", notes = "传入ids")
+    @ApiOperation(position = 8, value = "菜单权限表-删除" , notes = "传入ids")
     @PermissionCacheEvict
-    public R delete(@ApiParam(value = "主键集合", required = true) @RequestParam String ids) {
+    public R delete(@ApiParam(value = "主键集合" , required = true) @RequestParam String ids) {
         List<String> idList = Arrays.asList(ids.split(","));
         List<String> all = new ArrayList<>(idList);
         //寻找子权限
@@ -136,12 +140,19 @@ public class SysPermissionController extends T4Controller<SysPermission, ISysPer
      */
     @AutoLog(value = "获取用户菜单权限")
     @GetMapping("/userPermission")
-    @ApiOperation(position = 10, value = "菜单权限表-获取用户菜单权限", notes = "通过TOKEN获取用户菜单权限")
+    @ApiOperation(position = 10, value = "菜单权限表-获取用户菜单权限" , notes = "通过TOKEN获取用户菜单权限")
     public R<List<SysPermission>> userPermission() {
         LoginUser currentUser = UserUtil.getCurrentUser();
 
         //查询用户有的所有权限
-        List<SysPermission> metaList = service.queryByUsername(currentUser.getUsername());
+        List<SysPermission> metaList = service.queryByUserId(currentUser.getId());
+
+        //判断是否超级管理员
+        List<SysRole> sysRoleList = sysUserRoleService.getUserRoleList(currentUser.getId());
+        List<String> roleCodeList = sysRoleList.stream().map(SysRole::getRoleCode).collect(Collectors.toList());
+        if (roleCodeList.contains("SUPER-ADMIN")) {
+            metaList = service.list();
+        }
 
         //添加首页路由
         boolean hasHome = false;
@@ -167,17 +178,17 @@ public class SysPermissionController extends T4Controller<SysPermission, ISysPer
         }
         service.tree(menuList, metaList);
 
-        return R.ok("用户权限查询成功", menuList);
+        return R.ok("用户权限查询成功" , menuList);
     }
 
 
     /**
      * 全部列表（树状列表） 菜单权限表
      */
-    @AutoLog(value = "菜单权限表-全部列表（树状列表）", operateType = 4)
+    @AutoLog(value = "菜单权限表-全部列表（树状列表）" , operateType = 4)
     @GetMapping("/tree")
     @RequiresPermissions("system:SysPermission:VIEW")
-    @ApiOperation(position = 11, value = "菜单权限表-全部列表（树状列表）", notes = "无需参数")
+    @ApiOperation(position = 11, value = "菜单权限表-全部列表（树状列表）" , notes = "无需参数")
     public R<List<SysPermission>> tree() {
         //获取所有的权限
         List<SysPermission> metaList = service.list();
@@ -191,7 +202,7 @@ public class SysPermissionController extends T4Controller<SysPermission, ISysPer
         }
         //整理树状结构
         service.tree(menuList, metaList);
-        return R.ok("菜单权限表-全部列表（树状列表）查询成功", menuList);
+        return R.ok("菜单权限表-全部列表（树状列表）查询成功" , menuList);
     }
 
 

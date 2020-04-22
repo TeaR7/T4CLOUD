@@ -32,7 +32,7 @@ import java.util.Map;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/dashboard")
-@Api(value = "访问统计等数据接口", tags = "数据统计", position = 0)
+@Api(value = "访问统计等数据接口" , tags = "数据统计" , position = 0)
 public class DashboardController extends T4Controller<SysLog, ISysLogService> {
 
 
@@ -41,7 +41,7 @@ public class DashboardController extends T4Controller<SysLog, ISysLogService> {
      */
     @AutoLog(value = "访问量统计")
     @GetMapping("/visitInfo")
-    @ApiOperation(position = 1, value = "访问量统计", notes = "访问量统计、提供用户注册数据，系统访问数据等")
+    @ApiOperation(position = 1, value = "访问量统计" , notes = "访问量统计、提供用户注册数据，系统访问数据等")
     public R visitInfo() {
 
         //上方访问量数据
@@ -53,17 +53,17 @@ public class DashboardController extends T4Controller<SysLog, ISysLogService> {
 
         // 获取系统访问记录
         Integer totalVisit = service.countVisit(null, null);
-        result.put("totalVisit", totalVisit);
+        result.put("totalVisit" , totalVisit);
         Integer todayVisit = service.countVisit(start, end);
-        result.put("todayVisit", todayVisit);
+        result.put("todayVisit" , todayVisit);
         Integer todayIp = service.countIp(start, end);
-        result.put("todayIp", todayIp);
+        result.put("todayIp" , todayIp);
 
         // 获取访问记录折线图数据
         List<Map<String, Object>> dailyVisitInfo = service.countDailyVisitInfo(DateUtil.beginOfMonth(start), end);
-        result.put("dailyVisitInfo", dailyVisitInfo);
+        result.put("dailyVisitInfo" , dailyVisitInfo);
 
-        return R.ok("访问量统计获取成功！", result);
+        return R.ok("访问量统计获取成功！" , result);
     }
 
 }

@@ -27,8 +27,9 @@
         <el-tag>{{row[col.property]}}</el-tag>
       </template>
       <template #avatar="{col,row}">
-        <t-image :width="'45px'" :height="'45px'" :url="row.avatar" :srcList="[row.avatar]">
+        <t-image v-if="row.avatar" :width="'45px'" :height="'45px'" :url="row.avatar" :preview="true">
         </t-image>
+        <span v-else>无</span>
       </template>
     </t-standard-table>
     <SysUserModal ref="entityModal" @success="loadData" :refresh="true"></SysUserModal>
@@ -58,7 +59,7 @@ export default {
           key: 'username',
           name: '登录账号',
           query: true,
-          advanceQuery: "ne",
+          // advanceQuery: "ne",
           width: '150',
           renderHeader: 'accountHead',
           render: 'account'

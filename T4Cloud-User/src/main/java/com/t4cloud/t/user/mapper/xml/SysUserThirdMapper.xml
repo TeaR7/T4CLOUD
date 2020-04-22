@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.t4cloud.t.user.mapper.SysUserThirdMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="sysUserThirdResultMap" type="com.t4cloud.t.user.entity.SysUserThird">
+        <id column="id" property="id"/>
+        <result column="out_id" property="outId"/>
+        <result column="in_id" property="inId"/>
+        <result column="wx_applet_open_id" property="wxAppletOpenId"/>
+        <result column="union_id" property="unionId"/>
+        <result column="access_token" property="accessToken"/>
+        <result column="img" property="img"/>
+        <result column="phone" property="phone"/>
+        <result column="nick_name" property="nickName"/>
+        <result column="email" property="email"/>
+        <result column="login_type" property="loginType"/>
+        <result column="express" property="express"/>
+        <result column="status" property="status"/>
+        <result column="reamrk" property="reamrk"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+
+</mapper>

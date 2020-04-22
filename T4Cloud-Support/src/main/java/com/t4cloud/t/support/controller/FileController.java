@@ -47,7 +47,7 @@ import java.util.Date;
 @RestController
 @AllArgsConstructor
 @Slf4j
-@Api(value = "资源", tags = "资源上传下载", position = 1)
+@Api(value = "资源" , tags = "资源上传下载" , position = 1)
 @RequestMapping("/file")
 public class FileController extends T4Controller<SupResource, ISupResourceService> implements SupportFileClient {
 
@@ -61,9 +61,9 @@ public class FileController extends T4Controller<SupResource, ISupResourceServic
     /**
      * 详情
      */
-    @AutoLog(value = "资源上传", operateType = 1, logType = 5)
+    @AutoLog(value = "资源上传" , operateType = 1, logType = 5)
     @PutMapping("/upload")
-    @ApiOperation(position = 1, value = "资源上传", notes = "传入文件和权限类型")
+    @ApiOperation(position = 1, value = "资源上传" , notes = "传入文件和权限类型")
     public R<String> upload(
             @ApiParam("权限类型,1:公开，2：私有")
             @RequestParam(required = false, defaultValue = "2") Integer policy,
@@ -98,7 +98,7 @@ public class FileController extends T4Controller<SupResource, ISupResourceServic
         }
 
         //处理资源信息
-        String orgName = file.getOriginalFilename().replace("%", "");// 获取文件名
+        String orgName = file.getOriginalFilename().replace("%" , "");// 获取文件名
         //生成新的文件名，防重名
         String fileName = orgName.substring(0, orgName.lastIndexOf(".")) + "_" + System.currentTimeMillis() + orgName.substring(orgName.indexOf("."));
         resource.setName(orgName);
@@ -114,16 +114,16 @@ public class FileController extends T4Controller<SupResource, ISupResourceServic
         //保存资源对象
         service.save(resource);
 
-        return R.ok("资源上传成功", resource.getId());
+        return R.ok("资源上传成功" , resource.getId());
     }
 
 
     /**
      * 详情
      */
-    @AutoLog(value = "资源预览", logType = 5)
+    @AutoLog(value = "资源预览" , logType = 5)
     @GetMapping("/view/{path}")
-    @ApiOperation(position = 2, value = "资源预览", notes = "直接拼接相对文件路径即可，此接口header中的token如果有的话需要传递过来，如果访问的是私有资源的元，需要校验token的")
+    @ApiOperation(position = 2, value = "资源预览" , notes = "直接拼接相对文件路径即可，此接口header中的token如果有的话需要传递过来，如果访问的是私有资源的元，需要校验token的")
     public void view(
             @ApiParam("上传资源所得的资源路径")
             @PathVariable String path,
@@ -181,9 +181,9 @@ public class FileController extends T4Controller<SupResource, ISupResourceServic
     /**
      * 资源下载
      */
-    @AutoLog(value = "资源下载", logType = 5)
+    @AutoLog(value = "资源下载" , logType = 5)
     @GetMapping("/download/{path}")
-    @ApiOperation(position = 3, value = "资源下载", notes = "直接拼接相对文件路径即可，此接口header中的token如果有的话需要传递过来，如果访问的是私有资源的元，需要校验token的")
+    @ApiOperation(position = 3, value = "资源下载" , notes = "直接拼接相对文件路径即可，此接口header中的token如果有的话需要传递过来，如果访问的是私有资源的元，需要校验token的")
     public void download(
             @ApiParam("上传资源所得的资源路径")
             @PathVariable String path,
@@ -215,7 +215,7 @@ public class FileController extends T4Controller<SupResource, ISupResourceServic
 
         try {
             response.setContentType("application/force-download");// 设置强制下载不打开            
-            response.addHeader("Content-Disposition", "attachment;fileName=" + new String(resource.getName().getBytes("UTF-8"), "iso-8859-1"));
+            response.addHeader("Content-Disposition" , "attachment;fileName=" + new String(resource.getName().getBytes("UTF-8"), "iso-8859-1"));
             //对外输出流
             OutputStream outputStream = response.getOutputStream();
             byte[] buf = new byte[1024];
@@ -243,9 +243,9 @@ public class FileController extends T4Controller<SupResource, ISupResourceServic
     /**
      * 视频预览
      */
-    @AutoLog(value = "视频预览", logType = 5)
+    @AutoLog(value = "视频预览" , logType = 5)
     @GetMapping("/video/{path}")
-    @ApiOperation(position = 3, value = "视频预览", notes = "直接拼接相对文件路径即可，此接口header中的token如果有的话需要传递过来，如果访问的是私有资源的元，需要校验token的")
+    @ApiOperation(position = 3, value = "视频预览" , notes = "直接拼接相对文件路径即可，此接口header中的token如果有的话需要传递过来，如果访问的是私有资源的元，需要校验token的")
     public void video(
             @ApiParam("上传资源所得的资源路径")
             @PathVariable String path,
@@ -302,12 +302,12 @@ public class FileController extends T4Controller<SupResource, ISupResourceServic
         }
 
         response.setContentType("video/mp4");
-        response.setHeader("Accept-Ranges", "bytes");
-        response.setHeader("ETag", resource.getPath());
-        response.setHeader("Last-Modified", new Date().toString());
+        response.setHeader("Accept-Ranges" , "bytes");
+        response.setHeader("ETag" , resource.getPath());
+        response.setHeader("Last-Modified" , new Date().toString());
         //第一次请求只返回content length来让客户端请求多次实际数据
         if (range == null) {
-            response.setHeader("Content-length", contentLength + "");
+            response.setHeader("Content-length" , contentLength + "");
         } else {
             //以后的多次以断点续传的方式来返回视频数据
             response.setStatus(HttpServletResponse.SC_PARTIAL_CONTENT);//206
@@ -323,12 +323,12 @@ public class FileController extends T4Controller<SupResource, ISupResourceServic
             long length = 0;
             if (requestEnd > 0) {
                 length = requestEnd - requestStart + 1;
-                response.setHeader("Content-length", "" + length);
-                response.setHeader("Content-Range", "bytes " + requestStart + "-" + requestEnd + "/" + contentLength);
+                response.setHeader("Content-length" , "" + length);
+                response.setHeader("Content-Range" , "bytes " + requestStart + "-" + requestEnd + "/" + contentLength);
             } else {
                 length = contentLength - requestStart;
-                response.setHeader("Content-length", "" + length);
-                response.setHeader("Content-Range", "bytes " + requestStart + "-" + (contentLength - 1) + "/" + contentLength);
+                response.setHeader("Content-length" , "" + length);
+                response.setHeader("Content-Range" , "bytes " + requestStart + "-" + (contentLength - 1) + "/" + contentLength);
             }
         }
         ServletOutputStream out = response.getOutputStream();

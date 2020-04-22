@@ -55,15 +55,22 @@ export default {
 
 <style>
 /* 引入新的icon，更换链接 */
-@import "//at.alicdn.com/t/font_1633797_lrbl0z0udgr.css";
+@import "//at.alicdn.com/t/font_1633797_wkq9qgx8t6f.css";
 /* 为了class里面少加iconfont */
 [class^="el-icons"],
 [class^=" el-icons"] {
   font-family: "iconfont", serif !important;
-  font-size: 18px;
-  font-style: normal;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  /* font-size: 18px; */
+  /* font-family: element-icons!important; */
+    font-style: normal;
+    font-weight: 400;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    vertical-align: baseline;
+    display: inline-block;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

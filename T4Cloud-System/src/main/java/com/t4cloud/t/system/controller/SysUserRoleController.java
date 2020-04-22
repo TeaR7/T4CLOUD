@@ -6,7 +6,7 @@ import com.t4cloud.t.base.annotation.AutoLog;
 import com.t4cloud.t.base.annotation.cache.RoleCacheEvict;
 import com.t4cloud.t.base.controller.T4Controller;
 import com.t4cloud.t.base.entity.dto.R;
-import com.t4cloud.t.feign.client.SystemSysUserClient;
+import com.t4cloud.t.feign.client.UserSysUserClient;
 import com.t4cloud.t.feign.dto.SysUserDTO;
 import com.t4cloud.t.system.entity.SysRole;
 import com.t4cloud.t.system.entity.SysUserRole;
@@ -39,23 +39,23 @@ import java.util.stream.Collectors;
 @RestController
 @AllArgsConstructor
 @Slf4j
-@Api(value = "用户角色表", tags = "用户角色表接口", position = 13)
+@Api(value = "用户角色表" , tags = "用户角色表接口" , position = 13)
 @RequestMapping("/SysUserRole")
 public class SysUserRoleController extends T4Controller<SysUserRole, ISysUserRoleService> {
 
     @Autowired
-    private final SystemSysUserClient systemSysUserClient;
+    private final UserSysUserClient systemSysUserClient;
 
     /**
      * 根据用户名获取用户所有角色
      */
-    @AutoLog(value = "用户角色表-根据用户名获取用户所有角色")
-    @GetMapping("/getRoleList/{username}")
+    @AutoLog(value = "用户角色表-根据用户ID获取用户所有角色")
+    @GetMapping("/getRoleList/{userId}")
     @RequiresPermissions("system:SysUserRole:VIEW")
-    @ApiOperation(position = 1, value = "用户角色表-根据用户名获取用户所有角色", notes = "传入用户名")
-    public R<List<SysRole>> getRoleList(@ApiParam("用户名") @PathVariable String username) {
-        List<SysRole> list = service.getUserRoleList(username);
-        return R.ok("用户角色表-获取用户所有角色成功", list);
+    @ApiOperation(position = 1, value = "用户角色表-根据用户ID获取用户所有角色" , notes = "传入用户ID")
+    public R<List<SysRole>> getRoleList(@ApiParam("用户ID") @PathVariable String userId) {
+        List<SysRole> list = service.getUserRoleList(userId);
+        return R.ok("用户角色表-获取用户所有角色成功" , list);
     }
 
     /**
@@ -64,7 +64,7 @@ public class SysUserRoleController extends T4Controller<SysUserRole, ISysUserRol
     @AutoLog(value = "用户角色表-根据角色ID获取所有用户")
     @GetMapping("/getUserList/{roleId}")
     @RequiresPermissions("system:SysUserRole:VIEW")
-    @ApiOperation(position = 2, value = "用户角色表-根据角色ID获取所有用户", notes = "传入用户名")
+    @ApiOperation(position = 2, value = "用户角色表-根据角色ID获取所有用户" , notes = "传入用户名")
     public R<List<SysUserDTO>> getUserList(@ApiParam("角色ID") @PathVariable String roleId,
                                            @ApiParam("用户名") @RequestParam(required = false) String username,
                                            @ApiParam("姓名") @RequestParam(required = false) String realname) {
@@ -85,17 +85,17 @@ public class SysUserRoleController extends T4Controller<SysUserRole, ISysUserRol
                 userDTOList = result.getResult();
             }
         }
-        return R.ok("用户角色表-获取所有用户成功", userDTOList);
+        return R.ok("用户角色表-获取所有用户成功" , userDTOList);
     }
 
 
     /**
      * 保存 用户保存角色
      */
-    @AutoLog(value = "保存 用户保存角色", operateType = 1)
+    @AutoLog(value = "保存 用户保存角色" , operateType = 1)
     @PutMapping("/saveByUser")
     @RequiresPermissions("system:SysUserRole:EDIT")
-    @ApiOperation(position = 3, value = "用户角色表-用户保存角色", notes = "传入用户ID和所有角色ID(,分割），注意，是所有")
+    @ApiOperation(position = 3, value = "用户角色表-用户保存角色" , notes = "传入用户ID和所有角色ID(,分割），注意，是所有")
     @RoleCacheEvict // TODO 这个注解有个问题，我偷懒了，任何一个用户编辑他的角色的时候，不仅会清空他自己的redis角色和权限信息，是清空所有人的.以后可以优化一下此处，暂时问题不大
     public R saveByUser(@RequestBody SysUserRole sysUserRole) {
 
@@ -123,10 +123,10 @@ public class SysUserRoleController extends T4Controller<SysUserRole, ISysUserRol
     /**
      * 删除 清空用户角色
      */
-    @AutoLog(value = "删除 清空用户角色", operateType = 2)
+    @AutoLog(value = "删除 清空用户角色" , operateType = 2)
     @DeleteMapping("/deleteByUser")
     @RequiresPermissions("system:SysUserRole:EDIT")
-    @ApiOperation(position = 4, value = "删除 清空用户角色", notes = "传入用户ID,可批量传入")
+    @ApiOperation(position = 4, value = "删除 清空用户角色" , notes = "传入用户ID,可批量传入")
     @RoleCacheEvict // TODO 这个注解有个问题，我偷懒了，任何一个用户编辑他的角色的时候，不仅会清空他自己的redis角色和权限信息，是清空所有人的.以后可以优化一下此处，暂时问题不大
     public R<?> deleteByUser(@RequestParam String ids) {
         //查询之前的所有角色
@@ -138,10 +138,10 @@ public class SysUserRoleController extends T4Controller<SysUserRole, ISysUserRol
     /**
      * 保存 角色添加用户（支持批量）
      */
-    @AutoLog(value = "保存 角色添加用户", operateType = 1)
+    @AutoLog(value = "保存 角色添加用户" , operateType = 1)
     @PutMapping("/saveByRole")
     @RequiresPermissions("system:SysUserRole:EDIT")
-    @ApiOperation(position = 4, value = "用户角色表-角色添加用户", notes = "传入角色ID和需要新增的用户ID(,分割）")
+    @ApiOperation(position = 4, value = "用户角色表-角色添加用户" , notes = "传入角色ID和需要新增的用户ID(,分割）")
     @RoleCacheEvict // TODO 这个注解有个问题，我偷懒了，任何一个用户编辑他的角色的时候，不仅会清空他自己的redis角色和权限信息，是清空所有人的.以后可以优化一下此处，暂时问题不大
     public R saveByRole(@Valid @RequestBody SysUserRole sysUserRole) {
         //查询之前的所有用户
@@ -165,10 +165,10 @@ public class SysUserRoleController extends T4Controller<SysUserRole, ISysUserRol
     /**
      * 删除 角色删除用户（支持批量）
      */
-    @AutoLog(value = "删除 角色删除用户", operateType = 2)
+    @AutoLog(value = "删除 角色删除用户" , operateType = 2)
     @DeleteMapping("/deleteByRole")
     @RequiresPermissions("system:SysUserRole:EDIT")
-    @ApiOperation(position = 5, value = "用户角色表-角色删除用 户", notes = "传入角色ID和需要删除的用户ID(,分割）")
+    @ApiOperation(position = 5, value = "用户角色表-角色删除用 户" , notes = "传入角色ID和需要删除的用户ID(,分割）")
     @RoleCacheEvict // TODO 这个注解有个问题，我偷懒了，任何一个用户编辑他的角色的时候，不仅会清空他自己的redis角色和权限信息，是清空所有人的.以后可以优化一下此处，暂时问题不大
     public R deleteByRole(
             @ApiParam("用户ID") @RequestParam String userIds,

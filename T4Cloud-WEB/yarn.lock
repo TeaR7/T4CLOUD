@@ -2534,6 +2534,11 @@ cosmiconfig@^5.0.0:
     js-yaml "^3.13.1"
     parse-json "^4.0.0"
 
+countup.js@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.npm.taobao.org/countup.js/download/countup.js-2.0.4.tgz#8c845452e499b16187c0d1beb1e5d717bda90005"
+  integrity sha1-jIRUUuSZsWGHwNG+seXXF72pAAU=
+
 create-ecdh@^4.0.0:
   version "4.0.3"
   resolved "https://registry.npm.taobao.org/create-ecdh/download/create-ecdh-4.0.3.tgz#c9111b6f33045c4697f144787f9254cdc77c45ff"
@@ -8016,10 +8021,10 @@ swiper@^5.3.6:
     dom7 "^2.1.3"
     ssr-window "^1.0.1"
 
-t4cloud-ui@0.0.34:
-  version "0.0.34"
-  resolved "https://registry.npm.taobao.org/t4cloud-ui/download/t4cloud-ui-0.0.34.tgz#636548220c030fef2c46008148ea03f5cf9e7c49"
-  integrity sha1-Y2VIIgwDD+8sRgCBSOoD9c+efEk=
+t4cloud-ui@0.1.16:
+  version "0.1.16"
+  resolved "https://registry.npm.taobao.org/t4cloud-ui/download/t4cloud-ui-0.1.16.tgz#2176285548793a4f97db9bc65895005c89efa954"
+  integrity sha1-IXYoVUh5Ok+X25vGWJUAXInvqVQ=
   dependencies:
     "@nutui/nutui" "^2.1.8"
     core-js "^2.6.10"
@@ -8030,10 +8035,10 @@ t4cloud-ui@0.0.34:
     vue-router "^3.1.3"
     vuex "^3.1.3"
 
-t4cloud-util@^0.0.48:
-  version "0.0.48"
-  resolved "https://registry.npm.taobao.org/t4cloud-util/download/t4cloud-util-0.0.48.tgz#fe425d900b828ce726bd50605415e92f6f41d95f"
-  integrity sha1-/kJdkAuCjOcmvVBgVBXpL29B2V8=
+t4cloud-util@^0.1.4:
+  version "0.1.4"
+  resolved "https://registry.npm.taobao.org/t4cloud-util/download/t4cloud-util-0.1.4.tgz#16f3bcae70356f2d6adf29819d20633920d4f6cb"
+  integrity sha1-FvO8rnA1by1q3ymBnSBjOSDU9ss=
   dependencies:
     axios "^0.19.2"
     enquire.js "^2.1.6"
@@ -8526,6 +8531,11 @@ vm-browserify@^1.0.1:
   version "1.1.2"
   resolved "https://registry.npm.taobao.org/vm-browserify/download/vm-browserify-1.1.2.tgz?cache=0&sync_timestamp=1572870776965&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fvm-browserify%2Fdownload%2Fvm-browserify-1.1.2.tgz#78641c488b8e6ca91a75f511e7a3b32a86e5dda0"
   integrity sha1-eGQcSIuObKkadfUR56OzKobl3aA=
+
+vue-countup-v2@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.npm.taobao.org/vue-countup-v2/download/vue-countup-v2-4.0.0.tgz#061a1ac8ee4aa207bb9d23d2bcc1d53a5f7c3675"
+  integrity sha1-BhoayO5Koge7nSPSvMHVOl98NnU=
 
 vue-eslint-parser@^7.0.0:
   version "7.0.0"

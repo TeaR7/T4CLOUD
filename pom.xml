@@ -27,7 +27,9 @@
     <url>https://www.t4cloud.com</url>
 
     <properties>
-        <t4cloud.version>0.0.5</t4cloud.version>
+        <t4cloud.version>0.1.1</t4cloud.version>
+        <t4cloud.core.version>0.1.5</t4cloud.core.version>
+        <application.name></application.name>
         <spring-boot.version>2.2.4.RELEASE</spring-boot.version>
         <spring-cloud.version>Hoxton.SR1</spring-cloud.version>
         <spring-cloud-alibaba.version>2.2.0.RELEASE</spring-cloud-alibaba.version>
@@ -42,8 +44,8 @@
         <module>T4Cloud-User</module>
         <module>T4Cloud-System</module>
         <module>T4Cloud-Gateway</module>
-        <module>T4Cloud-Mock</module>
         <module>T4Cloud-Support</module>
+        <module>T4Cloud-Mock</module>
         <module>T4Cloud-Gen</module>
         <module>T4Cloud-Rocketmq-Console</module>
         <module>T4Cloud-XXL-Job</module>

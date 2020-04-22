@@ -32,8 +32,8 @@ public class SysPermissionServiceImpl extends T4ServiceImpl<SysPermissionMapper,
     /**
      * 查询用户有的所有权限
      *
-     * @param username 用户名
-     *                 <p>
+     * @param userId 用户ID
+     *               <p>
      * @return java.util.List<com.t4cloud.t.system.entity.SysPermission>
      * --------------------
      * @author TeaR
@@ -41,8 +41,8 @@ public class SysPermissionServiceImpl extends T4ServiceImpl<SysPermissionMapper,
      */
     @Override
     @PermissionCacheable
-    public List<SysPermission> queryByUsername(String username) {
-        return baseMapper.queryByUsername(username);
+    public List<SysPermission> queryByUserId(String userId) {
+        return baseMapper.queryByUserId(userId);
     }
 
 

@@ -5,7 +5,6 @@ server:
     mbeanregistry:
       enabled: true
   servlet:
-#    context-path: /t4cloud-user
     compression:
       enabled: true
       mime-types: application/javascript,application/json,application/xml,text/html,text/xml,text/plain,text/css,image/*
@@ -184,6 +183,6 @@ t4cloud:
     ## 导出的时候某些资源管理器是不带资源后缀的，需要而easypoi需要，所以手动配置一个
     temp-dir: /temp-pic
   # RSA 公私钥配置（公钥一般来说是给前端或者客户端使用的，不会再服务端使用到）
-  private-key: T4CLOUD-PRIVATE
-  public-key: T4CLOUD-PUBLIC
+#  private-key: T4CLOUD-PRIVATE
+#  public-key: T4CLOUD-PUBLIC
 

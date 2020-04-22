@@ -34,8 +34,8 @@ public class SysUserRoleServiceImpl extends T4ServiceImpl<SysUserRoleMapper, Sys
     /**
      * 获取某用户的所有角色
      *
-     * @param username 用户名
-     *                 <p>
+     * @param userId 用户ID
+     *               <p>
      * @return java.util.List<com.t4cloud.t.system.entity.SysRole>
      * --------------------
      * @author TeaR
@@ -43,8 +43,8 @@ public class SysUserRoleServiceImpl extends T4ServiceImpl<SysUserRoleMapper, Sys
      */
     @Override
     @RoleCacheable
-    public List<SysRole> getUserRoleList(String username) {
-        return sysRoleMapper.queryByUsername(username);
+    public List<SysRole> getUserRoleList(String userId) {
+        return sysRoleMapper.queryByUserId(userId);
     }
 
 }

@@ -43,46 +43,47 @@ public class ShiroConfig {
         // 配置不会被拦截的链接 顺序判断
 
         // ----------------------------------------------- 资源相关（主要是SWAGGER） -----------------------------------------------
-        filterChainDefinitionMap.put("/", "anon");
-        filterChainDefinitionMap.put("/doc.html", "anon");
-        filterChainDefinitionMap.put("/**/*.js", "anon");
-        filterChainDefinitionMap.put("/**/*.css", "anon");
-        filterChainDefinitionMap.put("/**/*.html", "anon");
-        filterChainDefinitionMap.put("/**/*.svg", "anon");
-        filterChainDefinitionMap.put("/**/*.pdf", "anon");
-        filterChainDefinitionMap.put("/**/*.jpg", "anon");
-        filterChainDefinitionMap.put("/**/*.png", "anon");
-        filterChainDefinitionMap.put("/**/*.ico", "anon");
-        filterChainDefinitionMap.put("/**/*.mp4", "anon");
-        filterChainDefinitionMap.put("/**/*.ttf", "anon");
-        filterChainDefinitionMap.put("/**/*.woff", "anon");
-        filterChainDefinitionMap.put("/swagger-ui.html", "anon");
-        filterChainDefinitionMap.put("/swagger**/**", "anon");
-        filterChainDefinitionMap.put("/webjars/**", "anon");
-        filterChainDefinitionMap.put("/v2/**", "anon");
+        filterChainDefinitionMap.put("/" , "anon");
+        filterChainDefinitionMap.put("/doc.html" , "anon");
+        filterChainDefinitionMap.put("/**/*.js" , "anon");
+        filterChainDefinitionMap.put("/**/*.css" , "anon");
+        filterChainDefinitionMap.put("/**/*.html" , "anon");
+        filterChainDefinitionMap.put("/**/*.svg" , "anon");
+        filterChainDefinitionMap.put("/**/*.pdf" , "anon");
+        filterChainDefinitionMap.put("/**/*.jpg" , "anon");
+        filterChainDefinitionMap.put("/**/*.png" , "anon");
+        filterChainDefinitionMap.put("/**/*.ico" , "anon");
+        filterChainDefinitionMap.put("/**/*.mp4" , "anon");
+        filterChainDefinitionMap.put("/**/*.ttf" , "anon");
+        filterChainDefinitionMap.put("/**/*.woff" , "anon");
+        filterChainDefinitionMap.put("/swagger-ui.html" , "anon");
+        filterChainDefinitionMap.put("/swagger**/**" , "anon");
+        filterChainDefinitionMap.put("/webjars/**" , "anon");
+        filterChainDefinitionMap.put("/v2/**" , "anon");
 
         //性能监控
-        filterChainDefinitionMap.put("/actuator/metrics/**", "anon");
-        filterChainDefinitionMap.put("/actuator/env/**", "anon");
-        filterChainDefinitionMap.put("/actuator/httptrace/**", "anon");
-        filterChainDefinitionMap.put("/actuator/redis/**", "anon");
-        filterChainDefinitionMap.put("/druid/**", "anon");
+        filterChainDefinitionMap.put("/actuator/metrics/**" , "anon");
+        filterChainDefinitionMap.put("/actuator/env/**" , "anon");
+        filterChainDefinitionMap.put("/actuator/httptrace/**" , "anon");
+        filterChainDefinitionMap.put("/actuator/redis/**" , "anon");
+        filterChainDefinitionMap.put("/druid/**" , "anon");
 
         // ----------------------------------------------- 系统业务相关 -----------------------------------------------
-        filterChainDefinitionMap.put("/file/view/**", "anon");//文件访问接口权限放开
-        filterChainDefinitionMap.put("/file/download/**", "anon");//文件下载接口权限放开
-        filterChainDefinitionMap.put("/file/video/**", "anon");//视频预览接口权限放开
+        filterChainDefinitionMap.put("/file/view/**" , "anon");//文件访问接口权限放开
+        filterChainDefinitionMap.put("/file/download/**" , "anon");//文件下载接口权限放开
+        filterChainDefinitionMap.put("/file/video/**" , "anon");//视频预览接口权限放开
+        filterChainDefinitionMap.put("/SupMessage/saveByTemplate" , "anon");//发送消息接口
 
 
         //websocket排除
-        filterChainDefinitionMap.put("/websocket/**", "anon");
+        filterChainDefinitionMap.put("/websocket/**" , "anon");
 
         // 添加过滤器
         Map<String, Filter> filterMap = new HashMap<String, Filter>(1);
-        filterMap.put("jwt", new JwtFilter());
+        filterMap.put("jwt" , new JwtFilter());
         shiroFilterFactoryBean.setFilters(filterMap);
         // <!-- 过滤链定义，从上向下顺序执行，一般将/**放在最为下边
-        filterChainDefinitionMap.put("/**", "jwt");
+        filterChainDefinitionMap.put("/**" , "jwt");
 
         shiroFilterFactoryBean.setUnauthorizedUrl("/401");
         shiroFilterFactoryBean.setLoginUrl("/401");

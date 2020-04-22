@@ -31,19 +31,18 @@ public class MessageSenderJob {
      * 定时推送消息
      */
     @XxlJob("messageSender")
-    @AutoLog(value = "定时推送消息", logType = 4, operateType = 3)
+    @AutoLog(value = "定时推送消息" , logType = 4, operateType = 3)
     public ReturnT messageSender(String param) {
-        ReturnT result = new ReturnT();
-
-
         log.debug("Test messageSender, Hello World.");
-
         //读取所有待发送的邮件
         int mailCount = supMessageService.mailSender(5);
+        //读取所有待发送短信
+        int smsCount = supMessageService.smsSender(5);
 
         //结果集
         JSONObject data = new JSONObject();
-        data.put("mailCount", mailCount);
+        data.put("mailCount" , mailCount);
+        data.put("smsCount" , smsCount);
 
         return ReturnT.SUCCESS.setMsg("定时推送消息成功").setContent(data);
     }

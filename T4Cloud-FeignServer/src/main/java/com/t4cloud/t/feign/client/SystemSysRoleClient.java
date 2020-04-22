@@ -16,7 +16,7 @@ import java.util.List;
  * @author TeaR
  * @date 2020/3/2 15:33
  */
-@FeignClient(name = "T4Cloud-System", contextId = "SysRole")
+@FeignClient(name = "T4Cloud-System" , contextId = "SysRole")
 public interface SystemSysRoleClient {
 
     @GetMapping(value = "/SysRole/list")

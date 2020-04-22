@@ -20,7 +20,7 @@
         <dependency>
             <groupId>com.t4cloud</groupId>
             <artifactId>T4Cloud-Common</artifactId>
-            <version>${spring-cloud.version}.${t4cloud.version}</version>
+            <version>${spring-cloud.version}.${t4cloud.core.version}</version>
         </dependency>
 
     </dependencies>

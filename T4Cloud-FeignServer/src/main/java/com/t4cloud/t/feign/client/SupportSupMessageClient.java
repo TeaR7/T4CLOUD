@@ -14,9 +14,9 @@ import java.util.List;
  * ---------------------
  *
  * @author TeaR
- * @since 2020-03-31 
+ * @since 2020-03-31
  */
-@FeignClient(name = "T4Cloud-Support", contextId = "supMessage", path = "/SupMessage")
+@FeignClient(name = "T4Cloud-Support" , contextId = "supMessage" , path = "/SupMessage")
 public interface SupportSupMessageClient {
 
 
@@ -31,6 +31,13 @@ public interface SupportSupMessageClient {
      */
     @PutMapping(value = "/save")
     R<?> save(@RequestBody SupMessageDTO supMessage);
+
+    /**
+     * 新增 消息列表
+     */
+    @PutMapping(value = "/saveByTemplate")
+    R<String> saveByTemplate(@RequestBody SupMessageDTO supMessage);
+
 
     /**
      * 修改 消息列表

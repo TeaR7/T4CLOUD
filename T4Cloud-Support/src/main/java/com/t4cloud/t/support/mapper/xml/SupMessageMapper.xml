@@ -21,5 +21,18 @@
         <result column="update_time" property="updateTime"/>
     </resultMap>
 
+    <!--  查询待发送消息（忽略租户ID）  -->
+    <select id="getTodoMessage" resultType="com.t4cloud.t.support.entity.SupMessage">
+        select *
+        from sup_message
+        where message_type = #{messageType}
+        and send_status in
+        <foreach item="item" index="index" collection="sendStatus" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        and send_time &lt;= #{sendTime}
+        order by send_time ASC limit #{size}
+    </select>
+
 
 </mapper>

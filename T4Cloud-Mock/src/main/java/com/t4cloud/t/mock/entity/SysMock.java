@@ -21,7 +21,7 @@ import lombok.experimental.Accessors;
 @TableName("sys_mock")
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-@ApiModel(value = "SysMock对象", description = "Mock数据")
+@ApiModel(value = "SysMock对象" , description = "Mock数据")
 public class SysMock extends BaseEntity {
 
     private static final long serialVersionUID = 1L;

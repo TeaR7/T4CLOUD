@@ -10,6 +10,10 @@
       <template #name="{row}">
         <el-tag><i :class="row.icon"></i> {{row.name}}</el-tag>
       </template>
+      <template #menuType="{row}">
+        <!-- <el-tag :color="row.hidden ? '':'lightgray'"> {{row.menuType === 0 ? '菜单':'按钮'}}</el-tag> -->
+        <span>{{$util.showDictText(dictOptions, row.menuType)}}</span>
+      </template>
       <template #options="{row}">
         <el-button type="primary" size="mini" v-auth="['system:SysPermission:ADD','system:SysPermission:EDIT']" @click="handleEdit(row)">编辑</el-button>
         <el-dropdown>
@@ -43,6 +47,7 @@ export default {
   },
   data() {
     return {
+      dictOptions: [],
       tableColumn: [
         {
           key: 'name',
@@ -50,15 +55,14 @@ export default {
           width: '220',
           align: 'left',
           render: 'name',
-          query: true,
-          type: String
-        }, {
+        },
+        {
           key: 'menuType',
           name: '菜单类型',
           width: '100',
-          query: true,
-          type: String
-        }, {
+          render: 'menuType',
+        },
+        {
           key: 'component',
           name: '组件'
         }, {
@@ -79,6 +83,7 @@ export default {
   },
   created() {
     this.ipagination.show = false
+    this.getDictArr('menu_type')
   },
   methods: {}
 }

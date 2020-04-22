@@ -13,11 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
-
-import static com.t4cloud.t.base.constant.CacheConstant.SYS_USERS_CHECK_CODE;
 
 /**
  * 用户表 服务实现类
@@ -39,32 +36,6 @@ public class SysUserServiceImpl extends T4ServiceImpl<SysUserMapper, SysUser> im
     @Autowired
     private Environment environment;
 
-
-    /**
-     * 根据用户名获取用户
-     *
-     * @param username 用户名
-     *                 <p>
-     * @return com.t4cloud.t.common.entity.LoginUser
-     * --------------------
-     * @author TeaR
-     * @date 2020/1/16 11:01
-     */
-    @Override
-    @Cacheable(cacheNames = CacheConstant.SYS_USERS_CACHE, key = "#username")
-    public LoginUser getUserByUsername(String username) {
-        if (StringUtils.isEmpty(username)) {
-            return null;
-        }
-        LoginUser loginUser = new LoginUser();
-        SysUser sysUser = lambdaQuery().eq(SysUser::getUsername, username).one();
-        if (sysUser == null) {
-            return null;
-        }
-        BeanUtils.copyProperties(sysUser, loginUser);
-        return loginUser;
-    }
-
     /**
      * 用户校验成功后生成token
      *
@@ -77,10 +48,10 @@ public class SysUserServiceImpl extends T4ServiceImpl<SysUserMapper, SysUser> im
      */
     @Override
     public LoginUser generateToken(LoginUser user) {
-        String token = JwtUtil.sign(user.getUsername(), user.getPassword());
+        String token = JwtUtil.sign(user.getId(), user.getUsername(), user.getPassword());
         // 设置token缓存有效时间
-        redisUtil.set(CacheConstant.SYS_USERS_TOKEN + user.getUsername() + "-" + token, token, JwtUtil.EXPIRE_TIME * 2 / 1000);
-        redisUtil.set(CacheConstant.SYS_USERS_CACHE + user.getUsername(), user, JwtUtil.EXPIRE_TIME * 2 / 1000);
+        redisUtil.set(CacheConstant.SYS_USERS_TOKEN + user.getId() + "-" + token, token, JwtUtil.EXPIRE_TIME * 2 / 1000);
+        redisUtil.set(CacheConstant.SYS_USERS_CACHE + user.getId(), user, JwtUtil.EXPIRE_TIME * 2 / 1000);
         user.setToken(token);
 
         //脱敏处理
@@ -103,14 +74,14 @@ public class SysUserServiceImpl extends T4ServiceImpl<SysUserMapper, SysUser> im
      * @date 2020/2/10 17:33
      */
     @Override
-    public boolean checkCode(String code, String key) {
+    public boolean checkCode(String prefix, String code, String key) {
 
-        //获取是否验证图片验证码
+        //获取是否验证验证码
         Boolean check = Boolean.parseBoolean(environment.getProperty("t4cloud.check-code"));
 
         if (check) {
-            //开始验证图片验证码
-            String checkCode = (String) redisUtil.get(SYS_USERS_CHECK_CODE + key);
+            //开始验证验证码
+            String checkCode = (String) redisUtil.get(prefix + key);
 
             if (StringUtils.isEmpty(checkCode)) {
                 return false;
@@ -121,10 +92,28 @@ public class SysUserServiceImpl extends T4ServiceImpl<SysUserMapper, SysUser> im
             }
 
             //验证通过，失效该验证码
-            redisUtil.del(SYS_USERS_CHECK_CODE + key);
+            redisUtil.del(prefix + key);
         }
 
         return true;
+    }
+
+    /**
+     * 刷新用户缓存
+     *
+     * @param userId 用户ID
+     *               <p>
+     * @return void
+     * --------------------
+     * @author TeaR
+     * @date 2020/4/22 14:53
+     */
+    @Override
+    public void freshUserCache(String userId) {
+        //更新用户缓存
+        LoginUser loginUser = new LoginUser();
+        BeanUtils.copyProperties(getById(userId), loginUser);
+        redisUtil.set(CacheConstant.SYS_USERS_CACHE + userId, loginUser, redisUtil.getExpire(CacheConstant.SYS_USERS_CACHE + userId));
     }
 
 

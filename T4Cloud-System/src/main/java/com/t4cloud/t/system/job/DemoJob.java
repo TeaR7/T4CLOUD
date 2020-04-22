@@ -32,7 +32,7 @@ public class DemoJob {
     /**
      * 1、简单任务示例（Bean模式）
      */
-    @AutoLog(value = "简单任务示例", logType = 4)
+    @AutoLog(value = "简单任务示例" , logType = 4)
     @XxlJob("demoJob")
     public ReturnT demoJobHandler(String param) throws Exception {
         log.info("Test job, Hello World.");
@@ -40,7 +40,7 @@ public class DemoJob {
         log.info("param：" + param);
 
         //测试service注入
-        List<SysPermission> sysPermissionList = sysPermissionService.queryByUsername(param);
+        List<SysPermission> sysPermissionList = sysPermissionService.queryByUserId(param);
         log.info(JSONUtil.toJsonStr(sysPermissionList));
 
         return ReturnT.SUCCESS;

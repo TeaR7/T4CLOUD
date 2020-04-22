@@ -31,13 +31,13 @@ public class ResourceListener implements RocketMQListener<SupResource> {
     private final ISupResourceService service;
 
     @Override
-    @AutoLog(value = "资源访问MQ处理", logType = 5, operateType = 3)
+    @AutoLog(value = "资源访问MQ处理" , logType = 5, operateType = 3)
     public void onMessage(SupResource resource) {
         //获取最新的数据
         SupResource supResource = service.getById(resource.getId());
         if (supResource == null) {
-            log.error("接受到的资源对象异常！", resource);
-            log.info("接受到的资源对象异常INFO！", JSONUtil.toJsonStr(resource));
+            log.error("接受到的资源对象异常！" , resource);
+            log.info("接受到的资源对象异常INFO！" , JSONUtil.toJsonStr(resource));
         }
         supResource.setCount(supResource.getCount() + 1)
                 .setUpdateBy(resource.getUpdateBy())

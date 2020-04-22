@@ -36,7 +36,7 @@ import java.util.stream.Collectors;
 @RestController
 @AllArgsConstructor
 @Slf4j
-@Api(value = "角色权限表", tags = "角色权限表接口", position = 12)
+@Api(value = "角色权限表" , tags = "角色权限表接口" , position = 12)
 @RequestMapping("/SysRolePermission")
 public class SysRolePermissionController extends T4Controller<SysRolePermission, ISysRolePermissionService> {
 
@@ -46,20 +46,20 @@ public class SysRolePermissionController extends T4Controller<SysRolePermission,
     @AutoLog(value = "角色权限表-全部列表")
     @GetMapping("/list")
     @RequiresPermissions("system:SysRolePermission:VIEW")
-    @ApiOperation(position = 1, value = "角色权限表-全部列表", notes = "传入sysRolePermission")
+    @ApiOperation(position = 1, value = "角色权限表-全部列表" , notes = "传入sysRolePermission")
     public R<List<SysRolePermission>> list(SysRolePermission sysRolePermission, HttpServletRequest req) {
-        QueryWrapper<SysRolePermission> sysRolePermissionQueryWapper = T4Query.initQuery(sysRolePermission, req.getParameterMap());
-        List<SysRolePermission> list = service.list(sysRolePermissionQueryWapper);
-        return R.ok("角色权限表-全部列表查询成功", list);
+        QueryWrapper<SysRolePermission> sysRolePermissionQueryWrapper = T4Query.initQuery(sysRolePermission, req.getParameterMap());
+        List<SysRolePermission> list = service.list(sysRolePermissionQueryWrapper);
+        return R.ok("角色权限表-全部列表查询成功" , list);
     }
 
     /**
      * 保存 角色授权
      */
-    @AutoLog(value = "保存 角色授权", operateType = 1)
+    @AutoLog(value = "保存 角色授权" , operateType = 1)
     @PutMapping("/save")
     @RequiresPermissions("system:SysRolePermission:EDIT")
-    @ApiOperation(position = 4, value = "保存 角色授权", notes = "传入sysRolePermission")
+    @ApiOperation(position = 4, value = "保存 角色授权" , notes = "传入sysRolePermission")
     @PermissionCacheEvict
     public R<?> save(@Valid @RequestBody SysRolePermission sysRolePermission, BindingResult bindingResult) {
         //查询之前的所有权限

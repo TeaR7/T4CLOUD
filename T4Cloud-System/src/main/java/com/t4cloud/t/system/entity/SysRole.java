@@ -21,7 +21,7 @@ import lombok.experimental.Accessors;
 @TableName("sys_role")
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-@ApiModel(value = "SysRole对象", description = "角色表")
+@ApiModel(value = "SysRole对象" , description = "角色表")
 public class SysRole extends BaseEntity {
 
     private static final long serialVersionUID = 1L;

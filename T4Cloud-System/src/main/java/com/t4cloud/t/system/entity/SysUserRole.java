@@ -23,7 +23,7 @@ import lombok.experimental.Accessors;
 @TableName("sys_user_role")
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-@ApiModel(value = "SysUserRole对象", description = "用户角色表")
+@ApiModel(value = "SysUserRole对象" , description = "用户角色表")
 public class SysUserRole extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
@@ -32,13 +32,13 @@ public class SysUserRole extends BaseEntity {
     /**
      * 用户id
      */
-    @Excel(name = "用户id", width = 10.0, orderNum = "0")
+    @Excel(name = "用户id" , width = 10.0, orderNum = "0")
     @ApiModelProperty(value = "用户id")
     private String userId;
     /**
      * 角色id
      */
-    @Excel(name = "角色id", width = 10.0, orderNum = "1")
+    @Excel(name = "角色id" , width = 10.0, orderNum = "1")
     @ApiModelProperty(value = "角色id")
     private String roleId;
 

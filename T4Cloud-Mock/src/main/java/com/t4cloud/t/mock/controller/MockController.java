@@ -16,13 +16,13 @@ import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/mock/api")
-@Api(value = "模拟数据接口", tags = "MOCK接口", position = 1)
+@Api(value = "模拟数据接口" , tags = "MOCK接口" , position = 1)
 public class MockController extends T4Controller<SysMock, ISysMockService> {
 
 
     @AutoLog(value = "MOCK-API")
     @RequestMapping("/{url}")
-    @ApiOperation(position = 1, value = "MOCK-API", notes = "传入MOCK的URL即可获取预先定义好的数据")
+    @ApiOperation(position = 1, value = "MOCK-API" , notes = "传入MOCK的URL即可获取预先定义好的数据")
     public R<JSONObject> mock(HttpServletRequest request, @PathVariable String url) {
         String method = request.getMethod();
         return service.getData(url, method);

@@ -21,6 +21,6 @@ public interface SysRoleMapper extends BaseMapper<SysRole> {
     /**
      * 根据用户查询用户权限
      */
-    List<SysRole> queryByUsername(@Param("username") String username);
+    List<SysRole> queryByUserId(@Param("userId") String userId);
 
 }

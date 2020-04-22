@@ -134,7 +134,7 @@ export const T4CloudListMixin = {
       var param = Object.assign(sorter, params, this.filters);
       param.pageNo = this.ipagination.current;
       param.pageSize = this.ipagination.pageSize;
-      return this.$util.filterNull(param);
+      return this.$util.filterNull(param, true);
     },
     // 合并查询参数
     combineQueryParams() {
@@ -312,7 +312,7 @@ export const T4CloudListMixin = {
       }
       // console.log("导出参数", param);
       this.$http.download(this.url.exportXls, param).then(data => {
-        if (!data || data.type == 'application/json') {
+        if (!data || data.type == "application/json") {
           this.$message.warning("文件下载失败");
           return;
         }
@@ -363,6 +363,25 @@ export const T4CloudListMixin = {
       //传递主表数据
       this.relationData = {};
       this.relationshipVisible = false;
+    },
+    // 获取字典数组
+    getDictArr(dictCode) {
+      this.loading = true;
+      this.$http
+        .GET(process.env.VUE_APP_DICTAPI + dictCode)
+        .then(res => {
+          if (res.success) {
+            // console.log(res.result);
+            this.dictOptions = res.result;
+          } else {
+            this.$message.error("获取字典失败");
+          }
+          this.loading = false;
+        })
+        .catch(() => {
+          this.$message.error("获取字典失败");
+          this.loading = false;
+        });
     }
   }
 };

@@ -72,6 +72,7 @@ export default {
     initForm() {
       return {
         roleId: null,
+        companyId: null,
         userIds: null,
       }
     },

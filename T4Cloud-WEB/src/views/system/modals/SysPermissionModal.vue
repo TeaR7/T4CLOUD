@@ -3,10 +3,7 @@
     <el-dialog :title="title" :visible.sync="isShow" :fullscreen="device=='mobile'" :before-close="close">
       <el-form class="dialogForm" :model="forms" :rules="rules" ref="baseForm" label-width="100px" v-loading="loading">
         <el-form-item label="菜单类型">
-          <el-radio-group v-model="forms.menuType" :disabled="disableSubmit">
-            <el-radio :label="0">一级菜单</el-radio>
-            <el-radio :label="2">按钮权限</el-radio>
-          </el-radio-group>
+          <t-dict v-model="forms.menuType" dictCode="menu_type" :readonly="disableSubmit"></t-dict>
         </el-form-item>
         <el-form-item label="菜单名称" prop="name">
           <el-input v-model="forms.name" :readonly="disableSubmit"></el-input>
@@ -17,7 +14,7 @@
         <el-form-item label="上级菜单" :prop="forms.menuType==0?'':'parentId'">
           <t-tree-select ref="treeSelect" :options="treeList" v-model="forms.parentId" :disabled="disableSubmit"></t-tree-select>
         </el-form-item>
-        <el-form-item label="菜单路径" prop="url" v-show="forms.menuType!=2">
+        <el-form-item label="菜单路径" :prop="forms.menuType!=2?'url':''" v-show="forms.menuType!=2">
           <el-input v-model="forms.url" :readonly="disableSubmit"></el-input>
         </el-form-item>
         <el-form-item label="前端组件" prop="component" v-show="forms.menuType!=2">
@@ -35,10 +32,10 @@
           <el-input-number v-model="forms.sortNo" :disabled="disableSubmit"></el-input-number>
         </el-form-item>
         <el-form-item label="是否隐藏" v-show="forms.menuType!=2">
-          <t-dict v-model="forms.hidden" dictCode="hidden" :disabled="disableSubmit"></t-dict>
+          <t-dict v-model="forms.hidden" dictCode="hidden" :readonly="disableSubmit"></t-dict>
         </el-form-item>
         <el-form-item label="打开方式" v-show="forms.menuType!=2">
-          <t-dict v-model="forms.openType" type="radio" dictCode="open_type" :disabled="disableSubmit"></t-dict>
+          <t-dict v-model="forms.openType" type="radio" dictCode="open_type" :readonly="disableSubmit"></t-dict>
         </el-form-item>
         <el-form-item label="状态">
           <t-dict v-model="forms.status" type="radio" dictCode="common_status" :readonly="disableSubmit"></t-dict>

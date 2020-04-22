@@ -24,12 +24,11 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/swagger-resources")
 public class SwaggerHandler {
+    private final SwaggerResourcesProvider swaggerResources;
     @Autowired(required = false)
     private SecurityConfiguration securityConfiguration;
     @Autowired(required = false)
     private UiConfiguration uiConfiguration;
-
-    private final SwaggerResourcesProvider swaggerResources;
 
     @Autowired
     public SwaggerHandler(SwaggerResourcesProvider swaggerResources) {

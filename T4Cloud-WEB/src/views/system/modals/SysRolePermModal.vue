@@ -29,7 +29,7 @@ export default {
         label: 'name'
       },
       url: {
-        tree: '/T4Cloud-System/SysPermission/tree',
+        tree: '/T4Cloud-System/SysPermission/userPermission',
         select: '/T4Cloud-System/SysRolePermission/list',
         save: '/T4Cloud-System/SysRolePermission/save',
       }

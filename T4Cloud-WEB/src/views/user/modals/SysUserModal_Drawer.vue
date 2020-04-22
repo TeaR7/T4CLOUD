@@ -23,7 +23,8 @@
           </el-form-item>
           <el-form-item label="用户角色" prop="roles">
             <!-- <TSelect :listUrl="url.roleList" v-model="forms.showRoles" placeholder="请选择用户角色"></TSelect> -->
-             <t-select :listUrl="url.roleList" v-model="forms.showRoles" placeholder="请选择用户角色"></t-select>
+             <!-- <t-select :listUrl="url.roleList" v-model="forms.showRoles" :labels="'roleName'" :multiple="true" placeholder="请选择用户角色"></t-select> -->
+             <t-select :listUrl="url.roleList" v-model="forms.showRoles" :labels="'roleName'" :multiple="true" placeholder="请选择用户角色" :disabled="disableSubmit"></t-select>
           </el-form-item>
           <el-form-item label="生日">
             <el-date-picker type="date" placeholder="选择生日" v-model="forms.birthday" format="yyyy-MM-dd" value-format="yyyy-MM-dd HH:mm:ss" :disabled="disableSubmit"></el-date-picker>
@@ -61,7 +62,7 @@
 <script>
 import { T4CloudModalMixin } from '@/mixins/T4CloudModalMixin'
 // import TPicUpload from '@/components/T4Cloud/TPicUpload'
-// import TSelect from '@/components/T4Cloud/TSelect'
+// import TSelect from '../../../components/test/Select'
 
 export default {
   name: 'SysUserModal',

@@ -114,6 +114,7 @@ logging:
 
 # rocket mq 配置
 rocketmq:
+  #  name-server: 127.0.0.1:9876
   name-server: 127.0.0.1:9876
   producer:
     # 必须指定group
@@ -137,9 +138,13 @@ t4cloud:
     ## 端口自动配置成本项目的端口-100
     port: ${server.port}
     appname: '@project.name@'
-    # poi 配置
-    excel:
-      ## 导出的时候OSS的前缀（任何资源管理器的END POINT）
-      oss: https://api.cloud.t4cloud.com/T4Cloud-Support/file/view/
-      ## 导出的时候某些资源管理器是不带资源后缀的，需要而easypoi需要，所以手动配置一个
-      temp-dir: /temp-pic
+  # poi 配置
+  excel:
+    ## 导出数据的阈值，如果大于这个值，则采用大数据模式导出
+    big-data: 1000
+    ## 每次导入excel的页大小
+    page-size: 1000
+    ## 导出的时候OSS的前缀（任何资源管理器的END POINT）
+    oss: https://
+    ## 导出的时候某些资源管理器是不带资源后缀的，需要而easypoi需要，所以手动配置一个
+    temp-dir: /temp-pic

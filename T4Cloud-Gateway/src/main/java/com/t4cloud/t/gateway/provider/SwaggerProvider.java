@@ -36,10 +36,10 @@ public class SwaggerProvider implements SwaggerResourcesProvider {
 
         //自动添加文档
         for (String route : routes) {
-            if ((!route.contains("T4Cloud-Gateway")) && route.contains("T4Cloud") ){
+            if ((!route.contains("T4Cloud-Gateway")) && route.contains("T4Cloud")) {
                 String[] location = route.split("_");
                 if (location.length > 1) {
-                    resources.add(swaggerResource(location[1] + "相关", "/" + location[1]));
+                    resources.add(swaggerResource(location[1] + "相关" , "/" + location[1]));
                 }
             }
         }

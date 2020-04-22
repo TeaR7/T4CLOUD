@@ -24,7 +24,7 @@ import javax.validation.constraints.NotBlank;
 @TableName("sys_role_permission")
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-@ApiModel(value = "SysRolePermission对象", description = "角色权限表")
+@ApiModel(value = "SysRolePermission对象" , description = "角色权限表")
 public class SysRolePermission extends BaseEntity {
 
     private static final long serialVersionUID = 1L;

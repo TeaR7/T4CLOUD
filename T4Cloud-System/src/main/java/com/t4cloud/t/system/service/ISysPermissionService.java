@@ -27,7 +27,7 @@ public interface ISysPermissionService extends T4Service<SysPermission> {
      * @author TeaR
      * @date 2020/2/13 13:18
      */
-    List<SysPermission> queryByUsername(String username);
+    List<SysPermission> queryByUserId(String username);
 
 
     /**

@@ -16,13 +16,13 @@
 
 
     <!-- 获取登录用户拥有的角色 -->
-    <select id="queryByUsername" parameterType="Object" resultMap="sysRoleResultMap">
+    <select id="queryByUserId" parameterType="Object" resultMap="sysRoleResultMap">
 		   SELECT p.*
 		   FROM  sys_role p
 		   WHERE exists(
 		   		select a.id from sys_user_role a
 		   		join sys_user d on d.id = a.user_id
-		   		where p.id = a.role_id AND d.username = #{username,jdbcType=VARCHAR}
+		   		where p.id = a.role_id AND d.id = #{userId,jdbcType=VARCHAR}
 		   )
 	</select>
 

@@ -109,6 +109,7 @@ const user = {
           .then(res => {
             if (res.success) {
               commit("SET_TOKEN", "");
+              commit("SET_PERMISSIONLIST", []);
               Vue.ls.remove(ACCESS_TOKEN);
             }
             resolve(res);

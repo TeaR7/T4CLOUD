@@ -4,14 +4,14 @@
       label-position="left">
       <div class="title-container">
         <img src="@/assets/logos/logo-o-w.png" alt="logo" />
-        <div class="title">T4CLOUD</div>
+        <div class="title">T4Cloud</div>
       </div>
 
       <el-form-item prop="username">
         <span class="svg-container">
           <i class="el-icon-user"></i>
         </span>
-        <el-input ref="username" v-model="loginForm.username" placeholder="用户名" name="username" type="text" tabindex="1"
+        <el-input ref="username" v-model="loginForm.username" placeholder="用户名" name="username" type="text" tabindex="1" @blur.prevent="changeBlur"
           auto-complete="on" />
       </el-form-item>
 
@@ -19,7 +19,7 @@
         <span class="svg-container">
           <i class="el-icon-lock"></i>
         </span>
-        <el-input :key="passwordType" ref="password" v-model="loginForm.password" :type="passwordType" placeholder="密码"
+        <el-input :key="passwordType" ref="password" v-model="loginForm.password" :type="passwordType" placeholder="密码" @blur.prevent="changeBlur"
           name="password" tabindex="2" auto-complete="on" @keyup.enter.native="handleLogin" />
         <span class="show-pwd" @click="showPwd">
           <i :class="passwordType === 'password' ? 'el-icons-yanjing' : 'el-icons-yanjing-'"></i>
@@ -30,19 +30,18 @@
           <span class="svg-container">
             <i class="el-icons-yanzhengma" style="font-size:14px"></i>
           </span>
-          <el-input name="code" ref="code" v-model="loginForm.code" placeholder="验证码" />
+          <el-input name="code" ref="code" v-model="loginForm.code" placeholder="验证码" @change="handleLogin" @blur.prevent="changeBlur"/>
         </el-col>
 
         <el-col :span="10">
           <div class="imgAutoDiv">
             <t-graphic-code class="graphicCode" @success="generateCode" ref="jgraphicCodeRef" remote :contentHeight="contentHeight"></t-graphic-code>
-            <div style="opacity: 0;">t</div>
+            <div style="opacity: 0;width: 0;">t</div>
           </div>
         </el-col>
       </el-form-item>
-     
 
-      <el-button :loading="loading" type="primary" style="width:100%;margin-top:10px;margin-bottom:30px;"
+      <el-button :loading="loading" type="primary" style="width:100%;margin-top:10px;margin-bottom:30px;height:44px;"
         @click.native.prevent="handleLogin">{{$t('login.login')}}
       </el-button>
 
@@ -91,7 +90,7 @@ export default {
       }
     };
     return {
-      contentHeight: 44,
+      contentHeight: 47,
       verifiedKey: "",
       loginForm: {
         username: "",
@@ -132,35 +131,35 @@ export default {
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
-          // this.loading = true
-          // this.$store.dispatch('user/login', this.loginForm).then(() => {
-          //   this.$router.push({ path: this.redirect || '/' })
-          //   this.loading = false
-          // }).catch(() => {
-          //   this.loading = false
-          // })
+          this.loading = true
           const data = {
             code: this.loginForm.code,
             codeKey: this.verifiedKey,
             password: this.loginForm.password,
             username: this.loginForm.username
           };
-          this.Login(data)
-            .then(res => {
-              if (res.success) {
-                var path = '/dashboard/analysis'
-                if (Vue.ls.get(SYS_LOGIN_BACK_PATH)) {
-                  path = Vue.ls.get(SYS_LOGIN_BACK_PATH)
-                  Vue.ls.remove(SYS_LOGIN_BACK_PATH)
-                }
-                this.$router.push({
-                  path: path
-                });
+          this.Login(data).then(res => {
+            if (res.success) {
+              var path = '/dashboard/analysis'
+              if (Vue.ls.get(SYS_LOGIN_BACK_PATH)) {
+                path = Vue.ls.get(SYS_LOGIN_BACK_PATH)
+                Vue.ls.remove(SYS_LOGIN_BACK_PATH)
               }
-              this.$message.success(res.message);
-            })
+              this.$router.push({
+                path: path
+              });
+            }
+            setTimeout(() => {
+              this.loading = false
+            }, 100);
+            this.$message.success(res.message);
+
+          })
             .catch(error => {
-              this.$message.error(error.message);
+              setTimeout(() => {
+                this.loading = false
+              }, 100);
+               this.$message.error(error.message);
             });
         } else {
           console.log("error submit!!");
@@ -173,10 +172,21 @@ export default {
       if (verifiedCode) {
         this.loginForm.code = value.toLowerCase();
         this.loginForm.username = "admin";
-        this.loginForm.password = "123456";
+        this.loginForm.password = "123654789";
       }
       this.verifiedKey = key;
       this.verifiedCode = value.toLowerCase();
+    },
+    changeBlur(){
+      let u = navigator.userAgent
+      // let app = navigator.appVersion;
+      let isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+      if(isIOS){
+        setTimeout(() => {
+          const scrollHeight = document.documentElement.scrollTop || document.body.scrollTop || 0
+          window.scrollTo(0, Math.max(scrollHeight - 1, 0))
+          }, 50)
+      }
     }
   }
 };
@@ -250,8 +260,8 @@ $footHeight: 50px;
     flex-grow: 1;
 
     .imgAutoDiv {
-      margin-top: 4px;
-      height: 44px;
+      margin-top: 2px;
+      height: 47px;
       width: 100%;
       cursor: pointer;
 

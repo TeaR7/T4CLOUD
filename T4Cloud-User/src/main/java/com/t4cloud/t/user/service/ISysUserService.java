@@ -16,18 +16,6 @@ import com.t4cloud.t.user.entity.SysUser;
 public interface ISysUserService extends T4Service<SysUser> {
 
     /**
-     * 根据用户名获取用户
-     *
-     * @param username 用户名
-     *                 <p>
-     * @return com.t4cloud.t.common.entity.LoginUser
-     * --------------------
-     * @author TeaR
-     * @date 2020/1/16 11:01
-     */
-    LoginUser getUserByUsername(String username);
-
-    /**
      * 用户校验成功后生成token
      *
      * @param user 已登录用户对象
@@ -42,14 +30,27 @@ public interface ISysUserService extends T4Service<SysUser> {
     /**
      * 检验基础的图片验证码
      *
-     * @param code 用户提交的验证码
-     * @param key  验证码对应的KEY
-     *             <p>
+     * @param prefix 缓存命名空间
+     * @param code   用户提交的验证码
+     * @param key    验证码对应的KEY
+     *               <p>
      * @return boolean
      * --------------------
      * @author TeaR
      * @date 2020/2/10 17:33
      */
-    boolean checkCode(String code, String key);
+    boolean checkCode(String prefix, String code, String key);
+
+    /**
+     * 刷新用户缓存
+     *
+     * @param userId 用户ID
+     * <p>
+     * @return void
+     * --------------------
+     * @author TeaR
+     * @date 2020/4/22 14:53
+     */
+    void freshUserCache(String userId);
 
 }

@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.t4cloud.t.base.annotation.Dict;
 import com.t4cloud.t.base.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
@@ -31,27 +32,31 @@ import java.util.Date;
 @TableName("sys_user")
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-@ApiModel(value = "SysUser对象", description = "用户表")
+@ApiModel(value = "SysUser对象" , description = "用户表")
 public class SysUser extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
-
+    /**
+     * 公司ID（租户ID）
+     */
+    @ApiModelProperty(value = "公司ID（租户ID）")
+    protected String tenantId;
     /**
      * 登陆账号
      */
     @ApiModelProperty(value = "登陆账号")
-    @Excel(name = "登陆账号", orderNum = "0")
+    @Excel(name = "登陆账号" , orderNum = "0")
     private String username;
     /**
      * 真实姓名
      */
     @ApiModelProperty(value = "真实姓名")
-    @Excel(name = "真实姓名", orderNum = "1")
+    @Excel(name = "真实姓名" , orderNum = "1")
     private String realname;
     /**
      * 密码
      */
-    @JsonIgnore
+    @JsonProperty
     @ApiModelProperty(value = "密码")
     private String password;
     /**
@@ -64,67 +69,66 @@ public class SysUser extends BaseEntity {
      * 工号，唯一键
      */
     @ApiModelProperty(value = "工号，唯一键")
-    @Excel(name = "工号", orderNum = "2")
+    @Excel(name = "工号" , orderNum = "2")
     private String workNo;
     /**
      * 头像
      */
     @ApiModelProperty(value = "头像")
-    @Excel(name = "头像", orderNum = "3", type = 2, imageType = 1)
+    @Excel(name = "头像" , orderNum = "3" , type = 2, imageType = 1)
     private String avatar;
     /**
      * 生日
      */
-    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd")
+    @JsonFormat(timezone = "GMT+8" , pattern = "yyyy-MM-dd")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @ApiModelProperty(value = "生日")
-    @Excel(name = "生日", width = 20, orderNum = "4", format = "yyyy-MM-dd")
+    @Excel(name = "生日" , width = 20, orderNum = "4" , format = "yyyy-MM-dd")
     private Date birthday;
     /**
      * 性别(0-默认未知,1-男,2-女)
      */
     @ApiModelProperty(value = "性别(0-默认未知,1-男,2-女)")
-    @Excel(name = "性别", orderNum = "5", dict = "gender")
+    @Excel(name = "性别" , orderNum = "5" , dict = "gender")
     @Dict(code = "gender")
     private Integer gender;
     /**
      * 电子邮件
      */
     @ApiModelProperty(value = "电子邮件")
-    @Excel(name = "电子邮件", orderNum = "6", width = 30)
+    @Excel(name = "电子邮件" , orderNum = "6" , width = 30)
     private String email;
     /**
      * 电话
      */
     @ApiModelProperty(value = "电话")
-    @Excel(name = "电话", orderNum = "7", width = 20)
+    @Excel(name = "电话" , orderNum = "7" , width = 20)
     private String phone;
     /**
      * 职务，关联职务表
      */
     @ApiModelProperty(value = "职务，关联职务表")
-    @Excel(name = "职务", orderNum = "8")
+    @Excel(name = "职务" , orderNum = "8")
     private String post;
     /**
      * 身份证号
      */
     @ApiModelProperty(value = "身份证号")
-    @Excel(name = "身份证号", orderNum = "9")
+    @Excel(name = "身份证号" , orderNum = "9")
     private String idCard;
     /**
      * 住址
      */
     @ApiModelProperty(value = "住址")
-    @Excel(name = "住址", orderNum = "10")
+    @Excel(name = "住址" , orderNum = "10")
     private String address;
     /**
      * 状态(1-正常,2-冻结)
      */
     @Dict(code = "common_status")
     @ApiModelProperty(value = "状态(1-正常,2-冻结)")
-    @Excel(name = "状态", orderNum = "10", dict = "common_status")
+    @Excel(name = "状态" , orderNum = "10" , dict = "common_status")
     private Integer status;
-
     // ----------------------------------------------- DTO字段 -----------------------------------------------
     @TableField(exist = false)
     @ApiModelProperty(value = "用户角色")

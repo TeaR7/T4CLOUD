@@ -9,8 +9,7 @@
       <div>
         <el-dropdown class="nameSpan" @command="handleCommand">
           <span class="el-dropdown-link">
-            <img class="userImg" :src="this.backAvatar()"
-              alt="avatar" />
+            <img class="userImg" :src="this.backAvatar()" alt="avatar" />
             <span class="web">
               {{welcome}}，{{username}}
               <i class="el-icon-arrow-down el-icon--right"></i>
@@ -18,6 +17,7 @@
           </span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item command="systemSetting">系统设置</el-dropdown-item>
+            <el-dropdown-item command="changeCompany">切换部门</el-dropdown-item>
             <el-dropdown-item command="changePassword">修改密码</el-dropdown-item>
             <el-dropdown-item command="loginOut">退出</el-dropdown-item>
           </el-dropdown-menu>
@@ -26,12 +26,15 @@
     </div>
     <ForgetPassword :isShow="isShowPassWordCom" @hidePasswordCom="handPasswordHide"></ForgetPassword>
     <TSettingDrawer ref="settingDrawer"></TSettingDrawer>
+    <UserCompanyModal ref="companyModal"></UserCompanyModal>
+
   </div>
 </template>
 <script>
 import { mapGetters, mapActions } from "vuex";
 import ForgetPassword from "../../views/user/modals/ForgetPasswordModal";
 import TSettingDrawer from "../Setting/TSettingDrawer"
+import UserCompanyModal from "../../views/user/modals/UserCompanyModal"
 
 export default {
   data() {
@@ -41,19 +44,26 @@ export default {
       isCollapse: {
         type: Boolean,
         default: false
+      },
+      companyInfo: {
+        current: [],
+        dataRules: []
       }
     };
   },
   components: {
     ForgetPassword,
-    TSettingDrawer
+    TSettingDrawer,
+    UserCompanyModal
   },
-  computed:{
-    ...mapGetters(["username","userInfo"])
+  computed: {
+    ...mapGetters(["username", "userInfo"])
   },
   //页面加载时
   created() {
     this.getWelcome();
+    // 获取用户所属的公司
+    this.getUserCompany();
   },
   methods: {
     ...mapActions(["Logout"]),
@@ -81,13 +91,6 @@ export default {
     },
     // 展开收缩
     handleIsOpen() {
-      // console.log(this.username());
-      // console.log(this.userInfo());
-      // console.log(
-      //   this.userInfo().avatar
-      //     ? this.userInfo().avatar
-      //     : "https://git.t4cloud.com/img/favicon.png"
-      // );
       this.$emit("change");
       this.isCollapse = !this.isCollapse;
     },
@@ -102,10 +105,13 @@ export default {
         this.$refs.settingDrawer.drawer = true
       } else if (command == 'changePassword') {
         this.isShowPassWordCom = true;
+      } else if (command == 'changeCompany') {
+        this.companyClick()
       } else if (command == 'loginOut') {
         this.Logout().then(res => {
           if (res.success) {
-            this.$router.push('/user/login');
+            this.$router.replace('/user/login');
+            window.location.reload()
           }
           this.$message.success(res.message);
         });
@@ -122,6 +128,22 @@ export default {
         }
       }
       return avatar
+    },
+    // 获取用户所属的公司
+    getUserCompany() {
+      this.$http.GET('/T4Cloud-System/SysCompany/userDataRule', {}).then(res => {
+        this.companyInfo = res.result
+        // this.companyInfo.dataRules.forEach(item => {
+        //   if (item.id == this.companyInfo.current[0]) {
+        //     this.companyName = item.name
+        //     return
+        //   }
+        // })
+      })
+    },
+    companyClick() {
+      this.$refs.companyModal.isShow = true
+      this.$refs.companyModal.companyInfo = this.companyInfo
     }
   }
 };
@@ -143,7 +165,7 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
-
+    
     .nameSpan {
       cursor: pointer;
       margin-left: 10px;
