@@ -16,7 +16,7 @@ import java.util.List;
  * @author TeaR
  * @since 2020-03-17
  */
-@FeignClient(name = "T4Cloud-System" , contextId = "sysUserRole" , path = "SysUserRole")
+@FeignClient(name = "T4Cloud-System", contextId = "sysUserRole", path = "SysUserRole")
 public interface SystemSysUserRoleClient {
 
 
@@ -25,6 +25,12 @@ public interface SystemSysUserRoleClient {
      */
     @GetMapping(value = "/getRoleList/{userId}")
     R<List<SysRoleDTO>> getRoleList(@PathVariable("userId") String userId);
+
+    /**
+     * 根据角色ID获取所有用户Id
+     */
+    @GetMapping("/getUserIdList/{roleId}")
+    R<List<String>> getUserIdList(@PathVariable("roleId") String roleId);
 
     /**
      * 新增 用户角色表
@@ -38,4 +44,9 @@ public interface SystemSysUserRoleClient {
     @DeleteMapping("/deleteByUser")
     R<?> deleteByUser(@RequestParam("ids") String ids);
 
+    /**
+     * 新增 用户注册增加权限
+     */
+    @PutMapping(value = "/regUserRole")
+    R<?> regUserRole(@RequestBody SysUserRoleDTO userRoleDTO);
 }

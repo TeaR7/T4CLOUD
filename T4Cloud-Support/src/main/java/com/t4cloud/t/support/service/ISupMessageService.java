@@ -39,4 +39,17 @@ public interface ISupMessageService extends T4Service<SupMessage> {
      */
     int smsSender(int size);
 
+
+    /**
+     * 根据模板发送消息
+     *
+     * @param supMessage 消息内容
+     *                   <p>
+     * @return boolean
+     * --------------------
+     * @author TeaR
+     * @date 2020/6/8 17:35
+     */
+    boolean saveByTemplate(SupMessage supMessage);
+
 }

@@ -1,13 +1,13 @@
 package com.t4cloud.t.user.controller;
 
-import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.collection.CollectionUtil;
-import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.RandomUtil;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONObject;
 import com.alibaba.nacos.common.util.Md5Utils;
 import com.t4cloud.t.base.annotation.AutoLog;
+import com.t4cloud.t.base.annotation.RSA;
 import com.t4cloud.t.base.constant.CacheConstant;
+import com.t4cloud.t.base.constant.LogConstant;
 import com.t4cloud.t.base.controller.T4Controller;
 import com.t4cloud.t.base.entity.LoginUser;
 import com.t4cloud.t.base.entity.dto.R;
@@ -20,7 +20,6 @@ import com.t4cloud.t.feign.client.SystemSysUserRoleClient;
 import com.t4cloud.t.feign.client.WechatUserClient;
 import com.t4cloud.t.feign.dto.*;
 import com.t4cloud.t.user.entity.SysUser;
-import com.t4cloud.t.user.entity.SysUserThird;
 import com.t4cloud.t.user.service.ISysUserService;
 import com.t4cloud.t.user.service.ISysUserThirdService;
 import io.swagger.annotations.Api;
@@ -36,8 +35,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.t4cloud.t.base.constant.CacheConstant.SYS_USERS_BIND_CODE;
 import static com.t4cloud.t.base.constant.CacheConstant.SYS_USERS_CHECK_CODE;
@@ -100,7 +97,7 @@ public class LoginController extends T4Controller<SysUser, ISysUserService> {
     @AutoLog(value = "账号密码登录", operateType = 1, logType = 2)
     @PostMapping("/loginByPwd")
     @ApiOperation(position = 2, value = "账号密码登录", notes = "根据账号密码及验证码登录")
-    public R<LoginUser> loginByPwd(@Valid @RequestBody LoginDTO loginDTO, BindingResult bindingResult) {
+    public R<LoginUser> loginByPwd(@Valid @RSA @RequestBody LoginDTO loginDTO, BindingResult bindingResult) {
 
 
         //开始验证图片验证码
@@ -147,104 +144,46 @@ public class LoginController extends T4Controller<SysUser, ISysUserService> {
     @PostMapping("/loginByCode/{type}")
     @ApiOperation(position = 2, value = "第三方动态码登录", notes = "根据账号密码及验证码登录")
     public R<LoginUser> loginByCode(
-            @ApiParam("第三方类型") @PathVariable("type") String type,
+            @ApiParam("第三方类型，微信公众号：WE_OPEN，钉钉（）应用内H5：DING_H5,其他暂不支持") @PathVariable("type") String type,
             @ApiParam(required = true, name = "code", value = "动态码")
-            @RequestParam(value = "code", required = true) String code
+            @RequestParam(value = "code", required = true) String code,
+            @ApiParam(required = false, name = "role", value = "用户角色,如果不传，会默认使用APP-USER角色CODE")
+            @RequestParam(value = "role", required = false) String role
     ) {
 
         //登录的用户对象
         SysUser user;
 
         //添加登录权限,前台注册用户添加默认权限，用来区分前后台用户
-        String roleCode = "USER";
-        SysRoleDTO sysRoleDTO = new SysRoleDTO();
-        sysRoleDTO.setRoleCode(roleCode);
-        R<List<SysRoleDTO>> result = systemSysRoleClient.list(sysRoleDTO);
-        if (!result.isSuccess()) {
-            return R.error("权限获取异常，登录失败");
+        //查询角色
+        if (StrUtil.isBlank(role)) {
+            role = "APP-USER";
+        }
+        R<SysRoleDTO> sysRoleDTOR = systemSysRoleClient.appUserRole(role);
+        if (!sysRoleDTOR.isSuccess()) {
+            return R.error("获取角色失败，请稍后再试");
         }
 
-        List<SysRoleDTO> sysRoleDTOS = result.getResult().stream().filter(item -> item.getRoleCode().equals(roleCode)).collect(Collectors.toList());
-        if (CollectionUtil.isEmpty(sysRoleDTOS)) {
-            return R.error("该权限不可用！请检查配置和数据！");
-        }
-        sysRoleDTO = sysRoleDTOS.get(0);
+        SysRoleDTO sysRoleDTO = sysRoleDTOR.getResult();
 
         switch (type) {
-            case "wechat_jsapi":
-                R<SysUserThirdDTO> userOauthResult = wechatUserClient.userOauth(code);
-                if (!userOauthResult.isSuccess()) {
-                    return R.error("微信JSAPI登录失败,校验不成功");
+            case "WE_OPEN":
+                R<SysUserThirdDTO> weOpenUserOauthResult = wechatUserClient.userOauth(code);
+                if (!weOpenUserOauthResult.isSuccess()) {
+                    return R.error("微信JSAPI登录失败,校验不成功:" + weOpenUserOauthResult.getMessage());
                 }
-
-                SysUserThirdDTO userOauth = userOauthResult.getResult();
-
-                //根据loginType和unionId查询第三表
-                SysUserThird sysUserThird = sysUserThirdService.lambdaQuery().eq(SysUserThird::getLoginType, userOauth.getLoginType())
-                        .eq(SysUserThird::getOutId, userOauth.getOutId()).one();
-
-                //如果为null的话则是新用户，先插入
-                if (null == sysUserThird) {
-                    //如果没查到就开始注册用户
-
-                    sysUserThird = new SysUserThird();
-
-                    BeanUtil.copyProperties(userOauth, sysUserThird);
-
-                    //然后插入用户表
-                    user = new SysUser();
-                    //配置用户信息
-                    user.setRealname(sysUserThird.getNickName());
-                    String username = sysUserThird.getNickName() + IdUtil.objectId();
-                    if (username.length() > 32) {
-                        username = username.substring(0, 32);
-                    }
-                    user.setUsername(username);
-                    user.setAvatar(sysUserThird.getImg());
-                    user.setGender(Integer.parseInt(sysUserThird.getGender()));
-                    //配置密码，但是微信登录没有密码
-                    String salt = RandomUtil.randomString(8);
-                    user.setSalt(salt);
-                    //填充随机密码
-                    String password = PwdUtil.encrypt(user.getUsername(), RandomUtil.randomString(8), user.getSalt());
-                    user.setPassword(password);
-                    user.setStatus(1);
-                    service.save(user);
-
-                    //将user表中id放入第三方表的in_id
-                    sysUserThird.setInId(user.getId());
-                    sysUserThirdService.save(sysUserThird);
-
-                    SysUserRoleDTO userRoleDTO = new SysUserRoleDTO();
-                    userRoleDTO.setUserId(user.getId());
-                    userRoleDTO.setRoleIds(sysRoleDTO.getId());
-                    systemSysUserRoleClient.saveByUser(userRoleDTO);
-
-                    //注册完成,user对象获取成功
-
-                } else {
-                    //说明地三方表中有，已经注册过的，更新信息
-                    //写入openid
-                    sysUserThird.setImg(sysUserThird.getImg());
-                    sysUserThird.setNickName(sysUserThird.getNickName());
-
-                    sysUserThird.setAccessToken(sysUserThird.getAccessToken());
-                    sysUserThird.setExpress(sysUserThird.getExpress());
-                    sysUserThirdService.updateById(sysUserThird);
-
-                    //更新完毕，用in_id查询用户
-                    user = service.getById(sysUserThird.getInId());
-
-                    //更新用户信息（直接覆盖） -- 如果需要随微信更新信息的话就打开此处
-//                    user.setRealname(sysUserThird.getNickName());
-//                    user.setAvatar(sysUserThird.getImg());
-//                    user.setGender(Integer.parseInt(sysUserThird.getGender()));
-//
-//                    service.updateById(user);
-
-                    //登录完成,user对象获取成功
+                SysUserThirdDTO weOpenUserOauth = weOpenUserOauthResult.getResult();
+                //根据第三方数据获取用户信息
+                user = service.getByThirdInfo(weOpenUserOauth, sysRoleDTO);
+                break;
+            case "DING_H5":
+                R<SysUserThirdDTO> dingH5UserOauthResult = wechatUserClient.userOauth(code);
+                if (!dingH5UserOauthResult.isSuccess()) {
+                    return R.error("钉钉H5登录失败,校验不成功:" + dingH5UserOauthResult.getMessage());
                 }
-
+                SysUserThirdDTO dingH5UserOauth = dingH5UserOauthResult.getResult();
+                //根据第三方数据获取用户信息
+                user = service.getByThirdInfo(dingH5UserOauth, sysRoleDTO);
                 break;
             default:
                 return R.error("暂不支持的登录方式");
@@ -371,7 +310,6 @@ public class LoginController extends T4Controller<SysUser, ISysUserService> {
     @ApiOperation(position = 3, value = "手机/邮箱绑定", notes = "绑定第三方信息")
     public R<String> bindThird(@RequestBody LoginDTO loginDTO) {
 
-
         //开始验证图片验证码
         if (!service.checkCode(SYS_USERS_BIND_CODE, loginDTO.getCode(), loginDTO.getCodeKey())) {
             return R.error("验证码错误");
@@ -394,6 +332,62 @@ public class LoginController extends T4Controller<SysUser, ISysUserService> {
         service.freshUserCache(user.getId());
 
         return R.ok((loginDTO.getCodeKey().contains("@") ? "邮箱" : "手机") + "绑定成功！");
+    }
+
+    /**
+     * 用户注册
+     */
+    @AutoLog(value = "用户注册", operateType = 1, logType = LogConstant.LOG_TYPE_LOGIN)
+    @PostMapping("/register")
+    @ApiOperation(position = 3, value = "用户注册", notes = "用户注册，账号密码即可")
+    public R<LoginUser> register(@Valid @RequestBody LoginDTO loginDTO, BindingResult bindingResult) {
+
+        //查询是否有重名用户
+        SysUser sysUser = service.lambdaQuery().eq(SysUser::getUsername, loginDTO.getUsername()).one();
+        if (sysUser != null) {
+            return R.error("该用户已存在");
+        }
+
+        //查询角色
+        String roleCode = loginDTO.getRole();
+        if (StrUtil.isBlank(roleCode)) {
+            roleCode = "APP-USER";
+        }
+        R<SysRoleDTO> sysRoleDTOR = systemSysRoleClient.appUserRole(roleCode);
+        if (!sysRoleDTOR.isSuccess()) {
+            return R.error("获取角色失败，请稍后再试");
+        }
+
+        SysRoleDTO sysRoleDTO = sysRoleDTOR.getResult();
+
+
+        //然后插入用户表
+        SysUser user = new SysUser();
+        //配置用户信息
+        user.setRealname(loginDTO.getUsername());
+        user.setUsername(loginDTO.getUsername());
+        //配置密码，但是微信登录没有密码
+        String salt = RandomUtil.randomString(8);
+        user.setSalt(salt);
+        //填充随机密码
+        String password = PwdUtil.encrypt(user.getUsername(), loginDTO.getPassword(), user.getSalt());
+        user.setPassword(password);
+        user.setStatus(1);
+        service.save(user);
+
+        //增加用户权限
+        SysUserRoleDTO userRoleDTO = new SysUserRoleDTO();
+        userRoleDTO.setUserId(user.getId());
+        userRoleDTO.setRoleIds(sysRoleDTO.getId());
+        systemSysUserRoleClient.saveByUser(userRoleDTO);
+
+        //生成登录信息
+        LoginUser loginUser = new LoginUser();
+        BeanUtils.copyProperties(user, loginUser);
+
+        service.generateToken(loginUser);
+
+        return R.ok("注册成功", loginUser);
     }
 
 }

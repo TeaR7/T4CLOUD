@@ -118,7 +118,7 @@ public class SysPermission extends BaseEntity {
         home.setMenuType(0);
         home.setPerms("dashboard:Analysis");
         home.setSortNo(0.0);
-        home.setIcon("home");
+        home.setIcon("el-icon-s-home");
         home.setDescription("首页");
         home.setHidden(1);
         home.setStatus(1);

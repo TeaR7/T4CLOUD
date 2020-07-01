@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.t4cloud.t.base.annotation.AutoLog;
+import com.t4cloud.t.base.annotation.RSA;
 import com.t4cloud.t.base.controller.T4Controller;
 import com.t4cloud.t.base.entity.dto.R;
 import com.t4cloud.t.base.query.T4Query;
@@ -50,7 +51,7 @@ public class ExampleCommonController extends T4Controller<ExampleCommon, IExampl
     @GetMapping("/detail")
     @RequiresPermissions("user:ExampleCommon:VIEW")
     @ApiOperation(position = 1, value = "通用示例-详情" , notes = "传入exampleCommon")
-    public R<ExampleCommon> detail(ExampleCommon exampleCommon, HttpServletRequest req) {
+    public R<ExampleCommon> detail(@RSA ExampleCommon exampleCommon, HttpServletRequest req) {
         QueryWrapper<ExampleCommon> exampleCommonQueryWrapper = T4Query.initQuery(exampleCommon, req.getParameterMap());
         ExampleCommon detail = service.getOne(exampleCommonQueryWrapper);
         return R.ok("通用示例-详情查询成功" , detail);
@@ -63,7 +64,7 @@ public class ExampleCommonController extends T4Controller<ExampleCommon, IExampl
     @GetMapping("/list")
     @RequiresPermissions("user:ExampleCommon:VIEW")
     @ApiOperation(position = 2, value = "通用示例-全部列表" , notes = "传入exampleCommon")
-    public R<List<ExampleCommon>> list(ExampleCommon exampleCommon, HttpServletRequest req) {
+    public R<List<ExampleCommon>> list(@RSA ExampleCommon exampleCommon, HttpServletRequest req) {
         QueryWrapper<ExampleCommon> exampleCommonQueryWrapper = T4Query.initQuery(exampleCommon, req.getParameterMap());
         List<ExampleCommon> list = service.list(exampleCommonQueryWrapper);
         return R.ok("通用示例-全部列表查询成功" , list);
@@ -76,7 +77,7 @@ public class ExampleCommonController extends T4Controller<ExampleCommon, IExampl
     @GetMapping("/page")
     @RequiresPermissions("user:ExampleCommon:VIEW")
     @ApiOperation(position = 3, value = "通用示例-分页查询" , notes = "传入exampleCommon")
-    public R<IPage<ExampleCommon>> page(ExampleCommon exampleCommon,
+    public R<IPage<ExampleCommon>> page(@RSA ExampleCommon exampleCommon,
                                         @ApiParam(name = "pageNo")
                                         @RequestParam(name = "pageNo" , required = false, defaultValue = "1") Integer pageNo,
                                         @ApiParam(name = "pageSize")
@@ -94,7 +95,7 @@ public class ExampleCommonController extends T4Controller<ExampleCommon, IExampl
     @PutMapping("/save")
     @RequiresPermissions("user:ExampleCommon:ADD")
     @ApiOperation(position = 4, value = "通用示例-新增" , notes = "传入exampleCommon")
-    public R save(@Valid @RequestBody ExampleCommon exampleCommon, BindingResult bindingResult) {
+    public R save(@Valid @RequestBody @RSA ExampleCommon exampleCommon, BindingResult bindingResult) {
         return R.ok("通用示例-新增成功" , service.save(exampleCommon));
     }
 
@@ -105,7 +106,7 @@ public class ExampleCommonController extends T4Controller<ExampleCommon, IExampl
     @PostMapping("/update")
     @RequiresPermissions(value = {"user:ExampleCommon:ADD" , "user:ExampleCommon:EDIT"}, logical = Logical.OR)
     @ApiOperation(position = 5, value = "通用示例-修改" , notes = "传入exampleCommon")
-    public R update(@RequestBody ExampleCommon exampleCommon) {
+    public R update(@RequestBody @RSA ExampleCommon exampleCommon) {
         return R.ok("通用示例-修改成功" , service.updateById(exampleCommon));
     }
 
@@ -130,7 +131,7 @@ public class ExampleCommonController extends T4Controller<ExampleCommon, IExampl
     @GetMapping("/export")
     @RequiresPermissions("user:ExampleCommon:EXPORT")
     @ApiOperation(position = 9, value = "通用示例-导出" , notes = "传入查询条件，选中的ID（多个用,分割），以及自定义的列（多个用,分割）")
-    public void export(ExampleCommon exampleCommon,
+    public void export(@RSA ExampleCommon exampleCommon,
                        @ApiParam("选中导出的数据") @RequestParam(name = "selectedRowKeys" , required = false) String selectedRowKeys,
                        @ApiParam("自定义导出列") @RequestParam(name = "selectedColKeys" , required = false) String selectedColKeys,
                        HttpServletRequest req) {

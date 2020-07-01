@@ -58,9 +58,9 @@ spring:
       connection-test-query: SELECT 1
   ### email
   mail:
-    host: smtp.163.com
-    username: jeecgos@163.com
-    password: ??
+    host: smtp.exmail.qq.com
+    username: example@t4cloud.com
+    password: 123456
     properties:
       mail:
         smtp:

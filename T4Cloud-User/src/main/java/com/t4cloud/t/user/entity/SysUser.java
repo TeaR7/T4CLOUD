@@ -129,7 +129,9 @@ public class SysUser extends BaseEntity {
     @ApiModelProperty(value = "状态(1-正常,2-冻结)")
     @Excel(name = "状态" , orderNum = "10" , dict = "common_status")
     private Integer status;
+
     // ----------------------------------------------- DTO字段 -----------------------------------------------
+
     @TableField(exist = false)
     @ApiModelProperty(value = "用户角色")
     private String roles;

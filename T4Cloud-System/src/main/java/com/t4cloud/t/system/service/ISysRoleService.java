@@ -15,4 +15,15 @@ import com.t4cloud.t.system.entity.SysRole;
  */
 public interface ISysRoleService extends T4Service<SysRole> {
 
+    /**
+     * 获取APP-USER的用户角色
+     *
+     * @param roleCode 角色编码
+     *                 <p>
+     * @return com.t4cloud.t.system.entity.SysRole
+     * --------------------
+     * @author TeaR
+     * @date 2020/6/8 16:14
+     */
+    SysRole appUserRole(String roleCode);
 }

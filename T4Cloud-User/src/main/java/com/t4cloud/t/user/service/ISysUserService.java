@@ -2,6 +2,8 @@ package com.t4cloud.t.user.service;
 
 import com.t4cloud.t.base.entity.LoginUser;
 import com.t4cloud.t.base.service.T4Service;
+import com.t4cloud.t.feign.dto.SysRoleDTO;
+import com.t4cloud.t.feign.dto.SysUserThirdDTO;
 import com.t4cloud.t.user.entity.SysUser;
 
 /**
@@ -45,12 +47,25 @@ public interface ISysUserService extends T4Service<SysUser> {
      * 刷新用户缓存
      *
      * @param userId 用户ID
-     * <p>
+     *               <p>
      * @return void
      * --------------------
      * @author TeaR
      * @date 2020/4/22 14:53
      */
     void freshUserCache(String userId);
+
+    /**
+     * 通过第三方用户信息新增或获取用户信息
+     *
+     * @param userOauth  第三方信息
+     * @param sysRoleDTO 用户角色（新增用户的时候生效）
+     *                   <p>
+     * @return com.t4cloud.t.user.entity.SysUser
+     * --------------------
+     * @author TeaR
+     * @date 2020/6/28 16:17
+     */
+    SysUser getByThirdInfo(SysUserThirdDTO userOauth, SysRoleDTO sysRoleDTO);
 
 }

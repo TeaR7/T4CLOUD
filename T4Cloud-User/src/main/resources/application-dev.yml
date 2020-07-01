@@ -83,7 +83,7 @@ spring:
           driver-class-name: com.mysql.cj.jdbc.Driver
           # 多数据源配置
           #multi-datasource1:
-          #url: jdbc:mysql://localhost:3306/jeecg-boot2?useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true
+          #url: jdbc:mysql://localhost:3306/t4-boot?useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true
           #username: root
           #password: root
           #driver-class-name: com.mysql.jdbc.Driver
@@ -136,7 +136,7 @@ ribbon:
   # 开启饥饿加载
   eager-load:
     enabled: true
-    clients: T4Cloud-Support
+    clients: T4Cloud-Support,T4Cloud-System
 
 # feign配置
 feign:
@@ -158,6 +158,8 @@ t4cloud:
   check-code: false
   #是否进行请求有效性，
   valid-request: false
+  #需要放过的接口，用逗号分隔
+  #  valid-filter: /login/captcha,/login/test
   #系统日志的处理方式，0：直接入库，1：通过MQ交由SYS模块集中处理
   log-type: 0
   actuator:

@@ -20,8 +20,10 @@ public class T4GenCode {
         GenCodeConfig config = new GenCodeConfig();
         //设置模块的包名，可以为空
         config.setModuleName("system");
+        //设置模块名（不写会自动生成的）
+//        config.setServerName("T4Cloud-System");
         //设置表前缀，可以为空
-        config.setTablePrefix("");
+//        config.setTablePrefix("");
         //modal表单样式
 //        config.setDrawer(true);
         //是否生成feignClient

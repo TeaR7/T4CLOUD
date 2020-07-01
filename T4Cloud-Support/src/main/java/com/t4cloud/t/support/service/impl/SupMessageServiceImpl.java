@@ -1,6 +1,7 @@
 package com.t4cloud.t.support.service.impl;
 
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSON;
@@ -10,10 +11,13 @@ import com.t4cloud.t.base.service.impl.T4ServiceImpl;
 import com.t4cloud.t.base.utils.EmailUtil;
 import com.t4cloud.t.base.utils.SmsUtil;
 import com.t4cloud.t.support.entity.SupMessage;
+import com.t4cloud.t.support.entity.SupMessageTemplate;
 import com.t4cloud.t.support.mapper.SupMessageMapper;
 import com.t4cloud.t.support.service.ISupMessageService;
+import com.t4cloud.t.support.service.ISupMessageTemplateService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -33,6 +37,8 @@ import java.util.List;
 @AllArgsConstructor
 public class SupMessageServiceImpl extends T4ServiceImpl<SupMessageMapper, SupMessage> implements ISupMessageService {
 
+    @Autowired
+    private ISupMessageTemplateService supMessageTemplateService;
 
     /**
      * mail发送
@@ -145,5 +151,57 @@ public class SupMessageServiceImpl extends T4ServiceImpl<SupMessageMapper, SupMe
         }
 
         return successCount;
+    }
+
+    /**
+     * 根据模板发送消息
+     *
+     * @param supMessage 消息内容
+     *                   <p>
+     * @return boolean
+     * --------------------
+     * @author TeaR
+     * @date 2020/6/8 17:35
+     */
+    @Override
+    public boolean saveByTemplate(SupMessage supMessage) {
+        //获取模板
+        SupMessageTemplate supMessageTemplate = supMessageTemplateService.
+                lambdaQuery().eq(SupMessageTemplate::getTemplateCode, supMessage.getMessageTemplateCode()).one();
+        if (supMessageTemplate == null) {
+            throw new T4CloudException("找不到该模板");
+        }
+
+        switch (supMessageTemplate.getTemplateType()) {
+            case 1:
+                //从模板确定类型
+                supMessage.setMessageType(supMessageTemplate.getTemplateType());
+                supMessage.setTitle(supMessageTemplate.getTemplateName());
+                supMessage.setContent(supMessageTemplate.getTemplateContent());
+                break;
+            case 2:
+                //从模板生成内容
+                String title = supMessageTemplate.getTemplateName();
+                String content = supMessageTemplate.getTemplateContent();
+                JSONObject param = JSONUtil.parseObj(supMessage.getParam());
+                for (String key : param.keySet()) {
+                    title = title.replace("${" + key + "}", param.getStr(key));
+                    content = content.replace("${" + key + "}", param.getStr(key));
+                }
+                //从模板确定类型
+                supMessage.setMessageType(supMessageTemplate.getTemplateType());
+                supMessage.setTitle(title);
+                supMessage.setContent(content);
+                break;
+            default:
+                throw new T4CloudException("暂不支持该类消息发送");
+        }
+
+        if (ObjectUtil.isEmpty(supMessage.getSendTime())) {
+            //如果没有填写，就填充当前时间，即刻发送
+            supMessage.setSendTime(DateUtil.date());
+        }
+
+        return save(supMessage);
     }
 }

@@ -21,7 +21,7 @@ public class T4CLoudGatewayApplication {
         String ip = InetAddress.getLocalHost().getHostAddress();
         String port = env.getProperty("server.port");
         log.info("\n----------------------------------------------------------\n\t" +
-                "Application T4CLOUD-User is running! Access URLs:\n\t" +
+                "Application T4CLOUD-Gateway is running! Access URLs:\n\t" +
                 "Local: \t\thttp://localhost:" + port + "/\n\t" +
                 "External: \thttp://" + ip + ":" + port + "/\n\t" +
                 "swagger-ui: \thttp://" + ip + ":" + port + "/swagger-ui.html\n\t" +

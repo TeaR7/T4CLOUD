@@ -11,6 +11,10 @@ server:
       mime-types: application/javascript,application/json,application/xml,text/html,text/xml,text/plain,text/css,image/*
 
 spring:
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
   aop:
     proxy-target-class: true
   application:
@@ -96,7 +100,7 @@ spring:
           driver-class-name: com.mysql.cj.jdbc.Driver
           # 多数据源配置
           #multi-datasource1:
-          #url: jdbc:mysql://localhost:3306/jeecg-boot2?useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true
+          #url: jdbc:mysql://localhost:3306/t4-boot?useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true
           #username: root
           #password: root
           #driver-class-name: com.mysql.jdbc.Driver
@@ -140,6 +144,8 @@ rocketmq:
 t4cloud:
   #是否进行请求有效性，
   valid-request: false
+  #需要放过的接口，用逗号分隔
+  valid-filter: /file/view/**,/file/download/**
   #系统日志的处理方式，0：直接入库，1：通过MQ交由SYS模块集中处理
   log-type: 1
   actuator:

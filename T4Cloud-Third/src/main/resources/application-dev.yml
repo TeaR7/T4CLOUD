@@ -1,0 +1,178 @@
+server:
+  port: 8086
+  tomcat:
+    max-swallow-size: -1
+    mbeanregistry:
+      enabled: true
+  servlet:
+    compression:
+      enabled: true
+      mime-types: application/javascript,application/json,application/xml,text/html,text/xml,text/plain,text/css,image/*
+
+spring:
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  aop:
+    proxy-target-class: true
+  application:
+    name: T4Cloud-WeChat
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+          # 环境隔离
+          group:   dev
+          # 项目隔离
+        #        namespace: xxxxx
+
+  #redis 配置
+  redis:
+    database: 1
+    host: 127.0.0.1
+    lettuce:
+      pool:
+        max-active: 8   #最大连接数据库连接数,设 0 为没有限制
+        max-idle: 8     #最大等待连接中的数量,设 0 为没有限制
+        max-wait: -1ms  #最大建立连接等待时间。如果超过此时间将接到异常。设为-1表示无限制。
+        min-idle: 0     #最小等待连接中的数量,设 0 为没有限制
+      shutdown-timeout: 100ms
+    password: ''
+    port: 6379
+  autoconfigure:
+    exclude: com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure
+  #数据库 配置
+  datasource:
+    druid:
+      stat-view-servlet:
+        enabled: true
+        loginUsername: t4cloud
+        loginPassword: 123456
+        allow:
+      web-stat-filter:
+        enabled: true
+    dynamic:
+      druid: # 全局druid参数，绝大部分值和默认保持一致。(现已支持的参数如下,不清楚含义不要乱设置)
+        # 连接池的配置信息
+        # 初始化大小，最小，最大
+        initial-size: 5
+        min-idle: 5
+        maxActive: 20
+        # 配置获取连接等待超时的时间
+        maxWait: 60000
+        # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+        timeBetweenEvictionRunsMillis: 60000
+        # 配置一个连接在池中最小生存的时间，单位是毫秒
+        minEvictableIdleTimeMillis: 300000
+        validationQuery: SELECT 1 FROM DUAL
+        testWhileIdle: true
+        testOnBorrow: false
+        testOnReturn: false
+        # 打开PSCache，并且指定每个连接上PSCache的大小
+        poolPreparedStatements: true
+        maxPoolPreparedStatementPerConnectionSize: 20
+        # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+        filters: stat,wall,slf4j
+        # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+        connectionProperties: druid.stat.mergeSql\=true;druid.stat.slowSqlMillis\=5000
+      datasource:
+        master:
+          url: jdbc:mysql://127.0.0.1:3306/t4-cloud?characterEncoding=UTF-8&useUnicode=true&useSSL=false&serverTimezone=GMT%2B8&zeroDateTimeBehavior=convertToNull
+          username: root
+          password: root
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          # 多数据源配置
+          #multi-datasource1:
+          #url: jdbc:mysql://localhost:3306/t4-boot?useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true
+          #username: root
+          #password: root
+          #driver-class-name: com.mysql.jdbc.Driver
+
+#运行环境监控端点开放
+management:
+  endpoints:
+    web:
+      exposure:
+        include: metrics,httptrace,env
+
+#mybatis plus 设置
+mybatis-plus:
+  mapper-locations: classpath*:com/t4cloud/t/**/*Mapper.xml
+  check-config-location: true
+  global-config:
+    # 关闭MP3.0自带的banner
+    banner: false
+    db-config:
+      #主键类型  0:"数据库ID自增",1:"该类型为未设置主键类型", 2:"用户输入ID",3:"全局唯一ID (数字类型唯一ID)", 4:"全局唯一ID UUID",5:"字符串全局唯一ID (idWorker 的字符串表示)";
+      id-type: 4
+      # 默认数据库表下划线命名
+      table-underline: true
+      logic-delete-field: flag  #全局逻辑删除字段值 3.3.0开始支持，详情看下面。
+      logic-delete-value: 0 # 逻辑已删除值(默认为 1)
+      logic-not-delete-value: 1 # 逻辑未删除值(默认为 0)
+#Mybatis输出sql日志
+logging:
+  level:
+    com.t4cloud.t.third.mapper: debug
+    com.t4cloud.t.service.mapper: debug
+    com.t4cloud.t.feign.client: debug
+
+# rocket mq 配置
+rocketmq:
+  name-server: 127.0.0.1:9876
+  producer:
+    # 必须指定group
+    group: T4Cloud
+
+# Ribbon规则配置 负载均衡器采用的是随机，（默认配置为RandomRule，如果需要变更可以开放此处配置）
+#T4Cloud-Support:
+#  ribbon:
+#    NFloadBalanceRuleClassName: com.netflix.loadbalancer.RandomRule
+
+ribbon:
+  # 配置超时时间
+  ReadTimeout: 300000
+  ConnectTimeout: 300000
+  # 开启饥饿加载
+  eager-load:
+    enabled: true
+    clients: T4Cloud-Support
+
+# feign配置
+feign:
+  client:
+    config:
+      default:
+        loggerLevel: FULL
+        requestInterceptors:
+          - com.t4cloud.t.base.authc.TokenFeignIntecepor
+  # 使用httpclient提升性能
+  httpclient:
+    enabled: true
+    max-connections: 200
+    max-connections-per-route: 40
+
+#T4CLOUD自定义配置
+t4cloud:
+  #是否进行请求有效性，
+  valid-request: false
+  #系统日志的处理方式，0：直接入库，1：通过MQ交由SYS模块集中处理
+  log-type: 0
+  actuator:
+    open: true
+  # 分布式任务调度器配置
+  job:
+    open: false
+    address: http://127.0.0.1:8020
+    port: ${server.port}
+    appname: '@project.name@'
+  # poi 配置
+  excel:
+    big-data: 1000
+    page-size: 1000
+    oss: https://
+    temp-dir: /temp-pic
+  # RSA 公私钥配置（公钥一般来说是给前端或者客户端使用的，不会再服务端使用到）
+  #  private-key: T4Cloud-PRIVATE
+  #  public-key: T4Cloud-PUBLIC

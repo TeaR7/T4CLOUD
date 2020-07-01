@@ -1,5 +1,6 @@
 package com.t4cloud.t.feign.dto;
 
+import com.t4cloud.t.base.annotation.RSA;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -24,6 +25,7 @@ public class LoginDTO {
     @NotBlank(message = "登录账号不允许为空！")
     @ApiModelProperty(value = "账号")
     private String username;
+    @RSA
     @NotBlank(message = "密码不允许为空！")
     @ApiModelProperty(value = "密码")
     private String password;
@@ -31,5 +33,8 @@ public class LoginDTO {
     private String code;
     @ApiModelProperty(value = "验证码key")
     private String codeKey;
+    @ApiModelProperty(value = "用户角色")
+    private String role;
+
 
 }

@@ -22,6 +22,19 @@
             <artifactId>T4Cloud-FeignServer</artifactId>
             <version>${spring-cloud.version}.${t4cloud.version}</version>
         </dependency>
+
+        <!--   处理名字中的emoji     -->
+        <dependency>
+            <groupId>com.github.binarywang</groupId>
+            <artifactId>java-emoji-converter</artifactId>
+            <version>0.0.1</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.google.guava</groupId>
+                    <artifactId>guava</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
     </dependencies>
 
     <build>

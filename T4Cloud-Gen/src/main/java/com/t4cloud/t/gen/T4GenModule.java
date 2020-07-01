@@ -26,6 +26,8 @@ public class T4GenModule {
         config.setArtifactId("T4Cloud-Testing");
         //填写描述 可为空
         config.setDescription("T4Cloud 测试相关模块");
+        // 服务运行端口
+        config.setServerPort(9080);
 
         T4GenUtil.gen(config);
 

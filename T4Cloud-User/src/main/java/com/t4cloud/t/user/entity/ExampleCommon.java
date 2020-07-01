@@ -3,6 +3,7 @@ package com.t4cloud.t.user.entity;
 import cn.afterturn.easypoi.excel.annotation.Excel;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.t4cloud.t.base.annotation.RSA;
 import com.t4cloud.t.base.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -42,11 +43,19 @@ public class ExampleCommon extends BaseEntity {
     private String str;
 
     /**
+     * 字符串加密传输
+     */
+    @Excel(name = "字符串加密传输" , width = 12.5, orderNum = "0")
+    @ApiModelProperty(value = "字符串加密传输")
+    @RSA
+    private String encryptStr;
+
+
+    /**
      * 长文本查询
      */
     @Excel(name = "长文本查询" , width = 12.5, orderNum = "1")
     @ApiModelProperty(value = "长文本查询")
-    @NotNull(message = "长文本查询不允许为空")
     private String txt;
 
     /**
@@ -83,6 +92,27 @@ public class ExampleCommon extends BaseEntity {
     @Excel(name = "时间查询" , width = 10.0, orderNum = "5" , format = "HH:mm:ss")
     @ApiModelProperty(value = "时间查询")
     private Date queryTime;
+
+    /**
+     * 图片演示
+     */
+    @Excel(name = "图片演示" , orderNum = "6" , type = 2, imageType = 1)
+    @ApiModelProperty(value = "图片演示")
+    private String picture;
+
+    /**
+     * 音频演示
+     */
+    @Excel(name = "音频演示" , width = 15.0, orderNum = "7")
+    @ApiModelProperty(value = "音频演示")
+    private String audio;
+
+    /**
+     * 文件演示
+     */
+    @Excel(name = "文件演示" , width = 15.0, orderNum = "8")
+    @ApiModelProperty(value = "文件演示")
+    private String file;
 
 
 }

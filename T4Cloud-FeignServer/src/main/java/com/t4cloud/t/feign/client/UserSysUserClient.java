@@ -32,6 +32,12 @@ public interface UserSysUserClient {
     R<List<SysUserDTO>> list(@SpringQueryMap SysUserDTO sysUserDTO);
 
     /**
+     * 全部列表（受限查询） 用户表
+     */
+    @GetMapping(value = "/limitList")
+    R<List<SysUserDTO>> limitList(@SpringQueryMap SysUserDTO sysUserDTO);
+
+    /**
      * 新增 用户表
      */
     @PutMapping(value = "/save")

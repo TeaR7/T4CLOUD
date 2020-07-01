@@ -75,6 +75,8 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/login/loginByPwd" , "anon"); // 账号密码登录
         filterChainDefinitionMap.put("/login/loginByCode/**" , "anon"); // 第三方授权码登录
 
+        filterChainDefinitionMap.put("/SysUser/limitList" , "anon"); // 受限用户列表查询
+
 
         //Flow测试接口
         filterChainDefinitionMap.put("/ProcessLeave/**" , "anon");

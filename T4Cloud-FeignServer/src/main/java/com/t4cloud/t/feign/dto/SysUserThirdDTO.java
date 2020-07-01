@@ -97,7 +97,7 @@ public class SysUserThirdDTO implements Serializable {
      * 用户平台种类 WX|QQ|WEB
      */
     @ApiModelProperty(value = "用户平台种类 WX|QQ|WEB")
-    private String loginType;
+    private Integer loginType;
     /**
      * 过期时间
      */
