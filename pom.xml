@@ -30,7 +30,7 @@
         <t4cloud.version>0.1.2</t4cloud.version>
         <t4cloud.core.version>0.1.17</t4cloud.core.version>
         <application.name></application.name>
-        <spring-boot.version>2.2.4.RELEASE</spring-boot.version>
+        <spring-boot.version>2.5.12</spring-boot.version>
         <spring-cloud.version>Hoxton.SR1</spring-cloud.version>
         <spring-cloud-alibaba.version>2.2.0.RELEASE</spring-cloud-alibaba.version>
         <swagger.fox.version>2.9.2</swagger.fox.version>
